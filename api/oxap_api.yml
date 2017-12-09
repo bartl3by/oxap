@@ -1,0 +1,140 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is the Open-Xchange Admin Panel API. This API is the connector to the
+    middleware that handles provisioning tasks towards Open-Xchange products
+    such as Dovecot or App Suite.
+  version: 1.0.0
+  title: Open-Xchange Admin Panel API
+  termsOfService: 'http://www.open-xchange.com'
+  contact:
+    email: bartl3by@t-online.de
+    name: Benjamin Otterbach
+  license:
+    name: "GPL3"
+    url: https://github.com/bartl3by/oxap/blob/master/LICENSE
+host: doesnotexist.open-xchange.com
+basePath: /v2
+security: []
+schemes:
+  - http
+  - https
+paths:
+  /resource:
+    get:
+      tags:
+      - "resource"
+      summary: "List all resources"
+      description: "List all resources in given context"
+      operationId: "list_all_resources"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid Status Value"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "listAll"
+    post:
+      tags:
+      - "resource"
+      summary: "Create a new resource"
+      description: "Creates a new resource within the given context"
+      operationId: "create_resource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceObject"
+        in: "body"
+        description: "Resource object that needs to be created within the given context"
+        required: true
+        schema:
+          $ref: "#/definitions/Resource"
+      responses:
+        405:
+          description: "Invalid Input"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "create"
+    put:
+      tags:
+      - "resource"
+      summary: "Change a resource"
+      description: "Change resource within the given context"
+      operationId: "change_resource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "body"
+        description: "Id of the resource object that needs to be updated within the given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "resourceObject"
+        in: "body"
+        description: "Resource object that needs to be updated within the given context"
+        required: true
+        schema:
+          $ref: "#/definitions/Resource"
+      responses:
+        400:
+          description: "Invalid Id supplied"
+        404:
+          description: "Resource not found"
+        405:
+          description: "Invalid Input"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "change"
+tags:
+- name: "resource"
+  description: "Open-Xchange App Suite Resources"
+  url: "http://software.open-xchange.com/products/appsuite/doc/RMI/javadoc/com/openexchange/admin/rmi/dataobjects/Resource.html"
+definitions:
+  Resource:
+    type: "object"
+    required:
+    - "name"
+    - "displayname"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of this object"
+      description:
+        type: "string"
+        description: "The description of this resource"
+      displayname:
+        type: "string"
+        description: "The displayname of this resource"
+      email:
+        type: "string"
+        description: "The E-Mail of this resource"
+      name:
+        type: "string"
+        description: "The name of this object"
+    xml:
+      name: "Order"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
