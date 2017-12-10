@@ -7,6 +7,7 @@ tox.ini
 git_push.sh
 test-requirements.txt
 setup.py
+swagger_server/test/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
