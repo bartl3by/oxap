@@ -13,7 +13,6 @@ info:
   license:
     name: "GPL3"
     url: https://github.com/bartl3by/oxap/blob/master/LICENSE
-host: doesnotexist.open-xchange.com
 basePath: /v2
 security: []
 schemes:
