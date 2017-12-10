@@ -66,6 +66,116 @@ paths:
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "create"
+  /resource/find:
+    get:
+      tags:
+      - "resource"
+      summary: "Find resource by pattern"
+      description: "Find resource by pattern within the given context"
+      operationId: "find_resource_by_pattern"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "pattern"
+        in: "query"
+        description: "Pattern of the resource object to find within the given context"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid pattern"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "list"
+  /resource/{resourceId}:
+    get:
+      tags:
+      - "resource"
+      summary: "Find resource by ID"
+      description: "Find resource within the given context"
+      operationId: "get_resource_by_id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "Id of the resource object to find within the given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Object not found"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "getData"
+    put:
+      tags:
+      - "resource"
+      summary: "Change a resource"
+      description: "Change resource within the given context"
+      operationId: "change_resource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "Id of the resource object that needs to be updated within the given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "resourceObject"
+        in: "body"
+        description: "Resource object that needs to be updated within the given context"
+        required: true
+        schema:
+          $ref: "#/definitions/Resource"
+      responses:
+        400:
+          description: "Invalid Id supplied"
+        404:
+          description: "Object not found"
+        405:
+          description: "Invalid Input"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "change"
+    delete:
+      tags:
+      - "resource"
+      summary: "Delete a resource"
+      description: "Delete a resource within the given context"
+      operationId: "delete_resource"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "Id of the resource object that needs to be deleted within the given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Object not found"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "delete"
 tags:
 - name: "resource"
   description: "Open-Xchange App Suite Resources"
@@ -92,8 +202,6 @@ definitions:
       name:
         type: "string"
         description: "The name of this object"
-    xml:
-      name: "Order"
   ApiResponse:
     type: "object"
     properties:

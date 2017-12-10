@@ -33,7 +33,7 @@ GET 	/publications						getPublication
 PUT 	/publications						deletePublication
 
 GET 	/resources 							listAll
-GET 	/resources/find 					list, getMultipleData
+GET 	/resources/find 					list, (getMultipleData)
 POST 	/resources 							create
 GET 	/resources/[id] 					getData
 PUT 	/resources/[id] 					change
