@@ -1,6 +1,8 @@
-# oxap
-Open-Xchange Admin Panel
+# OXAP - Open-Xchange Admin Panel
 
-middleware:
-  Build: swagger-codegen generate -i api/oxap_api.yml -l python-flask -o middleware 
-  Execute: nodemon --watch swagger_server --ext py,yaml,yml --exec "python3 -m swagger_server"
+## Overview
+
+- **Directories**
+ - api: The API definition for interfacing with the OXAP middleware
+ - middleware: The swagger-enabled middleware uses the Connexion library on top of Tornado.
+ - frontend: The VUE.js user interface for OX Master Admins and Context Admins
