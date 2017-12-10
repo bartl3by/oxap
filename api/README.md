@@ -1,5 +1,6 @@
 # Open-Xchange SOAP References
 
+## Context Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
 | GET | /contexts | listAll |
@@ -18,6 +19,9 @@
 | PUT | /contexts/[id] | change, changeModuleAccessByName, enable, changeModuleAccess, downgrade, moveContextDatabase, moveContextFilestore, changeCapabilities, changeQuota, disable
 | DELETE | /contexts/[id] | delete
 
+## Groups Interface
+| HTTP Method | Path | SOAP Call Reference |
+| --- | --- | --- |
 | GET | /groups | listAll
 | GET | /groups?search=[s] | list, getMultipleData
 | GET | /groups/defaultgroup | getDefaultGroup
@@ -31,9 +35,15 @@
 | POST | /groups/[id]/member | addMember
 | DELETE | /groups/[id]/member/[id | removeMember
 
+## Publications Interface
+| HTTP Method | Path | SOAP Call Reference |
+| --- | --- | --- |
 | GET | publications | getPublication
 | PUT | /publications | deletePublication
 
+## Resources Interface
+| HTTP Method | Path | SOAP Call Reference |
+| --- | --- | --- |
 | GET | /resources | listAll
 | GET | /resources/find | list, (getMultipleData)
 | POST | resources | create
@@ -41,6 +51,9 @@
 | PUT | /resources/[id] | change
 | DELETE | /resources/[id] | delete
 
+## Users Interface
+| HTTP Method | Path | SOAP Call Reference |
+| --- | --- | --- |
 | GET | /users | listAll
 | GET | /users?search=[s] | list, getMultipleData
 | POST | users | create, createByModuleAccess, createByModuleAccessName
@@ -50,6 +63,9 @@
 | PUT | /users/[id] | move*, changeMailAddressPersonal, changeCapabilities, change
 | DELETE | /users/[id] | delete
 
+## Util Interface
+| HTTP Method | Path | SOAP Call Reference |
+| --- | --- | --- |
 | GET | environment/tasks | getJobList
 | PUT | /environment/tasks | flush
 | GET | /environment/tasks/[id] | getTaskResults
