@@ -1,0 +1,221 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the Open-Xchange Admin Panel API. This API is the connector\
+    \ to the middleware that handles provisioning tasks towards Open-Xchange products\
+    \ such as Dovecot or App Suite."
+  version: "1.0.0"
+  title: "Open-Xchange Admin Panel API"
+  termsOfService: "http://www.open-xchange.com"
+  contact:
+    name: "Benjamin Otterbach"
+    email: "bartl3by@t-online.de"
+  license:
+    name: "GPL3"
+    url: "https://github.com/bartl3by/oxap/blob/master/LICENSE"
+basePath: "/v2"
+tags:
+- name: "resource"
+  description: "Open-Xchange App Suite Resources"
+schemes:
+- "http"
+- "https"
+security: []
+paths:
+  /resource:
+    get:
+      tags:
+      - "resource"
+      summary: "List all resources"
+      description: "List all resources in given context"
+      operationId: "list_all_resources"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid Status Value"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "listAll"
+      x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+    post:
+      tags:
+      - "resource"
+      summary: "Create a new resource"
+      description: "Creates a new resource within the given context"
+      operationId: "create_resource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "resourceObject"
+        description: "Resource object that needs to be created within the given context"
+        required: true
+        schema:
+          $ref: "#/definitions/Resource"
+      responses:
+        405:
+          description: "Invalid Input"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "create"
+      x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+  /resource/find:
+    get:
+      tags:
+      - "resource"
+      summary: "Find resource by pattern"
+      description: "Find resource by pattern within the given context"
+      operationId: "find_resource_by_pattern"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "pattern"
+        in: "query"
+        description: "Pattern of the resource object to find within the given context"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid pattern"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "list"
+      x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+  /resource/{resourceId}:
+    get:
+      tags:
+      - "resource"
+      summary: "Find resource by ID"
+      description: "Find resource within the given context"
+      operationId: "get_resource_by_id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "Id of the resource object to find within the given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/Resource"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Object not found"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "getData"
+      x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+    put:
+      tags:
+      - "resource"
+      summary: "Change a resource"
+      description: "Change resource within the given context"
+      operationId: "change_resource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "Id of the resource object that needs to be updated within the\
+          \ given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "resourceObject"
+        description: "Resource object that needs to be updated within the given context"
+        required: true
+        schema:
+          $ref: "#/definitions/Resource"
+      responses:
+        400:
+          description: "Invalid Id supplied"
+        404:
+          description: "Object not found"
+        405:
+          description: "Invalid Input"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "change"
+      x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+    delete:
+      tags:
+      - "resource"
+      summary: "Delete a resource"
+      description: "Delete a resource within the given context"
+      operationId: "delete_resource"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "Id of the resource object that needs to be deleted within the\
+          \ given context"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Object not found"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
+      x-open-xchange-soap-reference-operation-id: "delete"
+      x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+definitions:
+  Resource:
+    type: "object"
+    required:
+    - "displayname"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of this object"
+      description:
+        type: "string"
+        description: "The description of this resource"
+      displayname:
+        type: "string"
+        description: "The displayname of this resource"
+      email:
+        type: "string"
+        description: "The E-Mail of this resource"
+      name:
+        type: "string"
+        description: "The name of this object"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"

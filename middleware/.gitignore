@@ -1,3 +1,14 @@
+.dockerignore
+Dockerfile
+.travis.yaml
+.travis.yml
+.swagger-codegen/
+.swagger-codegen-ignore
+tox.ini
+git_push.sh
+test-requirements.txt
+setup.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
