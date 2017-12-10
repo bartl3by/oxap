@@ -1,7 +1,7 @@
 # Open-Xchange SOAP References
 
 | HTTP Method | Path | SOAP Call Reference |
-| --- | --- | --- |
+| --- | --- | --- |
 | GET | /contexts | listAll |
 | GET | /contexts?search=[s] | list |
 | GET | /contexts?database=[id] | listByDatabase |
@@ -75,7 +75,7 @@
 
 #OXAP Specific
 | HTTP Method | Path | Action |
-| --- | --- | --- |
+| --- | --- | --- |
 | ? | /account| ? |
 | ? | /account/provisioningendpoints | ? |
 | ? | /account/provisioningendpoints/appsuite | ? |
