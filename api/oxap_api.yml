@@ -66,43 +66,9 @@ paths:
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "create"
-    put:
-      tags:
-      - "resource"
-      summary: "Change a resource"
-      description: "Change resource within the given context"
-      operationId: "change_resource"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "resourceId"
-        in: "body"
-        description: "Id of the resource object that needs to be updated within the given context"
-        required: true
-        type: "integer"
-        format: "int32"
-      - name: "resourceObject"
-        in: "body"
-        description: "Resource object that needs to be updated within the given context"
-        required: true
-        schema:
-          $ref: "#/definitions/Resource"
-      responses:
-        400:
-          description: "Invalid Id supplied"
-        404:
-          description: "Resource not found"
-        405:
-          description: "Invalid Input"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "change"
 tags:
 - name: "resource"
   description: "Open-Xchange App Suite Resources"
-  url: "http://software.open-xchange.com/products/appsuite/doc/RMI/javadoc/com/openexchange/admin/rmi/dataobjects/Resource.html"
 definitions:
   Resource:
     type: "object"
