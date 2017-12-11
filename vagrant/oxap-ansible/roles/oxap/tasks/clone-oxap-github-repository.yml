@@ -1,0 +1,8 @@
+- name: clone OXAP from Github
+  git:
+    repo: 'https://github.com/bartl3by/oxap.git'
+    dest: /opt/oxap
+    clone: yes
+    update: yes
+    force: yes
+    version: master

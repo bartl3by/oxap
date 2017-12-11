@@ -1,0 +1,25 @@
+---
+appsuite:
+  configuration:
+    configdb:
+      password: db_password
+    middleware:
+      license: YOUR-OX-LICENSE-CODE
+      servername: oxserver
+      masterpass: admin_master_password
+      servermemory: 512
+      filestore:
+        location: /var/opt/filestore
+        owner: open-xchange
+        group: open-xchange
+        size: 1000000
+      database:
+        name: oxdatabase
+      rest:
+        username: restlogin
+        password: restpass
+      daas:
+        server: http://localhost:8084
+        nonce: boxcar
+        username: wforce
+        password: daaspass

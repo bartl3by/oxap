@@ -1,0 +1,36 @@
+- name: delete welcome configuration
+  file:
+    path: /etc/httpd/conf.d/welcome.conf
+    state: absent
+
+- name: configure proxy_http.conf
+  template: src=proxy_http.conf dest=/etc/httpd/conf.d/proxy_http.conf
+  when: ansible_os_family == "RedHat"
+  notify: restart httpd
+  tags:
+      - configuration
+      - apache_configuration
+
+- name: configure oxap.conf
+  template: src=oxap.conf dest=/etc/httpd/conf.d/oxap.conf
+  when: ansible_os_family == "RedHat"
+  notify: restart httpd
+  tags:
+      - configuration
+      - apache_configuration
+
+- name: set mpm to worker
+  template: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
+  when: ansible_os_family == "RedHat"
+  notify: restart httpd
+  tags:
+      - configuration
+      - apache_configuration
+
+- name: configure mpm worker
+  template: src=mpm-worker.conf dest=/etc/httpd/conf.d/mpm-worker.conf
+  when: ansible_os_family == "RedHat"
+  notify: restart httpd
+  tags:
+      - configuration
+      - apache_configuration

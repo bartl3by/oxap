@@ -1,0 +1,6 @@
+- name: install git packages
+  yum: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - git
+  when: ansible_os_family == "RedHat"
+  tags: git_install

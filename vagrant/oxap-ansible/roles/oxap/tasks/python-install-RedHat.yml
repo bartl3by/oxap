@@ -1,0 +1,34 @@
+- name: install IUS repo
+  yum: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - https://rhel7.iuscommunity.org/ius-release.rpm
+  when: ansible_os_family == "RedHat"
+  tags: python_install
+
+- name: import IUS buildkey
+  rpm_key: state=present key={{ item }}
+  with_items:
+     - /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+  tags:
+    - python_configuration
+    - python_install
+
+- name: install the Python 3.6 packages
+  yum: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - python36u
+    - python36u-libs
+    - python36u-devel
+    - python36u-pip
+  when: ansible_os_family == "RedHat"
+  tags: python_install
+
+- name: install additional python libraries required for the oxap middleware
+  command: pip3.6 install -r /opt/oxap/middleware/requirements.txt
+  when: ansible_os_family == "RedHat"
+  tags: python_install
+
+- name: install Tornado for python
+  command: pip3.6 install tornado
+  when: ansible_os_family == "RedHat"
+  tags: python_install

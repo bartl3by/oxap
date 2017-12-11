@@ -1,0 +1,3 @@
+---
+- name: restart oxap
+  service: name=oxap.service state=restarted

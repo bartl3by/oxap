@@ -1,0 +1,6 @@
+---
+
+- hosts: all
+  roles:
+    - { role: apache, tags: [ 'apache_ansible' ] }
+    - { role: oxap, tags: [ 'oxap_ansible' ] }

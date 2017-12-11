@@ -1,0 +1,6 @@
+---
+
+- include_tasks: apache-install-{{ ansible_os_family }}.yml
+- import_tasks: apache-service.yml
+- import_tasks: apache-configuration-files.yml
+- import_tasks: apache-firewalld.yml

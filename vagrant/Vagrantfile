@@ -1,0 +1,71 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Online Documentation: https://docs.vagrantup.com.
+Vagrant.configure("2") do |config|
+
+  # Every Vagrant development environment requires a box.
+  config.vm.box = "centos/7"
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine and only allow access
+  # via 127.0.0.1 to disable public access
+
+  # OXAP API
+  config.vm.network "forwarded_port", guest: 80, host: 10080, hots_ip: "127.0.0.1"
+  # OXAP API (SSL)
+  config.vm.network "forwarded_port", guest: 443, host: 10443, hots_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", type: "dhcp"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = "1024"
+
+    # Use virtualbox folder syncing (if available) to sync vagrant directory
+    # Requires this command to be run to install plugin:
+    #   vagrant plugin install vagrant-vbguest
+    if Vagrant.has_plugin? 'vagrant-vbguest'
+      config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    end
+  end
+
+  config.vm.provision "apache_provision", type: "ansible_local" do |ansible|
+    ansible.playbook = "install.yml"
+    ansible.provisioning_path = "/vagrant/oxap-ansible"
+    ansible.become = true
+    ansible.become_user = "root"
+    ansible.tags = "apache_ansible"
+  end
+
+  config.vm.provision "oxap_provision", type: "ansible_local" do |ansible|
+    ansible.playbook = "install.yml"
+    ansible.provisioning_path = "/vagrant/oxap-ansible"
+    ansible.become = true
+    ansible.become_user = "root"
+    ansible.tags = "oxap_ansible"
+  end
+
+  # Display Internal IP Address assigned to the VM
+  config.vm.provision "display_ip", type: "shell", run: "always", inline: <<-SHELL
+    ip addr show eth1 | grep 'inet ' | cut -d: -f1 | awk '{ print "PRIVATE IP ADDRESS: " $2 }'
+  SHELL
+
+end

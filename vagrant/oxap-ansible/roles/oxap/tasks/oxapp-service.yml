@@ -1,0 +1,9 @@
+- name: install OXAP service script
+  template: src=oxap.service dest=/lib/systemd/system/oxap.service
+  when: ansible_os_family == "RedHat"
+  notify: restart oxap
+  tags: oxap_configuration
+
+- name: enable OXAP service
+  service: name=oxap.service state=started enabled=yes
+  tags: oxap_configuration
