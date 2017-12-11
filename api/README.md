@@ -100,252 +100,217 @@
 | ? | /account/provisioningendpoints/domains/[id] | ? |
 
 # SOAP Object Overview
-
-## Context ##
-
-average_size: long
-enabled: boolean
-filestoreId: int
-filestore_name: string
-id: int
-loginMappings: string
-maxQuota: long
-name: string
-readDatabase: OX.Database
-usedQuota: long
-userAttributes: OX.SOAPStringMapMap
-writeDatabase: OX.Database
-
-## Group ##
-
-displayname: string
-id: int
-members: int
-name: string
-
-## User ##
-
-aliases: string
-anniversary: date
-assistant_name: string
-birthday: date
-branches: string
-business_category: string
-categories: string
-cellular_telephone1: string
-cellular_telephone2: string
-city_business: string
-city_home: string
-city_other: string
-commercial_register: string
-company: string
-contextadmin: boolean
-country_business: string
-country_home: string
-country_other: string
-defaultSenderAddress: string
-driveUserFolderMode: string
-default_group: OX.Group
-department: string
-display_name: string
-email1: string
-email2: string
-email3: string
-employeeType: string
-fax_business: string
-fax_home: string
-fax_other: string
-filestoreId: int
-filestore_name: string
-folderTree: int
-given_name: string
-guiPreferencesForSoap: OX.SOAPStringMap
-gui_spam_filter_enabled: boolean
-id: int
-imapLogin: string
-imapPort: int
-imapSchema: string
-imapServer: string
-imapServerString: string
-info: string
-instant_messenger1: string
-instant_messenger2: string
-language: string
-mail_folder_confirmed_ham_name: string
-mail_folder_confirmed_spam_name: string
-mail_folder_drafts_name: string
-mail_folder_sent_name: string
-mail_folder_spam_name: string
-mail_folder_trash_name: string
-mailenabled: boolean
-manager_name: string
-marital_status: string
-maxQuota: long
-middle_name: string
-name: string
-nickname: string
-note: string
-number_of_children: string
-number_of_employee: string
-password: string
-passwordMech: string
-password_expired: boolean
-position: string
-postal_code_business: string
-postal_code_home: string
-postal_code_other: string
-primaryEmail: string
-profession: string
-room_number: string
-sales_volume: string
-smtpPort: int
-smtpSchema: string
-smtpServer: string
-smtpServerString: string
-spouse_name: string
-state_business: string
-state_home: string
-state_other: string
-street_business: string
-street_home: string
-street_other: string
-suffix: string
-sur_name: string
-tax_id: string
-telephone_assistant: string
-telephone_business1: string
-telephone_business2: string
-telephone_callback: string
-telephone_car: string
-telephone_company: string
-telephone_home1: string
-telephone_home2: string
-telephone_ip: string
-telephone_isdn: string
-telephone_other: string
-telephone_pager: string
-telephone_primary: string
-telephone_radio: string
-telephone_telex: string
-telephone_ttytdd: string
-timezone: string
-title: string
-uploadFileSizeLimit: int
-uploadFileSizeLimitPerFile: int
-url: string
-usedQuota: long
-userAttributes: OX.SOAPStringMapMap
-userfield01: string
-userfield02: string
-userfield03: string
-userfield04: string
-userfield05: string
-userfield06: string
-userfield07: string
-userfield08: string
-userfield09: string
-userfield10: string
-userfield11: string
-userfield12: string
-userfield13: string
-userfield14: string
-userfield15: string
-userfield16: string
-userfield17: string
-userfield18: string
-userfield19: string
-userfield20: string
-primaryAccountName: string
-convert_drive_user_folders: boolean
-
-## User Module Access ##
-
-OLOX20: boolean
-USM: boolean
-activeSync: boolean
-calendar: boolean
-collectEmailAddresses: boolean
-contacts: boolean
-delegateTask: boolean
-deniedPortal: boolean
-editGroup: boolean
-editPassword: boolean
-editPublicFolders: boolean
-editResource: boolean
-globalAddressBookDisabled: boolean
-ical: boolean
-infostore: boolean
-multipleMailAccounts: boolean
-publicFolderEditable: boolean
-publication: boolean
-readCreateSharedFolders: boolean
-subscription: boolean
-syncml: boolean
-tasks: boolean
-vcard: boolean
-webdav: boolean
-webdavXml: boolean
-webmail: boolean
-
-
-## Database ##
-
-clusterWeight: int
-currentUnits: int
-driver: string
-id: int
-login: string
-master: boolean
-masterId: int
-maxUnits: int
-name: string
-password: string
-poolHardLimit: int
-poolInitial: int
-poolMax: int
-read_id: int
-scheme: string
-url: string
-
-## Filestore ##
-
-currentContexts: int
-id: int
-maxContexts: int
-reserved: long
-size: long
-url: string
-used: long
-
-## Publication
-
-userId: int
-context: : OX.Context
-id: string
-entityId: string
-module: string
-name: string
-description: string
-
-## Credentials ##
-
-login: string
-password: string
-
-## String Map Map ##
-
-entries: OX.SOAPMapEntry
-
-## Map Entry ##
-
-key: string
-value: OX.SOAPStringMap
-
-## String Map ##
-
-entries: OX.Entry
-
-## Entry ##
-
-key: string
-value: string
+| Module | Object Name | Object Type |
+| --- | --- | --- |
+| Context | average_size | long |
+| Context | enabled | boolean |
+| Context | filestoreId | int |
+| Context | filestore_name | string |
+| Context | id | int |
+| Context | loginMappings | string |
+| Context | maxQuota | long |
+| Context | name | string |
+| Context | readDatabase | OX.Database |
+| Context | usedQuota | long |
+| Context | userAttributes | OX.SOAPStringMapMap |
+| Context | writeDatabase | OX.Database |
+| Group | displayname | string |
+| Group | id | int |
+| Group | members | int |
+| Group | name | string |
+| User | aliases | string |
+| User | anniversary | date
+| User | assistant_name | string |
+| User | birthday | date
+| User | branches | string |
+| User | business_category | string |
+| User | categories | string |
+| User | cellular_telephone1 | string |
+| User | cellular_telephone2 | string |
+| User | city_business | string |
+| User | city_home | string |
+| User | city_other | string |
+| User | commercial_register | string |
+| User | company | string |
+| User | contextadmin | boolean |
+| User | country_business | string |
+| User | country_home | string |
+| User | country_other | string |
+| User | defaultSenderAddress | string |
+| User | driveUserFolderMode | string |
+| User | default_group | OX.Group
+| User | department | string |
+| User | display_name | string |
+| User | email1 | string |
+| User | email2 | string |
+| User | email3 | string |
+| User | employeeType | string |
+| User | fax_business | string |
+| User | fax_home | string |
+| User | fax_other | string |
+| User | filestoreId | int |
+| User | filestore_name | string |
+| User | folderTree | int |
+| User | given_name | string |
+| User | guiPreferencesForSoap | OX.SOAPStringMap |
+| User | gui_spam_filter_enabled | boolean |
+| User | id | int |
+| User | imapLogin | string |
+| User | imapPort | int |
+| User | imapSchema | string |
+| User | imapServer | string |
+| User | imapServerString | string |
+| User | info | string |
+| User | instant_messenger1 | string |
+| User | instant_messenger2 | string |
+| User | language | string |
+| User | mail_folder_confirmed_ham_name | string |
+| User | mail_folder_confirmed_spam_name | string |
+| User | mail_folder_drafts_name | string |
+| User | mail_folder_sent_name | string |
+| User | mail_folder_spam_name | string |
+| User | mail_folder_trash_name | string |
+| User | mailenabled | boolean |
+| User | manager_name | string |
+| User | marital_status | string |
+| User | maxQuota | long |
+| User | middle_name | string |
+| User | name | string |
+| User | nickname | string |
+| User | note | string |
+| User | number_of_children | string |
+| User | number_of_employee | string |
+| User | password | string |
+| User | passwordMech | string |
+| User | password_expired | boolean |
+| User | position | string |
+| User | postal_code_business | string |
+| User | postal_code_home | string |
+| User | postal_code_other | string |
+| User | primaryEmail | string |
+| User | profession | string |
+| User | room_number | string |
+| User | sales_volume | string |
+| User | smtpPort | int |
+| User | smtpSchema | string |
+| User | smtpServer | string |
+| User | smtpServerString | string |
+| User | spouse_name | string |
+| User | state_business | string |
+| User | state_home | string |
+| User | state_other | string |
+| User | street_business | string |
+| User | street_home | string |
+| User | street_other | string |
+| User | suffix | string |
+| User | sur_name | string |
+| User | tax_id | string |
+| User | telephone_assistant | string |
+| User | telephone_business1 | string |
+| User | telephone_business2 | string |
+| User | telephone_callback | string |
+| User | telephone_car | string |
+| User | telephone_company | string |
+| User | telephone_home1 | string |
+| User | telephone_home2 | string |
+| User | telephone_ip | string |
+| User | telephone_isdn | string |
+| User | telephone_other | string |
+| User | telephone_pager | string |
+| User | telephone_primary | string |
+| User | telephone_radio | string |
+| User | telephone_telex | string |
+| User | telephone_ttytdd | string |
+| User | timezone | string |
+| User | title | string |
+| User | uploadFileSizeLimit | int |
+| User | uploadFileSizeLimitPerFile | int |
+| User | url | string |
+| User | usedQuota | long |
+| User | userAttributes | OX.SOAPStringMapMap |
+| User | userfield01 | string |
+| User | userfield02 | string |
+| User | userfield03 | string |
+| User | userfield04 | string |
+| User | userfield05 | string |
+| User | userfield06 | string |
+| User | userfield07 | string |
+| User | userfield08 | string |
+| User | userfield09 | string |
+| User | userfield10 | string |
+| User | userfield11 | string |
+| User | userfield12 | string |
+| User | userfield13 | string |
+| User | userfield14 | string |
+| User | userfield15 | string |
+| User | userfield16 | string |
+| User | userfield17 | string |
+| User | userfield18 | string |
+| User | userfield19 | string |
+| User | userfield20 | string |
+| User | primaryAccountName | string |
+| User | convert_drive_user_folders | boolean |
+| User Module Access | OLOX20 | boolean |
+| User Module Access | USM | boolean |
+| User Module Access | activeSync | boolean |
+| User Module Access | calendar | boolean |
+| User Module Access | collectEmailAddresses | boolean |
+| User Module Access | contacts | boolean |
+| User Module Access | delegateTask | boolean |
+| User Module Access | deniedPortal | boolean |
+| User Module Access | editGroup | boolean |
+| User Module Access | editPassword | boolean |
+| User Module Access | editPublicFolders | boolean |
+| User Module Access | editResource | boolean |
+| User Module Access | globalAddressBookDisabled | boolean |
+| User Module Access | ical | boolean |
+| User Module Access | infostore | boolean |
+| User Module Access | multipleMailAccounts | boolean |
+| User Module Access | publicFolderEditable | boolean |
+| User Module Access | publication | boolean |
+| User Module Access | readCreateSharedFolders | boolean |
+| User Module Access | subscription | boolean |
+| User Module Access | syncml | boolean |
+| User Module Access | tasks | boolean |
+| User Module Access | vcard | boolean |
+| User Module Access | webdav | boolean |
+| User Module Access | webdavXml | boolean |
+| User Module Access | webmail | boolean |
+| Database | clusterWeight | int |
+| Database | currentUnits | int |
+| Database | driver | string |
+| Database | id | int |
+| Database | login | string |
+| Database | master | boolean |
+| Database | masterId | int |
+| Database | maxUnits | int |
+| Database | name | string |
+| Database | password | string |
+| Database | poolHardLimit | int |
+| Database | poolInitial | int |
+| Database | poolMax | int |
+| Database | read_id | int |
+| Database | scheme | string |
+| Database | url | string |
+| Filestore | currentContexts | int |
+| Filestore | id | int |
+| Filestore | maxContexts | int |
+| Filestore | reserved | long |
+| Filestore | size | long |
+| Filestore | url | string |
+| Filestore | used | long |
+| Publication | userId | int |
+| Publication | context  | OX.Context
+| Publication | id | string |
+| Publication | entityId | string |
+| Publication | module | string |
+| Publication | name | string |
+| Publication | description | string |
+| Credentials | login | string |
+| Credentials | password | string |
+| String Map Map | entries | OX.SOAPMapEntry |
+| String Map Entry | key | string |
+| String Map Entry | value | OX.SOAPStringMap |
+| String Map | entries | OX.Entry |
+| Entry | key | string |
+| Entry | value | string |
