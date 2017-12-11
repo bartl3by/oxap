@@ -3,4 +3,4 @@
 - include_tasks: git-install-{{ ansible_os_family }}.yml
 - include_tasks: clone-oxap-github-repository.yml
 - include_tasks: python-install-{{ ansible_os_family }}.yml
-- include_tasks: oxapp-service.yml
+- include_tasks: oxap-service.yml
