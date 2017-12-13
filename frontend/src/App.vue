@@ -2,7 +2,7 @@
   <div id="app">
     <b-navbar toggleable="md">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand><img src="assets/logo.png"></b-navbar-brand>
+      <b-navbar-brand><img src="./assets/logo.png"></b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item @click="selectMasterAdmin" :class="{ active: isActiveMasterAdmin }">Master Admin</b-nav-item>
