@@ -8,7 +8,7 @@ from ..util import deserialize_date, deserialize_datetime
 def get_oxap_account():
     """
     Get Account Information
-    Get Account Information of the Open-Xchange Admin Panel Account
+    Get account information of the Open-Xchange Admin Panel account
 
     :rtype: None
     """

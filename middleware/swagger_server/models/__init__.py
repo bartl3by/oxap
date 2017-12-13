@@ -5,6 +5,8 @@ from __future__ import absolute_import
 from .api_response import ApiResponse
 from .context import Context
 from .database import Database
+from .endpoint import Endpoint
+from .endpoint_interface import EndpointInterface
 from .entry import Entry
 from .filestore import Filestore
 from .group import Group
