@@ -15,13 +15,100 @@ info:
     url: "https://github.com/bartl3by/oxap/blob/master/LICENSE"
 basePath: "/v2"
 tags:
+- name: "context"
+  description: "Open-Xchange App Suite Context"
+- name: "user"
+  description: "Open-Xchange App Suite User"
+- name: "group"
+  description: "Open-Xchange App Suite Group"
 - name: "resource"
   description: "Open-Xchange App Suite Resources"
+- name: "publication"
+  description: "Open-Xchange App Suite Publication"
+- name: "environment"
+  description: "Open-Xchange App Suite Environment"
+- name: "oxapaccount"
+  description: "The Open-Xchange Admin Panel Account"
 schemes:
 - "http"
 - "https"
 security: []
 paths:
+  /context:
+    get:
+      tags:
+      - "context"
+      summary: "List all contexts"
+      description: "List all contexts in given context"
+      operationId: "list_all_contexts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Context"
+        400:
+          description: "Invalid Status Value"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXContextService"
+      x-open-xchange-soap-reference-operation-id: "listAll"
+      x-swagger-router-controller: "swagger_server.controllers.context_controller"
+  /user:
+    get:
+      tags:
+      - "user"
+      summary: "List all users"
+      description: "List all users in given context"
+      operationId: "list_all_users"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        400:
+          description: "Invalid Status Value"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXUserService"
+      x-open-xchange-soap-reference-operation-id: "listAll"
+      x-swagger-router-controller: "swagger_server.controllers.user_controller"
+  /group:
+    get:
+      tags:
+      - "group"
+      summary: "List all groups"
+      description: "List all groups in given context"
+      operationId: "list_all_groups"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+        400:
+          description: "Invalid Status Value"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXGroupService"
+      x-open-xchange-soap-reference-operation-id: "listAll"
+      x-swagger-router-controller: "swagger_server.controllers.group_controller"
   /resource:
     get:
       tags:
@@ -186,29 +273,798 @@ paths:
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "delete"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
+  /publication:
+    get:
+      tags:
+      - "publication"
+      summary: "List all publications"
+      description: "List all publications in given context"
+      operationId: "list_all_publications"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Publication"
+        400:
+          description: "Invalid Status Value"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXPublicationService"
+      x-open-xchange-soap-reference-operation-id: "getPublication"
+      x-swagger-router-controller: "swagger_server.controllers.publication_controller"
+  /oxap/account:
+    get:
+      tags:
+      - "oxapaccount"
+      summary: "Get Account Information"
+      description: "Get Account Information of the Open-Xchange Admin Panel Account"
+      operationId: "get_oxap_account"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful Operation"
+      security: []
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
 definitions:
-  Resource:
+  Group:
     type: "object"
     required:
     - "displayname"
     - "name"
     properties:
+      displayname:
+        type: "string"
+        description: "The displayname of the group"
       id:
         type: "integer"
         format: "int32"
-        description: "The id of this object"
-      description:
-        type: "string"
-        description: "The description of this resource"
-      displayname:
-        type: "string"
-        description: "The displayname of this resource"
-      email:
-        type: "string"
-        description: "The E-Mail of this resource"
+        description: "The id of the group"
+      members:
+        type: "integer"
+        format: "int32"
+        description: "The members of the group"
       name:
         type: "string"
-        description: "The name of this object"
+        description: "The displayname of the group"
+  Resource:
+    type: "object"
+    required:
+    - "displayname"
+    - "email"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of the resource"
+      description:
+        type: "string"
+        description: "The description of the resource"
+      displayname:
+        type: "string"
+        description: "The displayname of the resource"
+      email:
+        type: "string"
+        description: "The E-Mail of the resource"
+      name:
+        type: "string"
+        description: "The name of the resource"
+  Context:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      average_size:
+        type: "integer"
+        format: "int64"
+        description: "The average size of a context"
+      enabled:
+        type: "boolean"
+        description: "Defines if the context is enabled or not"
+      filestoreId:
+        type: "integer"
+        format: "int32"
+        description: "The filestore id of a context"
+      filestore_name:
+        type: "string"
+        description: "The filestore name of a context"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of a context"
+      loginMappings:
+        type: "string"
+        description: "The login mappings of a context (usually a list of domains)"
+      name:
+        type: "string"
+        description: "The name of a context"
+      readDatabase:
+        type: "object"
+        description: "The read database of a context"
+        properties: {}
+      writeDatabase:
+        type: "object"
+        description: "The write database of a context"
+        properties: {}
+      usedQuota:
+        type: "integer"
+        format: "long64"
+        description: "The used quota of a context"
+      userAttributes:
+        type: "object"
+        description: "The user attributes of a context"
+        properties: {}
+  User:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    - "surname"
+    - "username"
+    properties:
+      username:
+        type: "string"
+        description: "The aliases of a user"
+      aliases:
+        type: "string"
+        description: "The aliases of a user"
+      assistant_name:
+        type: "string"
+        description: "The assistant name of a user"
+      branches:
+        type: "string"
+        description: "The branches of a user"
+      business_category:
+        type: "string"
+        description: "The business category of a user"
+      categories:
+        type: "string"
+        description: "The categories of a user"
+      cellular_telephone1:
+        type: "string"
+        description: "The cellular telephone 1 of a user"
+      cellular_telephone2:
+        type: "string"
+        description: "The cellular telephone 2 of a user"
+      city_business:
+        type: "string"
+        description: "The city (business) of a user"
+      city_home:
+        type: "string"
+        description: "The city (home) of a user"
+      city_other:
+        type: "string"
+        description: "Other city of a user"
+      commercial_register:
+        type: "string"
+        description: "The commercial register of a user"
+      company:
+        type: "string"
+        description: "The company of a user"
+      contextadmin:
+        type: "boolean"
+        description: "Is the user a context admin?"
+      country_business:
+        type: "string"
+        description: "The country (business) of a user"
+      country_home:
+        type: "string"
+        description: "The country (home) of a user"
+      country_other:
+        type: "string"
+        description: "Other country of a user"
+      defaultSenderAddress:
+        type: "string"
+        description: "The default sender address of a user"
+      driveUserFolderMode:
+        type: "string"
+        description: "The drive user folder mode of a user"
+      default_group:
+        type: "object"
+        description: "The default group of a user"
+        properties: {}
+      department:
+        type: "string"
+        description: "The department of a user"
+      display_name:
+        type: "string"
+        description: "The display name of a user (must be unique)"
+      email:
+        type: "string"
+        description: "The email of a user"
+      email2:
+        type: "string"
+        description: "The email2 of a user"
+      email3:
+        type: "string"
+        description: "The email3 of a user"
+      employeeType:
+        type: "string"
+        description: "The employee type of a user"
+      fax_business:
+        type: "string"
+        description: "The fax (business) of a user"
+      fax_home:
+        type: "string"
+        description: "The fax (home) of a user"
+      fax_other:
+        type: "string"
+        description: "Other fax of a user"
+      filestoreId:
+        type: "integer"
+        format: "int32"
+        description: "The filestore id of a user"
+      filestore_name:
+        type: "string"
+        description: "The filestore name of a user"
+      folderTree:
+        type: "integer"
+        format: "int32"
+        description: "The folder tree of a user"
+      given_name:
+        type: "string"
+        description: "The given name of a user"
+      guiPreferencesForSoap:
+        type: "object"
+        description: "The gui preferences of a user"
+        properties: {}
+      gui_spam_filter_enabled:
+        type: "boolean"
+        description: "Is the spam plugin in App Suite enabled for a user?"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of a user"
+      imapLogin:
+        type: "string"
+        description: "The imap login information of a user"
+      imapPort:
+        type: "integer"
+        format: "int32"
+        description: "The imap port of a user"
+      imapSchema:
+        type: "string"
+        description: "The imap schema of a user"
+      imapServer:
+        type: "string"
+        description: "The imap server of a user"
+      imapServerString:
+        type: "string"
+        description: "The imap server string of a user"
+      info:
+        type: "string"
+        description: "The info of a user"
+      instant_messenger1:
+        type: "string"
+        description: "The instant messenger 1 of a user"
+      instant_messenger2:
+        type: "string"
+        description: "The instant messenger 2 of a user"
+      language:
+        type: "string"
+        description: "The language of a user"
+      mail_folder_confirmed_ham_name:
+        type: "string"
+        description: "The folder name for confirmed ham of a user"
+      mail_folder_confirmed_spam_name:
+        type: "string"
+        description: "The folder name for confirmed spam of a user"
+      mail_folder_drafts_name:
+        type: "string"
+        description: "The folder name for drafts of a user"
+      mail_folder_sent_name:
+        type: "string"
+        description: "The folder name for sent of a user"
+      mail_folder_spam_name:
+        type: "string"
+        description: "The folder name for spam of a user"
+      mail_folder_trash_name:
+        type: "string"
+        description: "The folder name for trash of a user"
+      mailenabled:
+        type: "boolean"
+        description: "The mailenabled flag of a user"
+      manager_name:
+        type: "string"
+        description: "The manager name of a user"
+      marital_status:
+        type: "string"
+        description: "The marital status of a user"
+      maxQuota:
+        type: "integer"
+        format: "int64"
+        description: "The maxQuota of a user"
+      middle_name:
+        type: "string"
+        description: "The middle name of a user"
+      name:
+        type: "string"
+        description: "The name of a user"
+      nickname:
+        type: "string"
+        description: "The nickname of a user"
+      note:
+        type: "string"
+        description: "The note of a user"
+      number_of_children:
+        type: "string"
+        description: "The number of children of a user"
+      number_of_employee:
+        type: "string"
+        description: "The number of employee of a user"
+      password:
+        type: "string"
+        description: "The password of a user"
+      passwordMech:
+        type: "string"
+        description: "The password mechanism of a user"
+      password_expired:
+        type: "boolean"
+        description: "The password expired status of a user"
+      position:
+        type: "string"
+        description: "The position of a user"
+      postal_code_business:
+        type: "string"
+        description: "The postal code (business) of a user"
+      postal_code_home:
+        type: "string"
+        description: "The postal code (home) of a user"
+      postal_code_other:
+        type: "string"
+        description: "Other postal code of a user"
+      primaryEmail:
+        type: "string"
+        description: "The primary email of a user"
+      profession:
+        type: "string"
+        description: "The profession of a user"
+      room_number:
+        type: "string"
+        description: "The room number of a user"
+      sales_volume:
+        type: "string"
+        description: "The sales volume of a user"
+      smtpPort:
+        type: "integer"
+        format: "int32"
+        description: "The smtp port of a user"
+      smtpSchema:
+        type: "string"
+        description: "The smtp schema of a user"
+      smtpServer:
+        type: "string"
+        description: "The smtp server of a user"
+      smtpServerString:
+        type: "string"
+        description: "The smtp server string of a user"
+      spouse_name:
+        type: "string"
+        description: "The spouse name of a user"
+      state_business:
+        type: "string"
+        description: "The state (business) of a user"
+      state_home:
+        type: "string"
+        description: "The state (home) of a user"
+      state_other:
+        type: "string"
+        description: "Other state of a user"
+      street_business:
+        type: "string"
+        description: "The street (business) of a user"
+      street_home:
+        type: "string"
+        description: "The street (home) of a user"
+      street_other:
+        type: "string"
+        description: "Other street of a user"
+      suffix:
+        type: "string"
+        description: "The suffix of a user"
+      surname:
+        type: "string"
+        description: "The lastname of a user"
+      tax_id:
+        type: "string"
+        description: "The tax id of a user"
+      telephone_assistant:
+        type: "string"
+        description: "The telephone assistant of a user"
+      telephone_business1:
+        type: "string"
+        description: "The telephone business 1 of a user"
+      telephone_business2:
+        type: "string"
+        description: "The telephone business 2 of a user"
+      telephone_callback:
+        type: "string"
+        description: "The telephone callback of a user"
+      telephone_car:
+        type: "string"
+        description: "The telephone car of a user"
+      telephone_company:
+        type: "string"
+        description: "The telephone (company) of a user"
+      telephone_home1:
+        type: "string"
+        description: "The telephone (home 1) of a user"
+      telephone_home2:
+        type: "string"
+        description: "The telephone (home 2) of a user"
+      telephone_ip:
+        type: "string"
+        description: "The telephone (ip) of a user"
+      telephone_isdn:
+        type: "string"
+        description: "The telephone (isdn) of a user"
+      telephone_other:
+        type: "string"
+        description: "Other telephone of a user"
+      telephone_pager:
+        type: "string"
+        description: "The telephone pager of a user"
+      telephone_primary:
+        type: "string"
+        description: "The primary telephone of a user"
+      telephone_radio:
+        type: "string"
+        description: "The telephone (radio) of a user"
+      telephone_telex:
+        type: "string"
+        description: "The telephone (telex) of a user"
+      telephone_ttytdd:
+        type: "string"
+        description: "The telephone (ttytdd) of a user"
+      timezone:
+        type: "string"
+        description: "The timezone of a user"
+      title:
+        type: "string"
+        description: "The title of a user"
+      uploadFileSizeLimit:
+        type: "integer"
+        format: "int32"
+        description: "The uploadFileSizeLimit of a user"
+      uploadFileSizeLimitPerFile:
+        type: "integer"
+        format: "int32"
+        description: "The uploadFileSizeLimitPerFile of a user"
+      url:
+        type: "string"
+        description: "The url of a user"
+      usedQuota:
+        type: "integer"
+        format: "int64"
+        description: "The usedQuota of a user"
+      userAttributes:
+        type: "object"
+        description: "The attributes of a user"
+        properties: {}
+      userfield01:
+        type: "string"
+        description: "The userfield01 of a user"
+      userfield02:
+        type: "string"
+        description: "The userfield02 of a user"
+      userfield03:
+        type: "string"
+        description: "The userfield03 of a user"
+      userfield04:
+        type: "string"
+        description: "The userfield04 of a user"
+      userfield05:
+        type: "string"
+        description: "The userfield05 of a user"
+      userfield06:
+        type: "string"
+        description: "The userfield06 of a user"
+      userfield07:
+        type: "string"
+        description: "The userfield07 of a user"
+      userfield08:
+        type: "string"
+        description: "The userfield08 of a user"
+      userfield09:
+        type: "string"
+        description: "The userfield09 of a user"
+      userfield10:
+        type: "string"
+        description: "The userfield10 of a user"
+      userfield11:
+        type: "string"
+        description: "The userfield11 of a user"
+      userfield12:
+        type: "string"
+        description: "The userfield12 of a user"
+      userfield13:
+        type: "string"
+        description: "The userfield13 of a user"
+      userfield14:
+        type: "string"
+        description: "The userfield14 of a user"
+      userfield15:
+        type: "string"
+        description: "The userfield15 of a user"
+      userfield16:
+        type: "string"
+        description: "The userfield16 of a user"
+      userfield17:
+        type: "string"
+        description: "The userfield17 of a user"
+      userfield18:
+        type: "string"
+        description: "The userfield18 of a user"
+      userfield19:
+        type: "string"
+        description: "The userfield19 of a user"
+      userfield20:
+        type: "string"
+        description: "The userfield20 of a user"
+      primaryAccountName:
+        type: "string"
+        description: "The primaryAccountName of a user"
+      convert_drive_user_folders:
+        type: "boolean"
+        description: "The convert_drive_user_folders flag of a user"
+  Database:
+    type: "object"
+    required:
+    - "master"
+    - "name"
+    - "password"
+    properties:
+      clusterWeight:
+        type: "integer"
+        format: "int32"
+        description: "The clusterWeight of the database object"
+      currentUnits:
+        type: "integer"
+        format: "int32"
+        description: "The currentUnits of the database object"
+      driver:
+        type: "string"
+        description: "The driver of the database object"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of the database object"
+      login:
+        type: "string"
+        description: "The login of the database object"
+      master:
+        type: "boolean"
+        description: "The master flag of the database object"
+      masterId:
+        type: "integer"
+        format: "int32"
+        description: "The master id reference of the database object"
+      maxUnits:
+        type: "integer"
+        format: "int32"
+        description: "The maxUnits of the database object"
+      name:
+        type: "string"
+        description: "The name of the database object"
+      password:
+        type: "string"
+        description: "The password of the database object"
+      poolHardLimit:
+        type: "integer"
+        format: "int32"
+        description: "The poolHardLimit of the database object"
+      poolInitial:
+        type: "integer"
+        format: "int32"
+        description: "The poolInitial of the database object"
+      poolMax:
+        type: "integer"
+        format: "int32"
+        description: "The poolMax of the database object"
+      read_id:
+        type: "integer"
+        format: "int32"
+        description: "The database read id reference of the database object"
+      scheme:
+        type: "string"
+        description: "The scheme of the database object"
+      url:
+        type: "string"
+        description: "The url of the database object"
+  Filestore:
+    type: "object"
+    required:
+    - "url"
+    properties:
+      currentContexts:
+        type: "integer"
+        format: "int32"
+        description: ""
+      id:
+        type: "integer"
+        format: "int32"
+        description: ""
+      maxContexts:
+        type: "integer"
+        format: "int32"
+        description: ""
+      reserved:
+        type: "integer"
+        format: "int64"
+        description: ""
+      size:
+        type: "integer"
+        format: "int64"
+        description: ""
+      url:
+        type: "string"
+        description: ""
+      used:
+        type: "integer"
+        format: "int64"
+        description: ""
+  Publication:
+    type: "object"
+    properties:
+      userId:
+        type: "integer"
+        format: "int64"
+        description: ""
+      id:
+        type: "string"
+        description: ""
+      entityId:
+        type: "string"
+        description: ""
+      module:
+        type: "string"
+        description: ""
+      name:
+        type: "string"
+        description: ""
+      description:
+        type: "string"
+        description: ""
+  UserModuleAccess:
+    type: "object"
+    properties:
+      OLOX20:
+        type: "boolean"
+        description: ""
+      USM:
+        type: "boolean"
+        description: ""
+      activeSync:
+        type: "boolean"
+        description: ""
+      calendar:
+        type: "boolean"
+        description: ""
+      collectEmailAddresses:
+        type: "boolean"
+        description: ""
+      contacts:
+        type: "boolean"
+        description: ""
+      delegateTask:
+        type: "boolean"
+        description: ""
+      deniedPortal:
+        type: "boolean"
+        description: ""
+      editGroup:
+        type: "boolean"
+        description: ""
+      editPassword:
+        type: "boolean"
+        description: ""
+      editPublicFolders:
+        type: "boolean"
+        description: ""
+      editResource:
+        type: "boolean"
+        description: ""
+      globalAddressBookDisabled:
+        type: "boolean"
+        description: ""
+      ical:
+        type: "boolean"
+        description: ""
+      infostore:
+        type: "boolean"
+        description: ""
+      multipleMailAccounts:
+        type: "boolean"
+        description: ""
+      publicFolderEditable:
+        type: "boolean"
+        description: ""
+      publication:
+        type: "boolean"
+        description: ""
+      readCreateSharedFolders:
+        type: "boolean"
+        description: ""
+      subscription:
+        type: "boolean"
+        description: ""
+      syncml:
+        type: "boolean"
+        description: ""
+      tasks:
+        type: "boolean"
+        description: ""
+      vcard:
+        type: "boolean"
+        description: ""
+      webdav:
+        type: "boolean"
+        description: ""
+      webdavXml:
+        type: "boolean"
+        description: ""
+      webmail:
+        type: "boolean"
+        description: ""
+  SOAPStringMapMap:
+    type: "object"
+    required:
+    - "entries"
+    properties:
+      entries:
+        type: "array"
+        items:
+          $ref: "#/definitions/SOAPMapEntry"
+  SOAPMapEntry:
+    type: "object"
+    required:
+    - "key"
+    - "value"
+    properties:
+      key:
+        type: "string"
+      value:
+        $ref: "#/definitions/Entry"
+  SOAPStringMap:
+    type: "object"
+    required:
+    - "entries"
+    properties:
+      entries:
+        type: "array"
+        items:
+          $ref: "#/definitions/SOAPMapEntry"
+  Entry:
+    type: "object"
+    required:
+    - "key"
+    - "value"
+    properties:
+      key:
+        type: "string"
+        description: ""
+      value:
+        type: "string"
+  OXAPAccount:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: ""
+      name:
+        type: "string"
+        description: ""
   ApiResponse:
     type: "object"
     properties:

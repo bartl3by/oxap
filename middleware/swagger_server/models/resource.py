@@ -65,7 +65,7 @@ class Resource(Model):
     def id(self) -> int:
         """
         Gets the id of this Resource.
-        The id of this object
+        The id of the resource
 
         :return: The id of this Resource.
         :rtype: int
@@ -76,7 +76,7 @@ class Resource(Model):
     def id(self, id: int):
         """
         Sets the id of this Resource.
-        The id of this object
+        The id of the resource
 
         :param id: The id of this Resource.
         :type id: int
@@ -88,7 +88,7 @@ class Resource(Model):
     def description(self) -> str:
         """
         Gets the description of this Resource.
-        The description of this resource
+        The description of the resource
 
         :return: The description of this Resource.
         :rtype: str
@@ -99,7 +99,7 @@ class Resource(Model):
     def description(self, description: str):
         """
         Sets the description of this Resource.
-        The description of this resource
+        The description of the resource
 
         :param description: The description of this Resource.
         :type description: str
@@ -111,7 +111,7 @@ class Resource(Model):
     def displayname(self) -> str:
         """
         Gets the displayname of this Resource.
-        The displayname of this resource
+        The displayname of the resource
 
         :return: The displayname of this Resource.
         :rtype: str
@@ -122,7 +122,7 @@ class Resource(Model):
     def displayname(self, displayname: str):
         """
         Sets the displayname of this Resource.
-        The displayname of this resource
+        The displayname of the resource
 
         :param displayname: The displayname of this Resource.
         :type displayname: str
@@ -136,7 +136,7 @@ class Resource(Model):
     def email(self) -> str:
         """
         Gets the email of this Resource.
-        The E-Mail of this resource
+        The E-Mail of the resource
 
         :return: The email of this Resource.
         :rtype: str
@@ -147,11 +147,13 @@ class Resource(Model):
     def email(self, email: str):
         """
         Sets the email of this Resource.
-        The E-Mail of this resource
+        The E-Mail of the resource
 
         :param email: The email of this Resource.
         :type email: str
         """
+        if email is None:
+            raise ValueError("Invalid value for `email`, must not be `None`")
 
         self._email = email
 
@@ -159,7 +161,7 @@ class Resource(Model):
     def name(self) -> str:
         """
         Gets the name of this Resource.
-        The name of this object
+        The name of the resource
 
         :return: The name of this Resource.
         :rtype: str
@@ -170,7 +172,7 @@ class Resource(Model):
     def name(self, name: str):
         """
         Sets the name of this Resource.
-        The name of this object
+        The name of the resource
 
         :param name: The name of this Resource.
         :type name: str

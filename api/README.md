@@ -3,70 +3,70 @@
 ## Context Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
-| GET | /contexts | listAll |
-| GET | /contexts?search=[s] | list |
-| GET | /contexts?database=[id] | listByDatabase |
-| GET | /contexts?filestore=[id] | listByFilestore |
-| PUT | /contexts | disableAll, enableAll
-| POST | /contexts | create, createModuleAccess, createModuleAccessByName
-| GET | /contexts/[id] | getData
-| GET | /contexts/[id]/adminid | getAdminId
-| GET | /contexts/[id]/contextcapabilities | getContextCapabilities
-| GET | /contexts/[id]/accesscombinationname | getAccessCombinationName
-| GET | /contexts/[id]/quota | listQuota
-| GET | /contexts/[id]/moduleaccess | getModuleAccess
-| GET | /contexts/[id]/exists | exists
-| PUT | /contexts/[id] | change, changeModuleAccessByName, enable, changeModuleAccess, downgrade, moveContextDatabase, moveContextFilestore, changeCapabilities, changeQuota, disable
-| DELETE | /contexts/[id] | delete
+| GET | /context | listAll |
+| GET | /context?search=[s] | list |
+| GET | /context?database=[id] | listByDatabase |
+| GET | /context?filestore=[id] | listByFilestore |
+| PUT | /context | disableAll, enableAll
+| POST | /context | create, createModuleAccess, createModuleAccessByName
+| GET | /context/[id] | getData
+| GET | /context/[id]/adminid | getAdminId
+| GET | /context/[id]/contextcapabilities | getContextCapabilities
+| GET | /context/[id]/accesscombinationname | getAccessCombinationName
+| GET | /context/[id]/quota | listQuota
+| GET | /context/[id]/moduleaccess | getModuleAccess
+| GET | /context/[id]/exists | exists
+| PUT | /context/[id] | change, changeModuleAccessByName, enable, changeModuleAccess, downgrade, moveContextDatabase, moveContextFilestore, changeCapabilities, changeQuota, disable
+| DELETE | /context/[id] | delete
 
 ## Groups Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
-| GET | /groups | listAll
-| GET | /groups?search=[s] | list, getMultipleData
-| GET | /groups/defaultgroup | getDefaultGroup
-| GET | /groups?user=[uid] | listGroupsForUser
+| GET | /group | listAll
+| GET | /group?search=[s] | list, getMultipleData
+| GET | /group/defaultgroup | getDefaultGroup
+| GET | /group?user=[uid] | listGroupsForUser
 | POST | groups | create
-| PUT | /groups | deleteMultiple
-| GET | /groups/[id] | getData
+| PUT | /group | deleteMultiple
+| GET | /group/[id] | getData
 | PUT | groups/[id] | change
 | DELETE | groups/[id] | delete
-| GET | /groups/[id]/member | getMembers
-| POST | /groups/[id]/member | addMember
-| DELETE | /groups/[id]/member/[id | removeMember
+| GET | /group/[id]/member | getMembers
+| POST | /group/[id]/member | addMember
+| DELETE | /group/[id]/member/[id | removeMember
 
 ## Publications Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
-| GET | publications | getPublication
-| PUT | /publications | deletePublication
+| GET | /publication | getPublication
+| PUT | /publication | deletePublication
 
 ## Resources Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
-| GET | /resources | listAll
-| GET | /resources/find | list, (getMultipleData)
-| POST | resources | create
-| GET | /resources/[id] | getData
-| PUT | /resources/[id] | change
-| DELETE | /resources/[id] | delete
+| GET | /resource | listAll
+| GET | /resource/find | list, (getMultipleData)
+| POST | resource | create
+| GET | /resource/[id] | getData
+| PUT | /resource/[id] | change
+| DELETE | /resource/[id] | delete
 
 ## Users Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
-| GET | /users | listAll
-| GET | /users?search=[s] | list, getMultipleData
+| GET | /user | listAll
+| GET | /user?search=[s] | list, getMultipleData
 | POST | users | create, createByModuleAccess, createByModuleAccessName
-| PUT | /users | changeModuleAccessGlobal, changeByModuleAccessName, changeByModuleAccess
-| DELETE | /users | deleteMultiple
-| GET | /users/[id] | getData, getUserCapabilities, getContextAdmin, getAccessCombinationName, exists, getModuleAccess
-| PUT | /users/[id] | move*, changeMailAddressPersonal, changeCapabilities, change
-| DELETE | /users/[id] | delete
+| PUT | /user | changeModuleAccessGlobal, changeByModuleAccessName, changeByModuleAccess
+| DELETE | /user | deleteMultiple
+| GET | /user/[id] | getData, getUserCapabilities, getContextAdmin, getAccessCombinationName, exists, getModuleAccess
+| PUT | /user/[id] | move*, changeMailAddressPersonal, changeCapabilities, change
+| DELETE | /user/[id] | delete
 
 ## Util Interface
 | HTTP Method | Path | SOAP Call Reference |
 | --- | --- | --- |
-| GET | environment/tasks | getJobList
+| GET | /environment/tasks | getJobList
 | PUT | /environment/tasks | flush
 | GET | /environment/tasks/[id] | getTaskResults
 | DELETE | /environment/tasks/[id] | deleteJob
@@ -92,12 +92,12 @@
 # Additional Interfaces (OXAP specific)
 | HTTP Method | Path | Action |
 | --- | --- | --- |
-| ? | /account| ? |
-| ? | /account/provisioningendpoints | ? |
-| ? | /account/provisioningendpoints/appsuite | ? |
-| ? | /account/provisioningendpoints/dovecot | ? |
-| ? | /account/provisioningendpoints/domains | ? |
-| ? | /account/provisioningendpoints/domains/[id] | ? |
+| ? | /oxap/account| ? |
+| ? | /oxap/account/provisioningendpoints | ? |
+| ? | /oxap/account/provisioningendpoints/appsuite | ? |
+| ? | /oxap/account/provisioningendpoints/dovecot | ? |
+| ? | /oxap/account/provisioningendpoints/domains | ? |
+| ? | /oxap/account/provisioningendpoints/domains/[id] | ? |
 
 # SOAP Object Overview
 | Module | Object Name | Object Type |
@@ -118,6 +118,7 @@
 | Group | id | int |
 | Group | members | int |
 | Group | name | string |
+| User | username | string |
 | User | aliases | string |
 | User | anniversary | date
 | User | assistant_name | string |
