@@ -1,3 +1,5 @@
 <template>
-    <p>Master Admin</p>
+    <b-container>
+        
+    </b-container>
 </template>

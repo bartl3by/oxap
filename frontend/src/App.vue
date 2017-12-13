@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="md">
+
+    <b-navbar toggleable="md" type="dark" variant="primary" sticky>
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-navbar-brand><img src="./assets/logo.png"></b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
@@ -44,6 +45,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  nav.navbar {
+    
+    // background-color: #3c73aa;
 
+    .navbar-brand img {
+      height: 20px;
+    }
+  }
 </style>
