@@ -1,0 +1,13 @@
+- name: install oxap frontend
+  synchronize:
+    src: /opt/oxap/frontend/
+    dest: /var/www/html/oxap
+    recursive: yes
+    delete: yes
+    rsync_opts:
+      - "--exclude=package.json"
+      - "--exclude=package-lock.json"
+      - "--exclude=README.md"
+      - "--exclude=.gitignore"
+      - "--exclude=.git"
+      - "--exclude=.eslintrc"
