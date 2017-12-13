@@ -1,23 +1,49 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <b-navbar toggleable="md">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-brand><img src="assets/logo.png"></b-navbar-brand>
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav>
+          <b-nav-item @click="selectMasterAdmin" :class="{ active: isActiveMasterAdmin }">Master Admin</b-nav-item>
+          <b-nav-item href="#" disabled>Context Admin</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+      
     <router-view/>
   </div>
 </template>
 
 <script>
+
+// import Vue from 'vue'
+import { mapState } from 'vuex'
+import * as APP_TYPES from '@/store/app-types'
+
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    selectApp (app) {
+      this.$store.dispatch('setCurrentApp', app)
+      this.$emit('selectApp', app)
+      this.$router.push('/' + app)
+    },
+    selectMasterAdmin () {
+      this.selectApp(APP_TYPES.MASTER_ADMIN)
+    },
+    selectContextAdmin () {
+      this.selectApp(APP_TYPES.CONTEXT_ADMIN)
+    }
+  },
+  computed: mapState({
+    isActiveMasterAdmin: state => (state.App.currentApp === APP_TYPES.MASTER_ADMIN),
+    isActiveContextAdmin: state => (state.App.currentApp === APP_TYPES.CONTEXT_ADMIN),
+    currentApp: state => state.App.currentApp
+  })
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
