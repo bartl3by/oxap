@@ -2,4 +2,8 @@ $theme-colors: (
     "primary": #3c73aa
 );
 
+.container {
+    margin-top: 20px;
+}
+
 @import '~bootstrap/scss/bootstrap.scss'

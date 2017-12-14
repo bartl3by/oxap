@@ -22,9 +22,3 @@
     computed: {}
   }
 </script>
-
-<style scoped>
-  .jumbotron {
-    margin-top: 20px;
-  }
-</style>

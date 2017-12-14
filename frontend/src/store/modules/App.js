@@ -1,4 +1,4 @@
-import { APP as types } from '../mutation-types'
+import { App as types } from '../mutation-types'
 import * as APP_TYPES from '../app-types'
 import Exception from '../util/Exception'
 
