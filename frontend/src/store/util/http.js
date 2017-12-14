@@ -1,4 +1,4 @@
-import fetch from 'whatwg-fetch'
+import 'whatwg-fetch'
 
 const API_VERSION = 'v2'
 
@@ -20,7 +20,7 @@ export default {
     }
 
     // perform fetch and get the response json to pass along
-    return fetch('/' + API_VERSION + '/' + endpoint + (params && params.length ? '?' + params : ''), {
+    return window.fetch('/' + API_VERSION + '/' + endpoint + (params && params.length ? '?' + params : ''), {
       credentials: 'include'
     }).then(response => response.json())
   }
