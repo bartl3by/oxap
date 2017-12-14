@@ -1,7 +1,26 @@
+- name: install nodejs packages
+  yum: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - nodejs
+  when: ansible_os_family == "RedHat"
+  tags: nodejs_install
+
+- name: install frontend dependencies through npm
+  command: npm --prefix /opt/oxap/frontend install
+  when: ansible_os_family == "RedHat"
+  tags:
+    - nodejs_install
+
+- name: build static frontend
+  command: npm --prefix /opt/oxap/frontend run build
+  when: ansible_os_family == "RedHat"
+  tags:
+    - nodejs_install
+
 - name: install oxap frontend
   synchronize:
-    src: /opt/oxap/frontend/
-    dest: /var/www/html/oxap
+    src: /opt/oxap/frontend/dist/
+    dest: /var/www/html/
     recursive: yes
     delete: yes
     rsync_opts:
