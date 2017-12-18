@@ -288,7 +288,7 @@ paths:
   /oxap/account/endpoint:
     get:
       tags:
-      - "endpoint"
+      - "oxapaccount"
       summary: "Get all Endpoints"
       description: "Get all endpoints of the Open-Xchange Admin Panel account"
       operationId: "get_oxap_account_endpoints"
@@ -307,7 +307,7 @@ paths:
   /oxap/account/endpoint/{endpointId}:
     get:
       tags:
-      - "endpoint"
+      - "oxapaccount"
       summary: "Find endpoint by ID"
       description: "Find endpoint within the given Open-Xchange Admin Panel account"
       operationId: "get_endpoint_by_id"
@@ -333,7 +333,7 @@ paths:
   /oxap/account/endpoint/{endpointId}/endpointinterface:
     get:
       tags:
-      - "endpointinterface"
+      - "oxapaccount"
       summary: "Get all interfaces"
       description: "Get all interfaces of an Open-Xchange Admin Panel account endpoint"
       operationId: "get_oxap_account_endpoint_interfaces"
@@ -359,7 +359,7 @@ paths:
   /oxap/account/endpoint/{endpointId}/endpointinterface/{endpointInterfaceId}:
     get:
       tags:
-      - "endpointinterface"
+      - "oxapaccount"
       summary: "Find endpoint interface by ID"
       description: "Find endpoint interface within the given Open-Xchange Admin Panel account endpoint"
       operationId: "get_endpoint_interface_by_id"
@@ -403,10 +403,6 @@ tags:
   description: "Open-Xchange App Suite Environment"
 - name: "oxapaccount"
   description: "The Open-Xchange Admin Panel Account"
-- name: "endpoint"
-  description: "An Endpoint Configuration for an OXAP Account"
-- name: "endpointinterface"
-  description: "An Interface Configuration for an OXAP Account Endpoint"
 definitions:
   Group:
     type: "object"
@@ -455,7 +451,7 @@ definitions:
     type: "object"
     required:
     - "id"
-    - "quota"
+    - "maxQuota"
     properties:
       average_size:
         type: "integer"
@@ -479,7 +475,7 @@ definitions:
         type: "string"
         description: "The login mappings of a context (usually a list of domains)"
       maxQuota:
-        type: "long"
+        type: "integer"
         format: "int64"
         description: "The Drive quota setting of a context"
       name:
@@ -505,9 +501,9 @@ definitions:
     type: "object"
     required:
     - "username"
-    - "displayname"
-    - "givenname"
-    - "surname"
+    - "display_name"
+    - "given_name"
+    - "sur_name"
     - "password"
     - "email"
     properties:
@@ -518,13 +514,15 @@ definitions:
         type: "string"
         description: "The aliases of a user"
       anniversary:
-        type: "date"
+        type: "string"
+        format: "date"
         description: "The anniversary date of a user"
       assistant_name:
         type: "string"
         description: "The assistant name of a user"
       birthday:
-        type: "date"
+        type: "string"
+        format: "date"
         description: "The birthday of a user"
       branches:
         type: "string"
@@ -777,7 +775,7 @@ definitions:
       suffix:
         type: "string"
         description: "The suffix of a user"
-      surname:
+      sur_name:
         type: "string"
         description: "The lastname of a user"
       tax_id:
@@ -1020,7 +1018,6 @@ definitions:
         description: ""
   Publication:
     type: "object"
-    required: []
     properties:
       userId:
         type: "integer"
@@ -1043,8 +1040,6 @@ definitions:
         description: ""
   UserModuleAccess:
     type: "object"
-    required:
-    - ""
     properties:
       OLOX20:
         type: "boolean"

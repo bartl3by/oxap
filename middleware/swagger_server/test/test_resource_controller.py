@@ -11,19 +11,6 @@ from flask import json
 class TestResourceController(BaseTestCase):
     """ ResourceController integration test stubs """
 
-    def test_change_resource(self):
-        """
-        Test case for change_resource
-
-        Change a resource
-        """
-        resourceObject = Resource()
-        response = self.client.open('/v2/resource/{resourceId}'.format(resourceId=56),
-                                    method='PUT',
-                                    data=json.dumps(resourceObject),
-                                    content_type='application/json')
-        self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
-
     def test_create_resource(self):
         """
         Test case for create_resource
@@ -37,16 +24,6 @@ class TestResourceController(BaseTestCase):
                                     content_type='application/json')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
-    def test_delete_resource(self):
-        """
-        Test case for delete_resource
-
-        Delete a resource
-        """
-        response = self.client.open('/v2/resource/{resourceId}'.format(resourceId=56),
-                                    method='DELETE')
-        self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
-
     def test_find_resource_by_pattern(self):
         """
         Test case for find_resource_by_pattern
@@ -56,17 +33,8 @@ class TestResourceController(BaseTestCase):
         query_string = [('pattern', 'pattern_example')]
         response = self.client.open('/v2/resource/find',
                                     method='GET',
+                                    content_type='application/json',
                                     query_string=query_string)
-        self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
-
-    def test_get_resource_by_id(self):
-        """
-        Test case for get_resource_by_id
-
-        Find resource by ID
-        """
-        response = self.client.open('/v2/resource/{resourceId}'.format(resourceId=56),
-                                    method='GET')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
     def test_list_all_resources(self):

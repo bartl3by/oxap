@@ -29,10 +29,6 @@ tags:
   description: "Open-Xchange App Suite Environment"
 - name: "oxapaccount"
   description: "The Open-Xchange Admin Panel Account"
-- name: "endpoint"
-  description: "An Endpoint Configuration for an OXAP Account"
-- name: "endpointinterface"
-  description: "An Interface Configuration for an OXAP Account Endpoint"
 schemes:
 - "http"
 - "https"
@@ -322,7 +318,7 @@ paths:
   /oxap/account/endpoint:
     get:
       tags:
-      - "endpoint"
+      - "oxapaccount"
       summary: "Get all Endpoints"
       description: "Get all endpoints of the Open-Xchange Admin Panel account"
       operationId: "get_oxap_account_endpoints"
@@ -339,11 +335,11 @@ paths:
             items:
               $ref: "#/definitions/Endpoint"
       security: []
-      x-swagger-router-controller: "swagger_server.controllers.endpoint_controller"
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint/{endpointId}:
     get:
       tags:
-      - "endpoint"
+      - "oxapaccount"
       summary: "Find endpoint by ID"
       description: "Find endpoint within the given Open-Xchange Admin Panel account"
       operationId: "get_endpoint_by_id"
@@ -367,11 +363,11 @@ paths:
         404:
           description: "Object not found"
       security: []
-      x-swagger-router-controller: "swagger_server.controllers.endpoint_controller"
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint/{endpointId}/endpointinterface:
     get:
       tags:
-      - "endpointinterface"
+      - "oxapaccount"
       summary: "Get all interfaces"
       description: "Get all interfaces of an Open-Xchange Admin Panel account endpoint"
       operationId: "get_oxap_account_endpoint_interfaces"
@@ -395,11 +391,11 @@ paths:
             items:
               $ref: "#/definitions/EndpointInterface"
       security: []
-      x-swagger-router-controller: "swagger_server.controllers.endpointinterface_controller"
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint/{endpointId}/endpointinterface/{endpointInterfaceId}:
     get:
       tags:
-      - "endpointinterface"
+      - "oxapaccount"
       summary: "Find endpoint interface by ID"
       description: "Find endpoint interface within the given Open-Xchange Admin Panel\
         \ account endpoint"
@@ -431,7 +427,7 @@ paths:
         404:
           description: "Object not found"
       security: []
-      x-swagger-router-controller: "swagger_server.controllers.endpointinterface_controller"
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
 definitions:
   Group:
     type: "object"
@@ -480,6 +476,7 @@ definitions:
     type: "object"
     required:
     - "id"
+    - "maxQuota"
     properties:
       average_size:
         type: "integer"
@@ -502,6 +499,10 @@ definitions:
       loginMappings:
         type: "string"
         description: "The login mappings of a context (usually a list of domains)"
+      maxQuota:
+        type: "integer"
+        format: "int64"
+        description: "The Drive quota setting of a context"
       name:
         type: "string"
         description: "The name of a context"
@@ -524,9 +525,11 @@ definitions:
   User:
     type: "object"
     required:
+    - "display_name"
     - "email"
+    - "given_name"
     - "password"
-    - "surname"
+    - "sur_name"
     - "username"
     properties:
       username:
@@ -535,9 +538,17 @@ definitions:
       aliases:
         type: "string"
         description: "The aliases of a user"
+      anniversary:
+        type: "string"
+        format: "date"
+        description: "The anniversary date of a user"
       assistant_name:
         type: "string"
         description: "The assistant name of a user"
+      birthday:
+        type: "string"
+        format: "date"
+        description: "The birthday of a user"
       branches:
         type: "string"
         description: "The branches of a user"
@@ -789,7 +800,7 @@ definitions:
       suffix:
         type: "string"
         description: "The suffix of a user"
-      surname:
+      sur_name:
         type: "string"
         description: "The lastname of a user"
       tax_id:

@@ -21,7 +21,7 @@ python3 -m swagger_server
 or use nodemon for automatic restarts when changing source code during development:
 
 ```
-nodemon --watch swagger_server --ext py,yaml,yml --exec "python3 -m swagger_server"
+nodemon --watch swagger_server --watch ../configuration --ext py,yaml,yml,conf --exec "python3 -m swagger_server"
 ```
 
 After starting the middleware, the Swagger UI is available at:
