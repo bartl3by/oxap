@@ -9,7 +9,8 @@ from requests import Session
 from zeep.transports import Transport
 import json
 from tornado.options import options
-from ..oxsoap import get_context_path, initiate_client, get_credentials_object
+from ..oxsoap import get_context_path, initiate_client, get_credentials_object, create_service
+from swagger_server.service_types import ContextService
 
 
 def list_all_contexts():
@@ -20,17 +21,12 @@ def list_all_contexts():
     :rtype: List[Context]
     """
 
-    response = []
-
-    client = initiate_client(options.oxap_account_endpoint_type)
+    client = initiate_client(options.oxap_account_endpoint_type, ContextService)
+    service = create_service(client, options.oxap_account_endpoint_type, ContextService)
     credentials = get_credentials_object(client, options.oxap_account_endpoint_type)
 
-    soapRequest = client.service.listAll(credentials(
+    soapResponse = service.listAll(credentials(
         options.oxap_account_endpoint_soap_login,
         options.oxap_account_endpoint_soap_password))
 
-    for current in soapRequest:
-        serialized_dict = helpers.serialize_object(current)
-        response.append(json.loads(json.dumps(serialized_dict)))
-
-    return response
+    return json.loads(json.dumps(helpers.serialize_object(soapResponse)))
