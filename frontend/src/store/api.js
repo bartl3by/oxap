@@ -17,33 +17,33 @@ export default {
         }
         return json
       })
-      .then(function () {
-        return [{
-          'average_size': 464345,
-          'enabled': true,
-          'filestoreId': 1,
-          'filestore_name': 'billybob',
-          'id': 1,
-          'loginMappings': '?',
-          'name': 'Context 1',
-          'readDatabase': {},
-          'usedQuota': 0,
-          'userAttributes': {},
-          'writeDatabase': {}
-        },
-        {
-          'average_size': 444224,
-          'enabled': true,
-          'filestoreId': 2,
-          'filestore_name': 'steve',
-          'id': 2,
-          'loginMappings': '?',
-          'name': 'Context 2',
-          'readDatabase': {},
-          'usedQuota': 23432353242,
-          'userAttributes': {},
-          'writeDatabase': {}
-        }]
-      })
+      // .then(function () {
+      //   return [{
+      //     'average_size': 464345,
+      //     'enabled': true,
+      //     'filestoreId': 1,
+      //     'filestore_name': 'billybob',
+      //     'id': 1,
+      //     'loginMappings': '?',
+      //     'name': 'Context 1',
+      //     'readDatabase': {},
+      //     'usedQuota': 0,
+      //     'userAttributes': {},
+      //     'writeDatabase': {}
+      //   },
+      //   {
+      //     'average_size': 444224,
+      //     'enabled': true,
+      //     'filestoreId': 2,
+      //     'filestore_name': 'steve',
+      //     'id': 2,
+      //     'loginMappings': '?',
+      //     'name': 'Context 2',
+      //     'readDatabase': {},
+      //     'usedQuota': 23432353242,
+      //     'userAttributes': {},
+      //     'writeDatabase': {}
+      //   }]
+      // })
   }
 }
