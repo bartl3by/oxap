@@ -33,7 +33,6 @@
   when: ansible_os_family == "RedHat"
   tags: python_install
 
-
 - name: install Zeep for python
   command: pip3.6 install zeep
   when: ansible_os_family == "RedHat"

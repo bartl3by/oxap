@@ -4,6 +4,12 @@
   notify: restart oxap
   tags: oxap_configuration
 
+- name: install OXAP service configuration
+  template: src=middleware.conf dest=/opt/oxap/configuration/middleware.conf
+  when: ansible_os_family == "RedHat"
+  notify: restart oxap
+  tags: oxap_configuration
+
 - name: enable OXAP service
   service: name=oxap.service state=started enabled=yes
   tags: oxap_configuration
