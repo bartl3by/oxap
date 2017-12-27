@@ -1,3 +1,5 @@
 *.md
 swagger_server/__main__.py
+swagger_server/controllers/endpoints_controller.py
+swagger_server/controllers/context_controller.py
 .gitignore

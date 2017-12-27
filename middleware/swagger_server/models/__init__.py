@@ -10,6 +10,7 @@ from .endpoint_interface import EndpointInterface
 from .entry import Entry
 from .filestore import Filestore
 from .group import Group
+from .inline_response200 import InlineResponse200
 from .oxap_account import OXAPAccount
 from .publication import Publication
 from .resource import Resource

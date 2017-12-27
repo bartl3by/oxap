@@ -1,16 +1,16 @@
 # Note: The file name of this configuration should be:
-# [OXAPAccount.id].yaml (in this example: 130456367247481243938031640083088534299.yaml)
+# [OXAPAccount.id].yaml (in this example: c1c02f90-b5ef-4968-90da-210db815f2d4.yaml)
 
 OXAPAccount:
-  id: 130456367247481243938031640083088534299
+  id: "c1c02f90-b5ef-4968-90da-210db815f2d4"
   name: "ExampleHoster.com"
   description: "ExampleHoster.com"
   endpoint:
-    - id: 325496075101403516518802730094098667547
+    - id: "be866c8a-c4f7-4e83-869c-68637cdb7f6e"
       name: "ExampleHoster.com eMail"
       description: "ExampleHoster.com eMail"
       interface:
-        - id: 229310600552226427285647447179024000079
+        - id: "16fde508-dd65-425c-8811-8068d7df3f58"
           name: "OXaaS provisioning interface for ExampleHoster.com eMail"
           description: "OXaaS provisioning interface for ExampleHoster.com eMail"
           location: "https://doesnotexist.open-xchange.com/webservices"
