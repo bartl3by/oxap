@@ -1,5 +1,6 @@
 *dev.conf
 .DS_STORE
+*.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

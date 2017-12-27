@@ -1,0 +1,27 @@
+# Note: The file name of this configuration should be:
+# [OXAPAccount.id].yaml (in this example: 130456367247481243938031640083088534299.yaml)
+
+OXAPAccount:
+  id: 130456367247481243938031640083088534299
+  name: "ExampleHoster.com"
+  description: "ExampleHoster.com"
+  endpoint:
+    - id: 325496075101403516518802730094098667547
+      name: "ExampleHoster.com eMail"
+      description: "ExampleHoster.com eMail"
+      interface:
+        - id: 229310600552226427285647447179024000079
+          name: "OXaaS provisioning interface for ExampleHoster.com eMail"
+          description: "OXaaS provisioning interface for ExampleHoster.com eMail"
+          location: "https://doesnotexist.open-xchange.com/webservices"
+          ssl_verify: False
+          login: "ox_admin_master"
+          password: "masterpassword"
+          ignore_binding: True
+          endpoint_type: "appsuite-soap-oxaas"
+            # appsuite-soap-oxaas
+            # appsuite-soap-onprem - not supported yet
+            # dovecot-ldap-dovecotMailboxUid - not supported yet
+            # dovecot-ldap-dovecotMailPrimaryAddress - not supported yet
+            # dovecot-ldap-dovecotMailAliasAddress - not supported yet
+            # dovecot-ldap-dovecotUserQuotaStorage - not supported yet

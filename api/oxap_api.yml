@@ -30,6 +30,19 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "accountId"
+        in: "query"
+        description: "Id of the OXAP account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "endpointId"
+        in: "query"
+        description: "Id of the OXAP endpoint for this OXAP account"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: "Successful Operation"
@@ -42,6 +55,81 @@ paths:
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "listAll"
+    post:
+      tags:
+      - "context"
+      summary: "Create a new context"
+      description: "Creates a new context within the given endpoint"
+      operationId: "create_context"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "accountId"
+        in: "query"
+        description: "Id of the OXAP account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "endpointId"
+        in: "query"
+        description: "Id of the OXAP endpoint for this OXAP account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "contextObject"
+        in: "body"
+        description: "Context object that needs to be created within the given endpoint"
+        required: true
+        schema:
+          $ref: "#/definitions/Context"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/Context"
+        405:
+          description: "Invalid Input"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXContextService"
+      x-open-xchange-soap-reference-operation-id: "create"
+  /context/{contextId}:
+    delete:
+      tags:
+      - "context"
+      summary: "Delete a context"
+      description: "Delete a context within an endpoint"
+      operationId: "delete_context"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "contextId"
+        in: "path"
+        description: "Id of the context object that needs to be deleted within the given endpoint"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "accountId"
+        in: "query"
+        description: "Id of the OXAP account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "endpointId"
+        in: "query"
+        description: "Id of the OXAP endpoint for this OXAP account"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Object not found"
+      security: []
+      x-open-xchange-soap-reference-operation-interface: "OXContextService"
+      x-open-xchange-soap-reference-operation-id: "delete"
   /user:
     get:
       tags:
@@ -450,9 +538,13 @@ definitions:
   Context:
     type: "object"
     required:
-    - "id"
     - "maxQuota"
+    - "user"
     properties:
+      endpointId:
+        type: "integer"
+        format: "int64"
+        description: "The OXAP endpoint of the context"
       average_size:
         type: "integer"
         format: "int64"
@@ -471,6 +563,9 @@ definitions:
         type: "integer"
         format: "int32"
         description: "The id of a context"
+      customid:
+        type: "string"
+        description: "The customid of a context, only used for OXaaS API endpoints"
       loginMappings:
         type: "string"
         description: "The login mappings of a context (usually a list of domains)"
@@ -497,19 +592,26 @@ definitions:
         type: "object"
         format: "StringMapMap"
         description: "The user attributes of a context"
+      user:
+        type: "object"
+        $ref: '#/definitions/User'
+        description: "The admin user information of a context"
   User:
     type: "object"
     required:
-    - "username"
+    - "name"
     - "display_name"
     - "given_name"
     - "sur_name"
     - "password"
     - "email"
+    - "email1"
+    - "primaryEmail"
     properties:
-      username:
-        type: "string"
-        description: "The aliases of a user"
+      endpointId:
+        type: "integer"
+        format: "int64"
+        description: "The OXAP endpoint of the context"
       aliases:
         type: "string"
         description: "The aliases of a user"
@@ -585,6 +687,9 @@ definitions:
       email:
         type: "string"
         description: "The email of a user"
+      email1:
+        type: "string"
+        description: "The email1 of a user"
       email2:
         type: "string"
         description: "The email2 of a user"
@@ -1211,20 +1316,25 @@ definitions:
       location:
         type: "string"
         description: "The url / address / location of the endpoint interface"
+      login:
+        type: "string"
+        description: ""
       password:
         type: "string"
         description: ""
-      type:
+      endpoint_type:
         type: "string"
         enum:
-        - appsuite-soap
+        - appsuite-soap-oxaas
+        - appsuite-soap-onprem
         - dovecot-ldap-dovecotMailboxUid
         - dovecot-ldap-dovecotMailPrimaryAddress
         - dovecot-ldap-dovecotMailAliasAddress
         - dovecot-ldap-dovecotUserQuotaStorage
         description: >
           "Endpoint Interface Type":
-          * appsuite-soap - The App Suite SOAP API Endpoint
+          * appsuite-soap-oxaas - The App Suite SOAP API Endpoint for OXaaS
+          * appsuite-soap-onprem - The App Suite SOAP API Endpoint for On-Premise Installations
           * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information
           * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information
           * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information
