@@ -6,4 +6,8 @@ $theme-colors: (
     margin-top: 20px;
 }
 
+table.table tbody {
+    word-break: break-all;
+}
+
 @import '~bootstrap/scss/bootstrap.scss'
