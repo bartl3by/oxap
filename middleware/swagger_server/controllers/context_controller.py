@@ -14,6 +14,22 @@ from swagger_server.oxap.oxap_account import OXAPAccount
 from swagger_server.oxap.endpoint_interface import EndpointInterface
 
 
+def change_context(contextId, accountId, endpointId):
+    """
+    Change a context
+    Change a context within an endpoint
+    :param contextId: Id of the context object that needs to be changed within the given endpoint
+    :type contextId: int
+    :param accountId: Id of the OXAP account
+    :type accountId: str
+    :param endpointId: Id of the OXAP endpoint for this OXAP account
+    :type endpointId: str
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
 def create_context(accountId, endpointId, contextObject):
     """
     Create a new context
@@ -62,8 +78,7 @@ def create_context(accountId, endpointId, contextObject):
             auth=credentials(
                 endpointInterface.getLogin(),
                 endpointInterface.getPassword()),
-            schema_select_strategy=None
-                )
+            schema_select_strategy=None)
 
         return json.loads(json.dumps(helpers.serialize_object(soapResponse)))
     except Exception as e:
@@ -88,7 +103,9 @@ def delete_context(contextId, accountId, endpointId):
 
     client = initiate_client(endpointInterface, ContextService)
     service = create_service(client, endpointInterface, ContextService)
-    credentials = get_credentials_object(client, endpointInterface.getEndpointType())
+    credentials = get_credentials_object(
+        client,
+        endpointInterface.getEndpointType())
 
     soapContext = client.get_type('ns4:ResellerContext')
 
@@ -97,8 +114,7 @@ def delete_context(contextId, accountId, endpointId):
             ctx=soapContext(id=contextId),
             auth=credentials(
                 endpointInterface.getLogin(),
-                endpointInterface.getPassword())
-                )
+                endpointInterface.getPassword()))
 
         # replace with log, don't return
         return json.loads(json.dumps(helpers.serialize_object(soapResponse)))

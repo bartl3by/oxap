@@ -21,16 +21,16 @@ class OXAPAccount(object):
                 for currentInterface in currentEndpoint['interface']:
                     if currentInterface['endpoint_type'] in (SOAPOXaaS(), SOAPOnPrem()):
                         return EndpointInterface(
-                            currentInterface['id'], 
-                            currentInterface['name'], 
-                            currentInterface['description'], 
-                            currentInterface['location'], 
-                            currentInterface['ssl_verify'], 
-                            currentInterface['login'], 
-                            currentInterface['password'], 
-                            currentInterface['ignore_binding'], 
+                            currentInterface['id'],
+                            currentInterface['name'],
+                            currentInterface['description'],
+                            currentInterface['location'],
+                            currentInterface['ssl_verify'],
+                            currentInterface['login'],
+                            currentInterface['password'],
+                            currentInterface['ignore_binding'],
                             currentInterface['endpoint_type']
-                            )
+                        )
 
     def _load_account_configuration(self):
         with open(os.path.join(options.oxap_account_config_dir, str(self.account_id) + ".yaml"), 'r') as stream:
