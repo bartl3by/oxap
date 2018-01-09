@@ -1,7 +1,8 @@
 *dev.conf
 .DS_STORE
 *.log
-configuration/130456367247481243938031640083088534299.yaml
+configuration/*.yaml
+!configuration/example.yaml
 vagrant/oxap-ansible/roles/oxap/templates/*.yaml
 
 # Byte-compiled / optimized / DLL files
