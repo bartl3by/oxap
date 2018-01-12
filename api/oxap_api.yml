@@ -31,12 +31,12 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "accountId"
+      - name: "account_id"
         in: "query"
         description: "Id of the OXAP account"
         required: true
         type: "string"
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
@@ -64,22 +64,34 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "accountId"
+      - name: "account_id"
         in: "query"
         description: "Id of the OXAP account"
         required: true
         type: "string"
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
-      - name: "contextObject"
+      - name: "payload"
         in: "body"
         description: "Context object that needs to be created within the given endpoint"
         required: true
         schema:
-          $ref: "#/definitions/Context"
+          type: object
+          required:
+            - context
+            - user
+          properties:
+            context:
+              type: "object"
+              $ref: '#/definitions/Context'
+              description: "The context information"
+            user:
+              type: "object"
+              $ref: '#/definitions/User'
+              description: "The admin user information of a context"
       responses:
         200:
           description: "Successful Operation"
@@ -90,7 +102,7 @@ paths:
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "create"
-  /context/{contextId}:
+  /context/{context_id}:
     put:
       tags:
       - "context"
@@ -100,22 +112,40 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "contextId"
+      - name: "context_id"
         in: "path"
         description: "Id of the context object that needs to be changed within the given endpoint"
         required: true
         type: "integer"
         format: "int32"
-      - name: "accountId"
+      - name: "account_id"
         in: "query"
         description: "Id of the OXAP account"
         required: true
         type: "string"
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
+      - name: "payload"
+        in: "body"
+        description: "Context information that will be used to update the context within the given endpoint"
+        required: true
+        schema:
+          type: object
+          required:
+            - context
+            - user
+          properties:
+            context:
+              type: "object"
+              $ref: '#/definitions/Context'
+              description: "The context information"
+            user:
+              type: "object"
+              $ref: '#/definitions/User'
+              description: "The admin user information of a context"
       responses:
         400:
           description: "Invalid ID supplied"
@@ -133,18 +163,18 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "contextId"
+      - name: "context_id"
         in: "path"
         description: "Id of the context object that needs to be deleted within the given endpoint"
         required: true
         type: "integer"
         format: "int32"
-      - name: "accountId"
+      - name: "account_id"
         in: "query"
         description: "Id of the OXAP account"
         required: true
         type: "string"
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
@@ -606,11 +636,7 @@ definitions:
     type: "object"
     required:
     - "maxQuota"
-    - "user"
     properties:
-      endpointId:
-        type: "string"
-        description: "The OXAP endpoint of the context"
       average_size:
         type: "integer"
         format: "int64"
@@ -658,10 +684,101 @@ definitions:
         type: "object"
         format: "StringMapMap"
         description: "The user attributes of a context"
-      user:
+  ResellerContext:
+    type: "object"
+    required:
+    - "maxQuota"
+    properties:
+      average_size:
+        type: "integer"
+        format: "int64"
+        description: "The average size of a context"
+      enabled:
+        type: "boolean"
+        description: "Defines if the context is enabled or not"
+      filestoreId:
+        type: "integer"
+        format: "int32"
+        description: "The filestore id of a context"
+      filestore_name:
+        type: "string"
+        description: "The filestore name of a context"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "The id of a context"
+      customid:
+        type: "string"
+        description: "The customid of a context, only used for OXaaS API endpoints"
+      loginMappings:
+        type: "string"
+        description: "The login mappings of a context (usually a list of domains)"
+      maxQuota:
+        type: "integer"
+        format: "int64"
+        description: "The Drive quota setting of a context"
+      name:
+        type: "string"
+        description: "The name of a context"
+      readDatabase:
         type: "object"
-        $ref: '#/definitions/User'
-        description: "The admin user information of a context"
+        format: "Database"
+        description: "The read database of a context"
+      writeDatabase:
+        type: "object"
+        format: "Database"
+        description: "The write database of a context"
+      usedQuota:
+        type: "integer"
+        format: "long64"
+        description: "The used quota of a context"
+      userAttributes:
+        type: "object"
+        format: "StringMapMap"
+        description: "The user attributes of a context"
+      extensionError:
+        type: "string"
+      owner:
+        type: "object"
+        format: "ResellerAdmin"
+      restriction:
+        type: "object"
+        format: "Restriction"
+      sid:
+        type: "integer"
+        format: "int32"
+  ResellerAdmin:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      passwordMech:
+        type: "string"
+      password:
+        type: "string"
+      parentId:
+        type: "integer"
+        format: "int32"
+      restrictions:
+        type: array
+        items:
+          $ref: '#/definitions/Restriction'
+      displayname:
+        type: "string"
+      id:
+        type: "integer"
+        format: "int32"
+  Restriction:
+    type: "object"
+    properties:
+      mandatoryMembersChange:
+        type: "string"
+      mandatoryMembersCreate:
+        type: "string"
+      mandatoryMembersDelete:
+        type: "string"
+      mandatoryMembersRegister:
+        type: "string"
   User:
     type: "object"
     required:
@@ -674,10 +791,6 @@ definitions:
     - "email1"
     - "primaryEmail"
     properties:
-      endpointId:
-        type: "integer"
-        format: "int64"
-        description: "The OXAP endpoint of the context"
       aliases:
         type: "string"
         description: "The aliases of a user"
@@ -1358,6 +1471,9 @@ definitions:
       description:
         type: "string"
         description: ""
+      oxaas:
+        type: "boolean"
+        description: ""
       interface:
         type: array
         items:
@@ -1379,25 +1495,32 @@ definitions:
       location:
         type: "string"
         description: "The url / address / location of the endpoint interface"
+      ssl_verify:
+        type: "boolean"
+        description: ""
       login:
         type: "string"
         description: ""
       password:
         type: "string"
         description: ""
-      endpoint_type:
+      ignore_binding:
+        type: "boolean"
+        description: ""
+      reseller:
+        type: "boolean"
+        description: ""
+      type:
         type: "string"
         enum:
-        - appsuite-soap-oxaas
-        - appsuite-soap-onprem
+        - appsuite-soap
         - dovecot-ldap-dovecotMailboxUid
         - dovecot-ldap-dovecotMailPrimaryAddress
         - dovecot-ldap-dovecotMailAliasAddress
         - dovecot-ldap-dovecotUserQuotaStorage
         description: >
           "Endpoint Interface Type":
-          * appsuite-soap-oxaas - The App Suite SOAP API Endpoint for OXaaS
-          * appsuite-soap-onprem - The App Suite SOAP API Endpoint for On-Premise Installations
+          * appsuite-soap - The App Suite SOAP API Endpoint
           * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information
           * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information
           * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information

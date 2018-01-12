@@ -9,6 +9,7 @@ OXAPAccount:
     - id: "be866c8a-c4f7-4e83-869c-68637cdb7f6e"
       name: "ExampleHoster.com eMail"
       description: "ExampleHoster.com eMail"
+      oxaas: True
       interface:
         - id: "16fde508-dd65-425c-8811-8068d7df3f58"
           name: "OXaaS provisioning interface for ExampleHoster.com eMail"
@@ -18,9 +19,9 @@ OXAPAccount:
           login: "ox_admin_master"
           password: "masterpassword"
           ignore_binding: True
-          endpoint_type: "appsuite-soap-oxaas"
-            # appsuite-soap-oxaas
-            # appsuite-soap-onprem - not supported yet
+          reseller: True
+          type: "appsuite-soap"
+            # appsuite-soap
             # dovecot-ldap-dovecotMailboxUid - not supported yet
             # dovecot-ldap-dovecotMailPrimaryAddress - not supported yet
             # dovecot-ldap-dovecotMailAliasAddress - not supported yet

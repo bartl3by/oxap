@@ -12,8 +12,13 @@ from .filestore import Filestore
 from .group import Group
 from .inline_response200 import InlineResponse200
 from .oxap_account import OXAPAccount
+from .payload import Payload
+from .payload1 import Payload1
 from .publication import Publication
+from .reseller_admin import ResellerAdmin
+from .reseller_context import ResellerContext
 from .resource import Resource
+from .restriction import Restriction
 from .soap_map_entry import SOAPMapEntry
 from .soap_string_map import SOAPStringMap
 from .soap_string_map_map import SOAPStringMapMap
