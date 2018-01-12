@@ -28,7 +28,7 @@ tags:
 - name: "environment"
   description: "Open-Xchange App Suite Environment"
 - name: "endpoints"
-  description: "Public Endpoint Information of all Open-Xchange Admin Panel Accounts"
+  description: "Public Endpoint Information"
 - name: "oxapaccount"
   description: "The Open-Xchange Admin Panel Account"
 schemes:
@@ -626,6 +626,7 @@ definitions:
     type: "object"
     required:
     - "maxQuota"
+    - "name"
     properties:
       average_size:
         type: "integer"
@@ -674,10 +675,14 @@ definitions:
         type: "object"
         description: "The user attributes of a context"
         properties: {}
+    example:
+      name: "example_context"
+      maxQuota: 0
   ResellerContext:
     type: "object"
     required:
     - "maxQuota"
+    - "name"
     properties:
       average_size:
         type: "integer"
@@ -1194,6 +1199,15 @@ definitions:
       convert_drive_user_folders:
         type: "boolean"
         description: "The convert_drive_user_folders flag of a user"
+    example:
+      name: "username"
+      display_name: "Firstname Lastname"
+      given_name: "Firstname"
+      sur_name: "Lastname"
+      password: "secret"
+      email: "firstname.lastname@example.com"
+      email1: "firstname.lastname@example.com"
+      primaryEmail: "firstname.lastname@example.com"
   Database:
     type: "object"
     required:
