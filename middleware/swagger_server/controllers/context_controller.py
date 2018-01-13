@@ -28,6 +28,16 @@ def change_context(context_id: str, account_id: str, endpoint_id: str, payload: 
 
     :rtype: None
     """
+    if connexion.request.is_json:
+        context_object = Context.from_dict(connexion.request.get_json())
+
+    soap_handler = SOAPHandler(account_id, endpoint_id, ContextService)
+
+    try:
+        logging.info(json.loads(json.dumps(helpers.serialize_object(soap_handler.change_context(context_id, context_object)))))
+    except Exception as e:
+        logging.error(str(e))
+        return str(e), 405
 
 
 def create_context(account_id: str, endpoint_id: str, payload: dict):

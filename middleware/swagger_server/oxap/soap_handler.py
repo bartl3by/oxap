@@ -27,7 +27,29 @@ class SOAPHandler(object):
         self.service = self._create_oxsoap_service()
         self.credentials = self._get_oxsoap_credentials_object()
 
+    def change_context(self, context_id: str, context: Context):
+        soap_context = self._get_oxsoap_context_object()
+
+        soap_context_instance = soap_context()
+        for key in context.attribute_map:
+            if hasattr(context, key) \
+                and not isinstance(getattr(context, key), (Model)) \
+                and getattr(context, key) is not None:
+                setattr(soap_context_instance, context.attribute_map[key], getattr(context, key))
+
+        setattr(soap_context_instance, "id", context_id)
+
+        return self.service.change(
+            ctx=soap_context_instance,
+            auth=self.credentials(
+                self.endpoint_interface.getLogin(),
+                self.endpoint_interface.getPassword()))
+
+
     def create_context(self, context: Context, user: User):
+        if self.endpoint_interface.getSOAPType() == SOAPReseller and context.name is None:
+            raise Exception("'name' is a required property during context creation on a reseller type SOAP interface")
+
         soap_context = self._get_oxsoap_context_object()
         soap_admin_user = self._get_oxsoap_user_object()
         soap_schema_select_strategy = self._get_oxsoap_schema_select_strategy_object()

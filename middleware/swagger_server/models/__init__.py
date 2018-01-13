@@ -13,7 +13,6 @@ from .group import Group
 from .inline_response200 import InlineResponse200
 from .oxap_account import OXAPAccount
 from .payload import Payload
-from .payload1 import Payload1
 from .publication import Publication
 from .reseller_admin import ResellerAdmin
 from .reseller_context import ResellerContext

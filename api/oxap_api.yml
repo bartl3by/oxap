@@ -134,18 +134,8 @@ paths:
         required: true
         schema:
           type: object
-          required:
-            - context
-            - user
-          properties:
-            context:
-              type: "object"
-              $ref: '#/definitions/Context'
-              description: "The context information"
-            user:
-              type: "object"
-              $ref: '#/definitions/User'
-              description: "The admin user information of a context"
+          $ref: "#/definitions/Context"
+          description: "The context information"
       responses:
         400:
           description: "Invalid ID supplied"
@@ -635,7 +625,6 @@ definitions:
   Context:
     type: "object"
     required:
-    - "name"
     - "maxQuota"
     properties:
       average_size:

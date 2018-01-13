@@ -142,7 +142,7 @@ paths:
           \ within the given endpoint"
         required: true
         schema:
-          $ref: "#/definitions/payload_1"
+          $ref: "#/definitions/Context"
       responses:
         400:
           description: "Invalid ID supplied"
@@ -626,7 +626,6 @@ definitions:
     type: "object"
     required:
     - "maxQuota"
-    - "name"
     properties:
       average_size:
         type: "integer"
@@ -1539,18 +1538,6 @@ definitions:
       message:
         type: "string"
   payload:
-    type: "object"
-    required:
-    - "context"
-    - "user"
-    properties:
-      context:
-        description: "The context information"
-        $ref: "#/definitions/Context"
-      user:
-        description: "The admin user information of a context"
-        $ref: "#/definitions/User"
-  payload_1:
     type: "object"
     required:
     - "context"
