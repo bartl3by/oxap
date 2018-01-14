@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from lxml import etree
+import logging
+
 from requests import Session
-from zeep import helpers, Client
-from zeep.exceptions import Fault
-from zeep.transports import Transport
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.context import Context
 from swagger_server.models.user import User
+from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
 from swagger_server.oxap.exceptions.context_exceptions import *
+from swagger_server.oxap.oxap_account import OXAPAccount
 from swagger_server.oxap.service_types import ContextService
 from swagger_server.oxap.soap_types import SOAPStandard, SOAPReseller
-from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
-from swagger_server.oxap.oxap_account import OXAPAccount
-from swagger_server.oxap.endpoint_interface import EndpointInterface
-import logging
+from tornado.options import options
+from zeep import Client
+from zeep.cache import SqliteCache
+from zeep.exceptions import Fault
+from zeep.transports import Transport
+
+from swagger_server.oxap.exceptions.context_exceptions import ContextException
 
 
 class SOAPHandler(object):
@@ -109,14 +112,14 @@ class SOAPHandler(object):
         except Fault as e:
             raise ContextException(e.message, e.detail)
 
-    def _create_oxsoap_service(self) -> Client:
+    def _create_oxsoap_service(self):
         binding_url = None
         if self.endpoint_interface.getSOAPType() == SOAPStandard:
             binding_url = "{http://soap.admin.openexchange.com}"
         elif self.endpoint_interface.getSOAPType() == SOAPReseller:
             binding_url = "{http://soap.reseller.admin.openexchange.com}"
         else:
-            logging.error("Unknown SOAP type found: " + str(endpoint_interface.getSOAPType()))
+            logging.error("Unknown SOAP type found: " + str(self.endpoint_interface.getSOAPType()))
 
         if self.endpoint_interface.getIgnoreBinding():
             return self.client.create_service(
@@ -133,7 +136,7 @@ class SOAPHandler(object):
             if self.service_type == ContextService:
                 return "OXResellerContextService"
         else:
-            logging.error("Unknown SOAP type found: " + str(endpoint_interface.getSOAPType()))
+            logging.error("Unknown SOAP type found: " + str(self.endpoint_interface.getSOAPType()))
 
     def _get_oxsoap_credentials_object(self):
         if self.endpoint_interface.getSOAPType() == SOAPStandard:
@@ -141,7 +144,7 @@ class SOAPHandler(object):
         elif self.endpoint_interface.getSOAPType() == SOAPReseller:
             return self.client.get_type('ns7:Credentials')
         else:
-            logging.error("Unknown SOAP type found: " + str(endpoint_interface.getSOAPType()))
+            logging.error("Unknown SOAP type found: " + str(self.endpoint_interface.getSOAPType()))
 
     def _get_oxsoap_context_object(self):
         if self.endpoint_interface.getSOAPType() == SOAPStandard:
@@ -149,7 +152,7 @@ class SOAPHandler(object):
         elif self.endpoint_interface.getSOAPType() == SOAPReseller:
             return self.client.get_type('ns4:ResellerContext')
         else:
-            logging.error("Unknown SOAP type found: " + str(endpoint_interface.getSOAPType()))
+            logging.error("Unknown SOAP type found: " + str(self.endpoint_interface.getSOAPType()))
 
     def _get_oxsoap_schema_select_strategy_object(self):
         if self.endpoint_interface.getSOAPType() == SOAPStandard:
@@ -157,7 +160,7 @@ class SOAPHandler(object):
         elif self.endpoint_interface.getSOAPType() == SOAPReseller:
             return self.client.get_type('ns5:SchemaSelectStrategy')
         else:
-            logging.error("Unknown SOAP type found: " + str(endpoint_interface.getSOAPType()))
+            logging.error("Unknown SOAP type found: " + str(self.endpoint_interface.getSOAPType()))
 
     def _get_oxsoap_user_object(self):
         if self.endpoint_interface.getSOAPType() == SOAPStandard:
@@ -165,12 +168,13 @@ class SOAPHandler(object):
         elif self.endpoint_interface.getSOAPType() == SOAPReseller:
             return self.client.get_type('ns5:User')
         else:
-            logging.error("Unknown SOAP type found: " + str(endpoint_interface.getSOAPType()))
+            logging.error("Unknown SOAP type found: " + str(self.endpoint_interface.getSOAPType()))
 
     def _initiate_oxsoap_client(self):
         session = Session()
         session.verify = self.endpoint_interface.getSSLVerify()
-        transport = Transport(session=session)
+        cache = SqliteCache(path=options.cache_wsdl_store_path, timeout=options.cache_wsdl_timeout)
+        transport = Transport(session=session, cache=cache)
         return Client(
             self.endpoint_interface.getLocation() + "/" + self._get_service_name() + "?wsdl",
             transport=transport)
