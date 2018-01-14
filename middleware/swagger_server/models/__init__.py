@@ -2,12 +2,12 @@
 
 from __future__ import absolute_import
 # import models into model package
-from .api_response import ApiResponse
 from .context import Context
 from .database import Database
 from .endpoint import Endpoint
 from .endpoint_interface import EndpointInterface
 from .entry import Entry
+from .error import Error
 from .filestore import Filestore
 from .group import Group
 from .inline_response200 import InlineResponse200

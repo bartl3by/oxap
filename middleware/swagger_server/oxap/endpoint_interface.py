@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from swagger_server.oxap.soap_types import SOAPStandard, SOAPReseller
 from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
 

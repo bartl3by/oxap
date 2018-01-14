@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 appsuite_soap = "appsuite-soap"
 dovecot_ldap_dovecotMailboxUid = "dovecot-ldap-dovecotMailboxUid"
 dovecot_ldap_dovecotMailPrimaryAddress = "dovecot-ldap-dovecotMailPrimaryAddress"

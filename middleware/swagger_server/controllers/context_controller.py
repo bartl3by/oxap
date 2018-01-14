@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import connexion
 from swagger_server.models.context import Context
 from swagger_server.models.user import User
@@ -9,6 +12,7 @@ from zeep import helpers, Client
 import json
 from swagger_server.oxap.service_types import ContextService
 from swagger_server.oxap.soap_handler import SOAPHandler
+from swagger_server.oxap.exceptions.context_exceptions import *
 import logging
 import sys
 
@@ -35,9 +39,30 @@ def change_context(context_id: str, account_id: str, endpoint_id: str, payload: 
 
     try:
         logging.info(json.loads(json.dumps(helpers.serialize_object(soap_handler.change_context(context_id, context_object)))))
-    except Exception as e:
-        logging.error(str(e))
-        return str(e), 405
+    except ContextExistsException as e:
+        return str(e), 409
+    except DatabaseUpdateException as e:
+        return str(e), 409
+    except DuplicateExtensionException as e:
+        return str(e), 409
+    except InvalidCredentialsException as e:
+        return str(e), 401
+    except InvalidDataException as e:
+        return str(e), 406
+    except NoSuchContextException as e:
+        return str(e), 404
+    except NoSuchDatabaseException as e:
+        return str(e), 404
+    except NoSuchFilestoreException as e:
+        return str(e), 404
+    except NoSuchReasonException as e:
+        return str(e), 404
+    except RemoteException as e:
+        return str(e), 400
+    except StorageException as e:
+        return str(e), 409
+    except OXContextException as e:
+        return str(e), 400
 
 
 def create_context(account_id: str, endpoint_id: str, payload: dict):
@@ -61,9 +86,28 @@ def create_context(account_id: str, endpoint_id: str, payload: dict):
 
     try:
         return json.loads(json.dumps(helpers.serialize_object(soap_handler.create_context(context_object, user_object))))
-    except Exception as e:
-        logging.error(str(e))
-        return str(e), 405
+    except ContextExistsException as e:
+        return str(e), 409
+    except DatabaseUpdateException as e:
+        return str(e), 409
+    except DuplicateExtensionException as e:
+        return str(e), 409
+    except InvalidCredentialsException as e:
+        return str(e), 401
+    except InvalidDataException as e:
+        return str(e), 406
+    except NoSuchDatabaseException as e:
+        return str(e), 404
+    except NoSuchFilestoreException as e:
+        return str(e), 404
+    except NoSuchReasonException as e:
+        return str(e), 404
+    except RemoteException as e:
+        return str(e), 400
+    except StorageException as e:
+        return str(e), 409
+    except OXContextException as e:
+        return str(e), 400
 
 
 def delete_context(context_id: str, account_id: str, endpoint_id: str):
@@ -83,9 +127,30 @@ def delete_context(context_id: str, account_id: str, endpoint_id: str):
 
     try:
         logging.info(json.loads(json.dumps(helpers.serialize_object(soap_handler.delete_context(context_id)))))
-    except Exception as e:
-        logging.error(str(e))
-        return str(e), 405
+    except ContextExistsException as e:
+        return str(e), 409
+    except DatabaseUpdateException as e:
+        return str(e), 409
+    except DuplicateExtensionException as e:
+        return str(e), 409
+    except InvalidCredentialsException as e:
+        return str(e), 401
+    except InvalidDataException as e:
+        return str(e), 406
+    except NoSuchContextException as e:
+        return str(e), 404
+    except NoSuchDatabaseException as e:
+        return str(e), 404
+    except NoSuchFilestoreException as e:
+        return str(e), 404
+    except NoSuchReasonException as e:
+        return str(e), 404
+    except RemoteException as e:
+        return str(e), 400
+    except StorageException as e:
+        return str(e), 409
+    except OXContextException as e:
+        return str(e), 400
 
 
 def list_all_contexts(account_id: str, endpoint_id: str):
@@ -103,6 +168,19 @@ def list_all_contexts(account_id: str, endpoint_id: str):
 
     try:
         return json.loads(json.dumps(helpers.serialize_object(soap_handler.list_all_contexts())))
-    except Exception as e:
-        logging.error(str(e))
-        return str(e), 405
+    except ContextExistsException as e:
+        return str(e), 409
+    except DatabaseUpdateException as e:
+        return str(e), 409
+    except DuplicateExtensionException as e:
+        return str(e), 409
+    except InvalidCredentialsException as e:
+        return str(e), 401
+    except InvalidDataException as e:
+        return str(e), 406
+    except RemoteException as e:
+        return str(e), 400
+    except StorageException as e:
+        return str(e), 409
+    except OXContextException as e:
+        return str(e), 400

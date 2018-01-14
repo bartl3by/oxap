@@ -48,8 +48,16 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Context"
-        400:
-          description: "Invalid Status Value"
+        400: 
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "listAll"
@@ -97,8 +105,16 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Context"
-        405:
-          description: "Invalid Input"
+        400: 
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "create"
@@ -137,10 +153,20 @@ paths:
           $ref: "#/definitions/Context"
           description: "The context information"
       responses:
-        400:
-          description: "Invalid ID supplied"
+        200:
+          description: "Successful Operation"
+        400: 
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
         404:
-          description: "Object not found"
+          $ref: '#/responses/404'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "change"
@@ -170,10 +196,20 @@ paths:
         required: true
         type: "string"
       responses:
-        400:
-          description: "Invalid ID supplied"
+        200:
+          description: "Successful Operation"
+        400: 
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
         404:
-          description: "Object not found"
+          $ref: '#/responses/404'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "delete"
@@ -195,8 +231,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/User"
-        400:
-          description: "Invalid Status Value"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXUserService"
       x-open-xchange-soap-reference-operation-id: "listAll"
@@ -218,8 +252,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Group"
-        400:
-          description: "Invalid Status Value"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXGroupService"
       x-open-xchange-soap-reference-operation-id: "listAll"
@@ -241,8 +273,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Resource"
-        400:
-          description: "Invalid Status Value"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "listAll"
@@ -264,8 +294,8 @@ paths:
         schema:
           $ref: "#/definitions/Resource"
       responses:
-        405:
-          description: "Invalid Input"
+        200:
+          description: "Successful Operation"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "create"
@@ -290,8 +320,6 @@ paths:
           schema:
             type: "array"
             $ref: "#/definitions/Resource"
-        400:
-          description: "Invalid pattern"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "list"
@@ -316,10 +344,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Resource"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Object not found"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "getData"
@@ -347,12 +371,8 @@ paths:
         schema:
           $ref: "#/definitions/Resource"
       responses:
-        400:
-          description: "Invalid Id supplied"
-        404:
-          description: "Object not found"
-        405:
-          description: "Invalid Input"
+        200:
+          description: "Successful Operation"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "change"
@@ -372,10 +392,8 @@ paths:
         type: "integer"
         format: "int32"
       responses:
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Object not found"
+        200:
+          description: "Successful Operation"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "delete"
@@ -397,8 +415,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Publication"
-        400:
-          description: "Invalid Status Value"
       security: []
       x-open-xchange-soap-reference-operation-interface: "OXPublicationService"
       x-open-xchange-soap-reference-operation-id: "getPublication"
@@ -498,10 +514,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Endpoint"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Object not found"
       security: []
   /oxap/account/endpoint/{endpointId}/endpointinterface:
     get:
@@ -556,10 +568,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/EndpointInterface"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Object not found"
       security: []
 tags:
 - name: "context"
@@ -578,7 +586,39 @@ tags:
   description: "Public Endpoint Information"
 - name: "oxapaccount"
   description: "The Open-Xchange Admin Panel Account"
+responses:
+  400:
+    description: "Bad Request"
+    schema:
+      $ref: '#/definitions/Error'
+  401:
+    description: "Unauthorized"
+    schema:
+      $ref: '#/definitions/Error'
+  403:
+    description: "Forbidden"
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description: "Not Found"
+    schema:
+      $ref: '#/definitions/Error'
+  406:
+    description: "Not Acceptable"
+    schema:
+      $ref: '#/definitions/Error'
+  409:
+    description: "Conflict"
+    schema:
+      $ref: '#/definitions/Error'
+  500:
+    description: "Internal Server Error"
+    schema:
+      $ref: '#/definitions/Error'
 definitions:
+  Error:
+    type: string
+    description: "The cause of the Error"
   Group:
     type: "object"
     required:
@@ -1528,13 +1568,3 @@ definitions:
           * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information
           * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information
           * dovecot-ldap-dovecotUserQuotaStorage - The Dovecot LDAP Endpoint for Quota Information
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
-      message:
-        type: "string"

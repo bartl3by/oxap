@@ -1,9 +1,15 @@
-from zeep import helpers, Client
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from lxml import etree
 from requests import Session
+from zeep import helpers, Client
+from zeep.exceptions import Fault
 from zeep.transports import Transport
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.context import Context
 from swagger_server.models.user import User
+from swagger_server.oxap.exceptions.context_exceptions import *
 from swagger_server.oxap.service_types import ContextService
 from swagger_server.oxap.soap_types import SOAPStandard, SOAPReseller
 from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
@@ -39,12 +45,14 @@ class SOAPHandler(object):
 
         setattr(soap_context_instance, "id", context_id)
 
-        return self.service.change(
-            ctx=soap_context_instance,
-            auth=self.credentials(
-                self.endpoint_interface.getLogin(),
-                self.endpoint_interface.getPassword()))
-
+        try:
+            return self.service.change(
+                ctx=soap_context_instance,
+                auth=self.credentials(
+                    self.endpoint_interface.getLogin(),
+                    self.endpoint_interface.getPassword()))
+        except Fault as e:
+            raise ContextException(e.message, e.detail)
 
     def create_context(self, context: Context, user: User):
         if self.endpoint_interface.getSOAPType() == SOAPReseller and context.name is None:
@@ -70,27 +78,36 @@ class SOAPHandler(object):
 
         soap_schema_select_strategy_instance = soap_schema_select_strategy()
 
-        return self.service.create(
-            ctx=soap_context_instance,
-            admin_user=soap_admin_user_instance,
-            auth=self.credentials(
-                self.endpoint_interface.getLogin(),
-                self.endpoint_interface.getPassword()),
-            schema_select_strategy=soap_schema_select_strategy_instance)
+        try:
+            return self.service.create(
+                ctx=soap_context_instance,
+                admin_user=soap_admin_user_instance,
+                auth=self.credentials(
+                    self.endpoint_interface.getLogin(),
+                    self.endpoint_interface.getPassword()),
+                schema_select_strategy=soap_schema_select_strategy_instance)
+        except Fault as e:
+            raise ContextException(e.message, e.detail)
 
     def delete_context(self, context_id: str):
         soap_context = self._get_oxsoap_context_object()
 
-        return self.service.delete(
-            ctx=soap_context(id=context_id),
-            auth=self.credentials(
-                self.endpoint_interface.getLogin(),
-                self.endpoint_interface.getPassword()))
+        try:
+            return self.service.delete(
+                ctx=soap_context(id=context_id),
+                auth=self.credentials(
+                    self.endpoint_interface.getLogin(),
+                    self.endpoint_interface.getPassword()))
+        except Fault as e:
+            raise ContextException(e.message, e.detail)
 
     def list_all_contexts(self):
-        return self.service.listAll(self.credentials(
-            self.endpoint_interface.getLogin(),
-            self.endpoint_interface.getPassword()))
+        try:
+            return self.service.listAll(self.credentials(
+                self.endpoint_interface.getLogin(),
+                self.endpoint_interface.getPassword()))
+        except Fault as e:
+            raise ContextException(e.message, e.detail)
 
     def _create_oxsoap_service(self) -> Client:
         binding_url = None

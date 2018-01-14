@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 soap_standard = 1
 soap_reseller = 2
 

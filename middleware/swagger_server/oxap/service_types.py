@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 context_service = 1
 user_service = 2
 group_service = 3
