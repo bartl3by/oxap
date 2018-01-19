@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import List
-from swagger_server.oxap.endpoint_interface import EndpointInterface
+from swagger_server.oxap.models.endpoint_interface import EndpointInterface
 
 
 class Endpoint(object):

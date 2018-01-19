@@ -55,6 +55,14 @@ Vagrant.configure("2") do |config|
     ansible.tags = "apache_ansible"
   end
 
+  config.vm.provision "memcached_provision", type: "ansible_local" do |ansible|
+    ansible.playbook = "install.yml"
+    ansible.provisioning_path = "/vagrant/oxap-ansible"
+    ansible.become = true
+    ansible.become_user = "root"
+    ansible.tags = "memcached_ansible"
+  end
+
   config.vm.provision "oxap_provision", type: "ansible_local" do |ansible|
     ansible.playbook = "install.yml"
     ansible.provisioning_path = "/vagrant/oxap-ansible"

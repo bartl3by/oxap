@@ -1,0 +1,6 @@
+---
+
+- import_tasks: memcache-firewalld.yml
+- include_tasks: memcache-install-{{ ansible_os_family }}.yml
+- import_tasks: memcache-service.yml
+- import_tasks: memcache-configuration-files.yml

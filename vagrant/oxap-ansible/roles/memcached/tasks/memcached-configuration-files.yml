@@ -1,0 +1,7 @@
+- name: deploy memcached configuration
+  template: src=memcached dest=/etc/sysconfig/memcached
+  when: ansible_os_family == "RedHat"
+  notify: restart memcached
+  tags:
+      - configuration
+      - memcached_configuration

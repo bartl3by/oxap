@@ -1,0 +1,6 @@
+- name: install memcached
+  yum: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - memcached
+  when: ansible_os_family == "RedHat"
+  tags: memcached_install

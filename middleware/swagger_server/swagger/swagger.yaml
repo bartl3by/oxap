@@ -30,7 +30,7 @@ tags:
 - name: "endpoints"
   description: "Public Endpoint Information"
 - name: "oxapaccount"
-  description: "The Open-Xchange Admin Panel Account"
+  description: "Open-Xchange Admin Panel"
 schemes:
 - "http"
 - "https"
@@ -58,13 +58,17 @@ paths:
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Context"
         400:
           description: "Bad Request"
           schema:
@@ -85,7 +89,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
-      security: []
+      x-security-scope: "oxap"
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "listAll"
       x-swagger-router-controller: "swagger_server.controllers.context_controller"
@@ -116,6 +120,14 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/payload"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -141,7 +153,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
-      security: []
+      x-security-scope: "oxap"
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "create"
       x-swagger-router-controller: "swagger_server.controllers.context_controller"
@@ -179,6 +191,14 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Context"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -206,7 +226,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
-      security: []
+      x-security-scope: "oxap"
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "change"
       x-swagger-router-controller: "swagger_server.controllers.context_controller"
@@ -236,6 +256,14 @@ paths:
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -263,7 +291,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
-      security: []
+      x-security-scope: "oxap"
       x-open-xchange-soap-reference-operation-interface: "OXContextService"
       x-open-xchange-soap-reference-operation-id: "delete"
       x-swagger-router-controller: "swagger_server.controllers.context_controller"
@@ -286,7 +314,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/User"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXUserService"
       x-open-xchange-soap-reference-operation-id: "listAll"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
@@ -309,7 +336,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Group"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXGroupService"
       x-open-xchange-soap-reference-operation-id: "listAll"
       x-swagger-router-controller: "swagger_server.controllers.group_controller"
@@ -332,7 +358,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Resource"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "listAll"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
@@ -356,7 +381,6 @@ paths:
       responses:
         200:
           description: "Successful Operation"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "create"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
@@ -380,7 +404,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Resource"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "list"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
@@ -405,7 +428,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Resource"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "getData"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
@@ -436,7 +458,6 @@ paths:
       responses:
         200:
           description: "Successful Operation"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "change"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
@@ -459,7 +480,6 @@ paths:
       responses:
         200:
           description: "Successful Operation"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "delete"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
@@ -482,7 +502,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Publication"
-      security: []
       x-open-xchange-soap-reference-operation-interface: "OXPublicationService"
       x-open-xchange-soap-reference-operation-id: "getPublication"
       x-swagger-router-controller: "swagger_server.controllers.publication_controller"
@@ -506,7 +525,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/inline_response_200"
-      security: []
       x-swagger-router-controller: "swagger_server.controllers.endpoints_controller"
   /oxap/account:
     get:
@@ -523,7 +541,6 @@ paths:
       responses:
         200:
           description: "Successful Operation"
-      security: []
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint:
     get:
@@ -544,7 +561,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Endpoint"
-      security: []
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint/{endpointId}:
     get:
@@ -568,7 +584,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Endpoint"
-      security: []
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint/{endpointId}/endpointinterface:
     get:
@@ -596,7 +611,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/EndpointInterface"
-      security: []
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
   /oxap/account/endpoint/{endpointId}/endpointinterface/{endpointInterfaceId}:
     get:
@@ -628,12 +642,147 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/EndpointInterface"
-      security: []
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
+  /oxap/session:
+    get:
+      tags:
+      - "oxapaccount"
+      summary: "Get OXAP session information"
+      description: "Get OXAP session information"
+      operationId: "get_session_information"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Successful Operation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-security-scope: ""
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
+    post:
+      tags:
+      - "oxapaccount"
+      summary: "Create an OXAP session"
+      description: "Create an OXAP session"
+      operationId: "create_session"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: "Session Information"
+        required: true
+        schema:
+          $ref: "#/definitions/data"
+      responses:
+        200:
+          description: "Successful Operation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
+    delete:
+      tags:
+      - "oxapaccount"
+      summary: "Delete an OXAP session"
+      description: "Delete an OXAP session"
+      operationId: "delete_session"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Successful Operation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-security-scope: ""
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
 definitions:
   Error:
     type: "string"
     description: "The cause of the Error"
+  Session:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        description: "The OXAP Session ID generated by the OXAP middleware"
+      session_cookie_path:
+        type: "string"
+        description: "The path to the cookie saved during the authentication request"
+      creation_date:
+        type: "string"
+      expiration_date:
+        type: "string"
+      account_id:
+        type: "string"
+        description: "Id of the OXAP account"
+      endpoint_id:
+        type: "string"
+        description: "Id of the OXAP endpoint for this OXAP account"
+      role:
+        type: "string"
+        description: "'The type of account that requests the login. If type is ':\
+          \ * oxap - An OXAP Master administrator having access to multiple endpoints\
+          \ * reseller - A Context reseller managing a context within an endpoint\
+          \ (the endpoint_id is required in data object) * context - A Context administrator\
+          \ managing a context within an endpoint (the endpoint_id is required in\
+          \ data object) * user - An Open-Xchange user account (the endpoint_id is\
+          \ required in data object)"
+        enum:
+        - "oxap"
+        - "context"
+        - "reseller"
+        - "user"
+    description: "OXAP Session"
   Group:
     type: "object"
     required:
@@ -1570,10 +1719,10 @@ definitions:
         description: ""
       type:
         type: "string"
-        description: "\"Endpoint Interface Type\": * appsuite-soap - The App Suite\
-          \ SOAP API Endpoint * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP\
-          \ Endpoint for Mailbox Information * dovecot-ldap-dovecotMailPrimaryAddress\
-          \ - The Dovecot LDAP Endpoint for Primary Mail Address Information * dovecot-ldap-dovecotMailAliasAddress\
+        description: "'Endpoint Interface Type': * appsuite-soap - The App Suite SOAP\
+          \ API Endpoint * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint\
+          \ for Mailbox Information * dovecot-ldap-dovecotMailPrimaryAddress - The\
+          \ Dovecot LDAP Endpoint for Primary Mail Address Information * dovecot-ldap-dovecotMailAliasAddress\
           \ - The Dovecot LDAP Endpoint for Alias Information * dovecot-ldap-dovecotUserQuotaStorage\
           \ - The Dovecot LDAP Endpoint for Quota Information"
         enum:
@@ -1614,7 +1763,53 @@ definitions:
       endpoint_description:
         type: "string"
         description: ""
+  data:
+    type: "object"
+    required:
+    - "account_id"
+    - "password"
+    - "username"
+    properties:
+      username:
+        type: "string"
+        description: "Id of the OXAP account"
+      password:
+        type: "string"
+        format: "password"
+        description: "Id of the OXAP endpoint for this OXAP account"
+      account_id:
+        type: "string"
+        description: "Id of the OXAP account"
+      endpoint_id:
+        type: "string"
+        description: "Id of the OXAP endpoint for this OXAP account"
+      role:
+        type: "string"
+        description: "'The type of account that requests the login. If type is ':\
+          \ * oxap - An OXAP Master administrator having access to multiple endpoints\
+          \ * reseller - A Context reseller managing a context within an endpoint\
+          \ (the endpoint_id is required in data object) * context - A Context administrator\
+          \ managing a context within an endpoint (the endpoint_id is required in\
+          \ data object) * user - An Open-Xchange user account (the endpoint_id is\
+          \ required in data object)"
+        enum:
+        - "oxap"
+        - "context"
+        - "reseller"
+        - "user"
+parameters:
+  Oxapsessionid:
+    name: "Oxapsessionid"
+    in: "header"
+    description: "Provide the session id previously acquired from /oxap/session. The\
+      \ session id can either be provided through this header parameter or as cookie\
+      \ ('Oxapsessionid'). If both, header and cookie will be send in a request, the\
+      \ cookie supersedes and will be used to verify the session."
+    required: false
+    type: "string"
 responses:
+  200:
+    description: "Successful Operation"
   400:
     description: "Bad Request"
     schema:

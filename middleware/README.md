@@ -36,8 +36,8 @@ Your Swagger definition lives here:
 http://localhost:8080/v2/swagger.json
 ```
 
-## Building
-Use swagger-codegen to update the middleware controllers:
+## Server Stub Generation
+In case the API Yaml configuration will be changed, use swagger-codegen to update the middleware server stub:
 ```
 swagger-codegen generate -i api/oxap_api.yml -l python-flask -o middleware
 ```

@@ -297,7 +297,7 @@ class EndpointInterface(Model):
     def type(self) -> str:
         """
         Gets the type of this EndpointInterface.
-        \"Endpoint Interface Type\": * appsuite-soap - The App Suite SOAP API Endpoint * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information * dovecot-ldap-dovecotUserQuotaStorage - The Dovecot LDAP Endpoint for Quota Information
+        'Endpoint Interface Type': * appsuite-soap - The App Suite SOAP API Endpoint * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information * dovecot-ldap-dovecotUserQuotaStorage - The Dovecot LDAP Endpoint for Quota Information
 
         :return: The type of this EndpointInterface.
         :rtype: str
@@ -308,7 +308,7 @@ class EndpointInterface(Model):
     def type(self, type: str):
         """
         Sets the type of this EndpointInterface.
-        \"Endpoint Interface Type\": * appsuite-soap - The App Suite SOAP API Endpoint * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information * dovecot-ldap-dovecotUserQuotaStorage - The Dovecot LDAP Endpoint for Quota Information
+        'Endpoint Interface Type': * appsuite-soap - The App Suite SOAP API Endpoint * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information * dovecot-ldap-dovecotMailAliasAddress - The Dovecot LDAP Endpoint for Alias Information * dovecot-ldap-dovecotUserQuotaStorage - The Dovecot LDAP Endpoint for Quota Information
 
         :param type: The type of this EndpointInterface.
         :type type: str

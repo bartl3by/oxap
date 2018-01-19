@@ -1,0 +1,6 @@
+- name: enable memcached service
+  service: name=memcached state=started enabled=yes
+  when: ansible_os_family == "RedHat"
+  tags:
+    - configuration
+    - memcached_configuration

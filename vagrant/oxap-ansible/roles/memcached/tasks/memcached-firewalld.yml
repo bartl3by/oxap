@@ -1,0 +1,26 @@
+- name: "set SELinux to permissive mode"
+  selinux:
+      policy: targeted
+      state: permissive
+
+- name: install firewalld
+  yum: name=firewalld state=latest
+  tags: firewalld
+
+- name: enable firewalld service
+  service: name=firewalld state=started enabled=yes
+  tags: firewalld
+
+- name: open memcached ports
+  firewalld:
+    zone: internal
+    state: enabled
+    port: "{{ item }}"
+    permanent: true
+  with_items:
+    - 11211/tcp
+  tags: firewalld
+
+- name: restart firewalld
+  service: name=firewalld state=restarted
+  tags: firewalld

@@ -3,4 +3,5 @@
 - hosts: all
   roles:
     - { role: apache, tags: [ 'apache_ansible' ] }
+    - { role: memcached, tags: [ 'memcached_ansible' ] }
     - { role: oxap, tags: [ 'oxap_ansible' ] }

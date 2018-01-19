@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from swagger_server.oxap.soap_types import SOAPStandard, SOAPReseller
-from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
+from swagger_server.oxap.types.soap_types import SOAPStandard, SOAPReseller
+from swagger_server.oxap.types.endpoint_interface_types import AppsuiteSOAP
 
 
 class EndpointInterface(object):
 
-    def __init__(self, oxap_account_id, endpoint_id, endpoint_interface_id, name, description, location, ssl_verify, login, password, ignore_binding, reseller, type: str):
+    def __init__(self, oxap_account_id, endpoint_id, endpoint_interface_id, name, description, location, ssl_verify,
+                 login, password, ignore_binding, reseller, type: str):
         self.oxap_account_id = oxap_account_id
         self.endpoint_id = endpoint_id
         self.endpoint_interface_id = endpoint_interface_id

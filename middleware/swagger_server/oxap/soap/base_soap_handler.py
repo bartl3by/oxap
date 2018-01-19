@@ -7,19 +7,16 @@ from requests import Session
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.context import Context
 from swagger_server.models.user import User
-from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
+from swagger_server.oxap.types.endpoint_interface_types import AppsuiteSOAP
 from swagger_server.oxap.exceptions.context_exceptions import *
-from swagger_server.oxap.oxap_account import OXAPAccount
-from swagger_server.oxap.service_types import ContextService
-from swagger_server.oxap.soap_types import SOAPStandard, SOAPReseller
+from swagger_server.oxap.models.oxap_account import OXAPAccount
+from swagger_server.oxap.types.service_types import ContextService
+from swagger_server.oxap.types.soap_types import SOAPStandard, SOAPReseller
 from tornado.options import options
 from zeep import Client
 from zeep.cache import SqliteCache
 from zeep.exceptions import Fault
 from zeep.transports import Transport
-
-from swagger_server.oxap.exceptions.context_exceptions import ContextException
-
 
 class SOAPHandler(object):
 
@@ -70,7 +67,7 @@ class SOAPHandler(object):
             if hasattr(context, key) \
                 and not isinstance(getattr(context, key), (Model)) \
                 and getattr(context, key) is not None:
-                setattr(soap_context_instance, context.attribute_map[key], getattr(context, key))
+                    setattr(soap_context_instance, context.attribute_map[key], getattr(context, key))
 
         soap_admin_user_instance = soap_admin_user()
         for key in user.attribute_map:

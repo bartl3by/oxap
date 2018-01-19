@@ -25,38 +25,50 @@ class ContextException(Exception):
     def __str__(self):
         return self.message
 
+
 class ContextExistsException(ContextException):
     pass
+
 
 class DatabaseUpdateException(ContextException):
     pass
 
+
 class DuplicateExtensionException(ContextException):
     pass
+
 
 class InvalidCredentialsException(ContextException):
     pass
 
+
 class InvalidDataException(ContextException):
     pass
+
 
 class NoSuchContextException(ContextException):
     pass
 
+
 class NoSuchDatabaseException(ContextException):
     pass
+
 
 class NoSuchFilestoreException(ContextException):
     pass
 
+
 class NoSuchReasonException(ContextException):
     pass
+
 
 class OXContextException(ContextException):
     pass
 
+
 class RemoteException(ContextException):
     pass
+
 
 class StorageException(ContextException):
     pass

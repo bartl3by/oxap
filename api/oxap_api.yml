@@ -11,44 +11,48 @@ info:
     email: bartl3by@t-online.de
     name: Benjamin Otterbach
   license:
-    name: "GPL3"
+    name: 'GPL3'
     url: https://github.com/bartl3by/oxap/blob/master/LICENSE
 basePath: /v2
 security: []
 schemes:
   - http
   - https
+securityDefinitions: []
+security: []
 paths:
   /context:
     get:
       tags:
-      - "context"
-      summary: "List all contexts"
-      description: "List all contexts in given context"
-      operationId: "list_all_contexts"
+      - 'context'
+      summary: 'List all contexts'
+      description: 'List all contexts in given context'
+      operationId: 'list_all_contexts'
       consumes:
-      - "application/json"
+      - 'application/json'
       produces:
-      - "application/json"
+      - 'application/json'
       parameters:
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
+      - name: 'account_id'
+        in: 'query'
+        description: 'Id of the OXAP account'
         required: true
-        type: "string"
-      - name: "endpoint_id"
-        in: "query"
-        description: "Id of the OXAP endpoint for this OXAP account"
+        type: 'string'
+      - name: 'endpoint_id'
+        in: 'query'
+        description: 'Id of the OXAP endpoint for this OXAP account'
         required: true
-        type: "string"
+        type: 'string'
+      - $ref: '#/parameters/Oxapsessionid'
+      x-security-scope: 'oxap'
       responses:
         200:
-          description: "Successful Operation"
+          $ref: '#/responses/200'
           schema:
-            type: "array"
+            type: 'array'
             items:
-              $ref: "#/definitions/Context"
-        400: 
+              $ref: '#/definitions/Context'
+        400:
           $ref: '#/responses/400'
         401:
           $ref: '#/responses/401'
@@ -58,1511 +62,1671 @@ paths:
           $ref: '#/responses/409'
         500:
           $ref: '#/responses/500'
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXContextService"
-      x-open-xchange-soap-reference-operation-id: "listAll"
+      x-open-xchange-soap-reference-operation-interface: 'OXContextService'
+      x-open-xchange-soap-reference-operation-id: 'listAll'
     post:
       tags:
-      - "context"
-      summary: "Create a new context"
-      description: "Creates a new context within the given endpoint"
-      operationId: "create_context"
+      - 'context'
+      summary: 'Create a new context'
+      description: 'Creates a new context within the given endpoint'
+      operationId: 'create_context'
       consumes:
-      - "application/json"
+      - 'application/json'
       produces:
-      - "application/json"
+      - 'application/json'
       parameters:
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
+      - name: 'account_id'
+        in: 'query'
+        description: 'Id of the OXAP account'
         required: true
-        type: "string"
-      - name: "endpoint_id"
-        in: "query"
-        description: "Id of the OXAP endpoint for this OXAP account"
+        type: 'string'
+      - name: 'endpoint_id'
+        in: 'query'
+        description: 'Id of the OXAP endpoint for this OXAP account'
         required: true
-        type: "string"
-      - name: "payload"
-        in: "body"
-        description: "Context object that needs to be created within the given endpoint"
+        type: 'string'
+      - name: 'payload'
+        in: 'body'
+        description: 'Context object that needs to be created within the given endpoint'
+        required: true
+        schema:
+          type: 'object'
+          required:
+            - 'context'
+            - 'user'
+          properties:
+            context:
+              type: 'object'
+              $ref: '#/definitions/Context'
+              description: 'The context information'
+            user:
+              type: 'object'
+              $ref: '#/definitions/User'
+              description: 'The admin user information of a context'
+      - $ref: '#/parameters/Oxapsessionid'
+      x-security-scope: 'oxap'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            $ref: '#/definitions/Context'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
+      x-open-xchange-soap-reference-operation-interface: 'OXContextService'
+      x-open-xchange-soap-reference-operation-id: 'create'
+  /context/{context_id}:
+    put:
+      tags:
+      - 'context'
+      summary: 'Change a context'
+      description: 'Change a context within an endpoint'
+      operationId: 'change_context'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'context_id'
+        in: 'path'
+        description: 'Id of the context object that needs to be changed within the given endpoint'
+        required: true
+        type: 'integer'
+        format: 'int32'
+      - name: 'account_id'
+        in: 'query'
+        description: 'Id of the OXAP account'
+        required: true
+        type: 'string'
+      - name: 'endpoint_id'
+        in: 'query'
+        description: 'Id of the OXAP endpoint for this OXAP account'
+        required: true
+        type: 'string'
+      - name: 'payload'
+        in: 'body'
+        description: 'Context information that will be used to update the context within the given endpoint'
+        required: true
+        schema:
+          type: object
+          $ref: '#/definitions/Context'
+          description: 'The context information'
+      - $ref: '#/parameters/Oxapsessionid'
+      x-security-scope: 'oxap'
+      responses:
+        200:
+          description: 'Successful Operation'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        404:
+          $ref: '#/responses/404'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
+      x-open-xchange-soap-reference-operation-interface: 'OXContextService'
+      x-open-xchange-soap-reference-operation-id: 'change'
+    delete:
+      tags:
+      - 'context'
+      summary: 'Delete a context'
+      description: 'Delete a context within an endpoint'
+      operationId: 'delete_context'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'context_id'
+        in: 'path'
+        description: 'Id of the context object that needs to be deleted within the given endpoint'
+        required: true
+        type: 'integer'
+        format: 'int32'
+      - name: 'account_id'
+        in: 'query'
+        description: 'Id of the OXAP account'
+        required: true
+        type: 'string'
+      - name: 'endpoint_id'
+        in: 'query'
+        description: 'Id of the OXAP endpoint for this OXAP account'
+        required: true
+        type: 'string'
+      - $ref: '#/parameters/Oxapsessionid'
+      x-security-scope: 'oxap'
+      responses:
+        200:
+          description: 'Successful Operation'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        404:
+          $ref: '#/responses/404'
+        406:
+          $ref: '#/responses/406'
+        409:
+          $ref: '#/responses/409'
+        500:
+          $ref: '#/responses/500'
+      x-open-xchange-soap-reference-operation-interface: 'OXContextService'
+      x-open-xchange-soap-reference-operation-id: 'delete'
+  /user:
+    get:
+      tags:
+      - 'user'
+      summary: 'List all users'
+      description: 'List all users in given context'
+      operationId: 'list_all_users'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/User'
+      x-open-xchange-soap-reference-operation-interface: 'OXUserService'
+      x-open-xchange-soap-reference-operation-id: 'listAll'
+  /group:
+    get:
+      tags:
+      - 'group'
+      summary: 'List all groups'
+      description: 'List all groups in given context'
+      operationId: 'list_all_groups'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Group'
+      x-open-xchange-soap-reference-operation-interface: 'OXGroupService'
+      x-open-xchange-soap-reference-operation-id: 'listAll'
+  /resource:
+    get:
+      tags:
+      - 'resource'
+      summary: 'List all resources'
+      description: 'List all resources in given context'
+      operationId: 'list_all_resources'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Resource'
+      x-open-xchange-soap-reference-operation-interface: 'OXResourceService'
+      x-open-xchange-soap-reference-operation-id: 'listAll'
+    post:
+      tags:
+      - 'resource'
+      summary: 'Create a new resource'
+      description: 'Creates a new resource within the given context'
+      operationId: 'create_resource'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'resourceObject'
+        in: 'body'
+        description: 'Resource object that needs to be created within the given context'
+        required: true
+        schema:
+          $ref: '#/definitions/Resource'
+      responses:
+        200:
+          description: 'Successful Operation'
+      x-open-xchange-soap-reference-operation-interface: 'OXResourceService'
+      x-open-xchange-soap-reference-operation-id: 'create'
+  /resource/find:
+    get:
+      tags:
+      - 'resource'
+      summary: 'Find resource by pattern'
+      description: 'Find resource by pattern within the given context'
+      operationId: 'find_resource_by_pattern'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'pattern'
+        in: 'query'
+        description: 'Pattern of the resource object to find within the given context'
+        required: true
+        type: 'string'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            $ref: '#/definitions/Resource'
+      x-open-xchange-soap-reference-operation-interface: 'OXResourceService'
+      x-open-xchange-soap-reference-operation-id: 'list'
+  /resource/{resourceId}:
+    get:
+      tags:
+      - 'resource'
+      summary: 'Find resource by ID'
+      description: 'Find resource within the given context'
+      operationId: 'get_resource_by_id'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'resourceId'
+        in: 'path'
+        description: 'Id of the resource object to find within the given context'
+        required: true
+        type: 'integer'
+        format: 'int32'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            $ref: '#/definitions/Resource'
+      x-open-xchange-soap-reference-operation-interface: 'OXResourceService'
+      x-open-xchange-soap-reference-operation-id: 'getData'
+    put:
+      tags:
+      - 'resource'
+      summary: 'Change a resource'
+      description: 'Change resource within the given context'
+      operationId: 'change_resource'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'resourceId'
+        in: 'path'
+        description: 'Id of the resource object that needs to be updated within the given context'
+        required: true
+        type: 'integer'
+        format: 'int32'
+      - name: 'resourceObject'
+        in: 'body'
+        description: 'Resource object that needs to be updated within the given context'
+        required: true
+        schema:
+          $ref: '#/definitions/Resource'
+      responses:
+        200:
+          description: 'Successful Operation'
+      x-open-xchange-soap-reference-operation-interface: 'OXResourceService'
+      x-open-xchange-soap-reference-operation-id: 'change'
+    delete:
+      tags:
+      - 'resource'
+      summary: 'Delete a resource'
+      description: 'Delete a resource within the given context'
+      operationId: 'delete_resource'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'resourceId'
+        in: 'path'
+        description: 'Id of the resource object that needs to be deleted within the given context'
+        required: true
+        type: 'integer'
+        format: 'int32'
+      responses:
+        200:
+          description: 'Successful Operation'
+      x-open-xchange-soap-reference-operation-interface: 'OXResourceService'
+      x-open-xchange-soap-reference-operation-id: 'delete'
+  /publication:
+    get:
+      tags:
+      - 'publication'
+      summary: 'List all publications'
+      description: 'List all publications in given context'
+      operationId: 'list_all_publications'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Publication'
+      x-open-xchange-soap-reference-operation-interface: 'OXPublicationService'
+      x-open-xchange-soap-reference-operation-id: 'getPublication'
+  /oxap/endpoints:
+    get:
+      tags:
+      - 'endpoints'
+      summary: 'Get a list of all Open-Xchange Admin Panel account endpoints'
+      description: 'Get a list with restricted (public) information of all Open-Xchange Admin Panel account endpoints'
+      operationId: 'get_all_endpoints'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              type: 'object'
+              properties:
+                oxap_account_id:
+                  type: 'string'
+                  description: ''
+                oxap_account_name:
+                  type: 'string'
+                  description: ''
+                oxap_account_description:
+                  type: 'string'
+                  description: ''
+                endpoint_id:
+                  type: 'string'
+                  description: ''
+                endpoint_name:
+                  type: 'string'
+                  description: ''
+                endpoint_description:
+                  type: 'string'
+                  description: ''
+  /oxap/account:
+    get:
+      tags:
+      - 'oxapaccount'
+      summary: 'Get Account Information'
+      description: 'Get account information of the Open-Xchange Admin Panel account'
+      operationId: 'get_oxap_account'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            items:
+              $ref: '#/definitions/OXAPAccount'
+  /oxap/account/endpoint:
+    get:
+      tags:
+      - 'oxapaccount'
+      summary: 'Get all Endpoints'
+      description: 'Get all endpoints of the Open-Xchange Admin Panel account'
+      operationId: 'get_oxap_account_endpoints'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Endpoint'
+  /oxap/account/endpoint/{endpointId}:
+    get:
+      tags:
+      - 'oxapaccount'
+      summary: 'Find endpoint by ID'
+      description: 'Find endpoint within the given Open-Xchange Admin Panel account'
+      operationId: 'get_endpoint_by_id'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'endpointId'
+        in: 'path'
+        description: 'Id of the Open-Xchange Admin Panel Account endpoint object to find within the given account'
+        required: true
+        type: 'integer'
+        format: 'int64'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            $ref: '#/definitions/Endpoint'
+  /oxap/account/endpoint/{endpointId}/endpointinterface:
+    get:
+      tags:
+      - 'oxapaccount'
+      summary: 'Get all interfaces'
+      description: 'Get all interfaces of an Open-Xchange Admin Panel account endpoint'
+      operationId: 'get_oxap_account_endpoint_interfaces'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'endpointId'
+        in: 'path'
+        description: 'Id of the Open-Xchange Admin Panel Account endpoint object to find within the given account'
+        required: true
+        type: 'integer'
+        format: 'int64'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/EndpointInterface'
+  /oxap/account/endpoint/{endpointId}/endpointinterface/{endpointInterfaceId}:
+    get:
+      tags:
+      - 'oxapaccount'
+      summary: 'Find endpoint interface by ID'
+      description: 'Find endpoint interface within the given Open-Xchange Admin Panel account endpoint'
+      operationId: 'get_endpoint_interface_by_id'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'endpointId'
+        in: 'path'
+        description: 'Id of the Open-Xchange Admin Panel Account endpoint object to find within the given account'
+        required: true
+        type: 'integer'
+        format: 'int64'
+      - name: 'endpointInterfaceId'
+        in: 'path'
+        description: 'Id of the Open-Xchange Admin Panel account endpoint interface object to find within the given endpoint'
+        required: true
+        type: 'integer'
+        format: 'int64'
+      responses:
+        200:
+          description: 'Successful Operation'
+          schema:
+            $ref: '#/definitions/EndpointInterface'
+  /oxap/session:
+    get:
+      tags:
+      - 'oxapaccount'
+      summary: 'Get OXAP session information'
+      description: 'Get OXAP session information'
+      operationId: 'get_session_information'
+      produces:
+      - 'application/json'
+      parameters:
+      - $ref: '#/parameters/Oxapsessionid'
+      x-security-scope: ''
+      responses:
+        200:
+          $ref: '#/responses/200'
+          schema:
+            $ref: '#/definitions/Session'
+          headers:
+            Set-Cookie:
+              description: >-
+                The session id aquired from this interface can either be provided through a header parameter or
+                as cookie ('Oxapsessionid'). The response of /oxap/session will automatically set the cookie if
+                the authentication request was successful, providing the header field in subsequent requests is
+                optional and primarily for documentation purposes due to missing cookie authentication integration
+                in swagger 2.0. If both, header and cookie information will be present in a request the session id
+                provided in the cookie supersedes and will be used to verify the session on the server.
+              type: 'string'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        500:
+          $ref: '#/responses/500'
+    delete:
+      tags:
+      - 'oxapaccount'
+      summary: 'Delete an OXAP session'
+      description: 'Delete an OXAP session'
+      operationId: 'delete_session'
+      produces:
+      - 'application/json'
+      parameters:
+      - $ref: '#/parameters/Oxapsessionid'
+      x-security-scope: ''
+      responses:
+        200:
+          $ref: '#/responses/200'
+          headers:
+            Set-Cookie:
+              description: >-
+                Send a Set-Cookie delete header to remove the OXAP session cookie from the client.
+              type: 'string'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        500:
+          $ref: '#/responses/500'
+    post:
+      tags:
+      - 'oxapaccount'
+      summary: 'Create an OXAP session'
+      description: 'Create an OXAP session'
+      operationId: 'create_session'
+      produces:
+      - 'application/json'
+      parameters:
+      - name: 'data'
+        in: 'body'
+        description: 'Session Information'
         required: true
         schema:
           type: object
           required:
-            - context
-            - user
+            - username
+            - password
+            - account_id
+            - type
           properties:
-            context:
-              type: "object"
-              $ref: '#/definitions/Context'
-              description: "The context information"
-            user:
-              type: "object"
-              $ref: '#/definitions/User'
-              description: "The admin user information of a context"
+            username:
+              description: 'Id of the OXAP account'
+              type: 'string'
+            password:
+              description: 'Id of the OXAP endpoint for this OXAP account'
+              type: 'string'
+              format: 'password'
+            account_id:
+              description: 'Id of the OXAP account'
+              type: 'string'
+            endpoint_id:
+              description: 'Id of the OXAP endpoint for this OXAP account'
+              type: 'string'
+            role:
+              type: 'string'
+              enum:
+              - oxap
+              - context
+              - reseller
+              - user
+              description: >-
+                'The type of account that requests the login. If type is ':
+                * oxap - An OXAP Master administrator having access to multiple endpoints
+                * reseller - A Context reseller managing a context within an endpoint (the endpoint_id is required in data object)
+                * context - A Context administrator managing a context within an endpoint (the endpoint_id is required in data object)
+                * user - An Open-Xchange user account (the endpoint_id is required in data object)
       responses:
         200:
-          description: "Successful Operation"
+          $ref: '#/responses/200'
           schema:
-            $ref: "#/definitions/Context"
-        400: 
+            $ref: '#/definitions/Session'
+          headers:
+            Set-Cookie:
+              description: >-
+                The session id aquired from this interface can either be provided through a header parameter or
+                as cookie ('Oxapsessionid'). The response of /oxap/session will automatically set the cookie if
+                the authentication request was successful, providing the header field in subsequent requests is
+                optional and primarily for documentation purposes due to missing cookie authentication integration
+                in swagger 2.0. If both, header and cookie information will be present in a request the session id
+                provided in the cookie supersedes and will be used to verify the session on the server.
+              type: 'string'
+        400:
           $ref: '#/responses/400'
-        401:
-          $ref: '#/responses/401'
-        406:
-          $ref: '#/responses/406'
-        409:
-          $ref: '#/responses/409'
+        403:
+          $ref: '#/responses/403'
         500:
           $ref: '#/responses/500'
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXContextService"
-      x-open-xchange-soap-reference-operation-id: "create"
-  /context/{context_id}:
-    put:
-      tags:
-      - "context"
-      summary: "Change a context"
-      description: "Change a context within an endpoint"
-      operationId: "change_context"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "context_id"
-        in: "path"
-        description: "Id of the context object that needs to be changed within the given endpoint"
-        required: true
-        type: "integer"
-        format: "int32"
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
-        required: true
-        type: "string"
-      - name: "endpoint_id"
-        in: "query"
-        description: "Id of the OXAP endpoint for this OXAP account"
-        required: true
-        type: "string"
-      - name: "payload"
-        in: "body"
-        description: "Context information that will be used to update the context within the given endpoint"
-        required: true
-        schema:
-          type: object
-          $ref: "#/definitions/Context"
-          description: "The context information"
-      responses:
-        200:
-          description: "Successful Operation"
-        400: 
-          $ref: '#/responses/400'
-        401:
-          $ref: '#/responses/401'
-        404:
-          $ref: '#/responses/404'
-        406:
-          $ref: '#/responses/406'
-        409:
-          $ref: '#/responses/409'
-        500:
-          $ref: '#/responses/500'
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXContextService"
-      x-open-xchange-soap-reference-operation-id: "change"
-    delete:
-      tags:
-      - "context"
-      summary: "Delete a context"
-      description: "Delete a context within an endpoint"
-      operationId: "delete_context"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "context_id"
-        in: "path"
-        description: "Id of the context object that needs to be deleted within the given endpoint"
-        required: true
-        type: "integer"
-        format: "int32"
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
-        required: true
-        type: "string"
-      - name: "endpoint_id"
-        in: "query"
-        description: "Id of the OXAP endpoint for this OXAP account"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "Successful Operation"
-        400: 
-          $ref: '#/responses/400'
-        401:
-          $ref: '#/responses/401'
-        404:
-          $ref: '#/responses/404'
-        406:
-          $ref: '#/responses/406'
-        409:
-          $ref: '#/responses/409'
-        500:
-          $ref: '#/responses/500'
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXContextService"
-      x-open-xchange-soap-reference-operation-id: "delete"
-  /user:
-    get:
-      tags:
-      - "user"
-      summary: "List all users"
-      description: "List all users in given context"
-      operationId: "list_all_users"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/User"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXUserService"
-      x-open-xchange-soap-reference-operation-id: "listAll"
-  /group:
-    get:
-      tags:
-      - "group"
-      summary: "List all groups"
-      description: "List all groups in given context"
-      operationId: "list_all_groups"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Group"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXGroupService"
-      x-open-xchange-soap-reference-operation-id: "listAll"
-  /resource:
-    get:
-      tags:
-      - "resource"
-      summary: "List all resources"
-      description: "List all resources in given context"
-      operationId: "list_all_resources"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Resource"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "listAll"
-    post:
-      tags:
-      - "resource"
-      summary: "Create a new resource"
-      description: "Creates a new resource within the given context"
-      operationId: "create_resource"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "resourceObject"
-        in: "body"
-        description: "Resource object that needs to be created within the given context"
-        required: true
-        schema:
-          $ref: "#/definitions/Resource"
-      responses:
-        200:
-          description: "Successful Operation"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "create"
-  /resource/find:
-    get:
-      tags:
-      - "resource"
-      summary: "Find resource by pattern"
-      description: "Find resource by pattern within the given context"
-      operationId: "find_resource_by_pattern"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "pattern"
-        in: "query"
-        description: "Pattern of the resource object to find within the given context"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            $ref: "#/definitions/Resource"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "list"
-  /resource/{resourceId}:
-    get:
-      tags:
-      - "resource"
-      summary: "Find resource by ID"
-      description: "Find resource within the given context"
-      operationId: "get_resource_by_id"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "resourceId"
-        in: "path"
-        description: "Id of the resource object to find within the given context"
-        required: true
-        type: "integer"
-        format: "int32"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            $ref: "#/definitions/Resource"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "getData"
-    put:
-      tags:
-      - "resource"
-      summary: "Change a resource"
-      description: "Change resource within the given context"
-      operationId: "change_resource"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "resourceId"
-        in: "path"
-        description: "Id of the resource object that needs to be updated within the given context"
-        required: true
-        type: "integer"
-        format: "int32"
-      - name: "resourceObject"
-        in: "body"
-        description: "Resource object that needs to be updated within the given context"
-        required: true
-        schema:
-          $ref: "#/definitions/Resource"
-      responses:
-        200:
-          description: "Successful Operation"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "change"
-    delete:
-      tags:
-      - "resource"
-      summary: "Delete a resource"
-      description: "Delete a resource within the given context"
-      operationId: "delete_resource"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "resourceId"
-        in: "path"
-        description: "Id of the resource object that needs to be deleted within the given context"
-        required: true
-        type: "integer"
-        format: "int32"
-      responses:
-        200:
-          description: "Successful Operation"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXResourceService"
-      x-open-xchange-soap-reference-operation-id: "delete"
-  /publication:
-    get:
-      tags:
-      - "publication"
-      summary: "List all publications"
-      description: "List all publications in given context"
-      operationId: "list_all_publications"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Publication"
-      security: []
-      x-open-xchange-soap-reference-operation-interface: "OXPublicationService"
-      x-open-xchange-soap-reference-operation-id: "getPublication"
-  /oxap/endpoints:
-    get:
-      tags:
-      - "endpoints"
-      summary: "Get a list of all Open-Xchange Admin Panel account endpoints"
-      description: "Get a list with restricted (public) information of all Open-Xchange Admin Panel account endpoints"
-      operationId: "get_all_endpoints"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                oxap_account_id:
-                  type: "string"
-                  description: ""
-                oxap_account_name:
-                  type: "string"
-                  description: ""
-                oxap_account_description:
-                  type: "string"
-                  description: ""
-                endpoint_id:
-                  type: "string"
-                  description: ""
-                endpoint_name:
-                  type: "string"
-                  description: ""
-                endpoint_description:
-                  type: "string"
-                  description: ""
-      security: []
-  /oxap/account:
-    get:
-      tags:
-      - "oxapaccount"
-      summary: "Get Account Information"
-      description: "Get account information of the Open-Xchange Admin Panel account"
-      operationId: "get_oxap_account"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            items:
-              $ref: "#/definitions/OXAPAccount"
-      security: []
-  /oxap/account/endpoint:
-    get:
-      tags:
-      - "oxapaccount"
-      summary: "Get all Endpoints"
-      description: "Get all endpoints of the Open-Xchange Admin Panel account"
-      operationId: "get_oxap_account_endpoints"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Endpoint"
-      security: []
-  /oxap/account/endpoint/{endpointId}:
-    get:
-      tags:
-      - "oxapaccount"
-      summary: "Find endpoint by ID"
-      description: "Find endpoint within the given Open-Xchange Admin Panel account"
-      operationId: "get_endpoint_by_id"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "endpointId"
-        in: "path"
-        description: "Id of the Open-Xchange Admin Panel Account endpoint object to find within the given account"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            $ref: "#/definitions/Endpoint"
-      security: []
-  /oxap/account/endpoint/{endpointId}/endpointinterface:
-    get:
-      tags:
-      - "oxapaccount"
-      summary: "Get all interfaces"
-      description: "Get all interfaces of an Open-Xchange Admin Panel account endpoint"
-      operationId: "get_oxap_account_endpoint_interfaces"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "endpointId"
-        in: "path"
-        description: "Id of the Open-Xchange Admin Panel Account endpoint object to find within the given account"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/EndpointInterface"
-      security: []
-  /oxap/account/endpoint/{endpointId}/endpointinterface/{endpointInterfaceId}:
-    get:
-      tags:
-      - "oxapaccount"
-      summary: "Find endpoint interface by ID"
-      description: "Find endpoint interface within the given Open-Xchange Admin Panel account endpoint"
-      operationId: "get_endpoint_interface_by_id"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "endpointId"
-        in: "path"
-        description: "Id of the Open-Xchange Admin Panel Account endpoint object to find within the given account"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "endpointInterfaceId"
-        in: "path"
-        description: "Id of the Open-Xchange Admin Panel account endpoint interface object to find within the given endpoint"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "Successful Operation"
-          schema:
-            $ref: "#/definitions/EndpointInterface"
-      security: []
 tags:
-- name: "context"
-  description: "Open-Xchange App Suite Context"
-- name: "user"
-  description: "Open-Xchange App Suite User"
-- name: "group"
-  description: "Open-Xchange App Suite Group"
-- name: "resource"
-  description: "Open-Xchange App Suite Resources"
-- name: "publication"
-  description: "Open-Xchange App Suite Publication"
-- name: "environment"
-  description: "Open-Xchange App Suite Environment"
-- name: "endpoints"
-  description: "Public Endpoint Information"
-- name: "oxapaccount"
-  description: "The Open-Xchange Admin Panel Account"
+- name: 'context'
+  description: 'Open-Xchange App Suite Context'
+- name: 'user'
+  description: 'Open-Xchange App Suite User'
+- name: 'group'
+  description: 'Open-Xchange App Suite Group'
+- name: 'resource'
+  description: 'Open-Xchange App Suite Resources'
+- name: 'publication'
+  description: 'Open-Xchange App Suite Publication'
+- name: 'environment'
+  description: 'Open-Xchange App Suite Environment'
+- name: 'endpoints'
+  description: 'Public Endpoint Information'
+- name: 'oxapaccount'
+  description: 'Open-Xchange Admin Panel'
 responses:
+  200:
+    description: 'Successful Operation'
   400:
-    description: "Bad Request"
+    description: 'Bad Request'
     schema:
       $ref: '#/definitions/Error'
   401:
-    description: "Unauthorized"
+    description: 'Unauthorized'
     schema:
       $ref: '#/definitions/Error'
   403:
-    description: "Forbidden"
+    description: 'Forbidden'
     schema:
       $ref: '#/definitions/Error'
   404:
-    description: "Not Found"
+    description: 'Not Found'
     schema:
       $ref: '#/definitions/Error'
   406:
-    description: "Not Acceptable"
+    description: 'Not Acceptable'
     schema:
       $ref: '#/definitions/Error'
   409:
-    description: "Conflict"
+    description: 'Conflict'
     schema:
       $ref: '#/definitions/Error'
   500:
-    description: "Internal Server Error"
+    description: 'Internal Server Error'
     schema:
       $ref: '#/definitions/Error'
+parameters:
+  Oxapsessionid:
+    name: 'Oxapsessionid'
+    in: 'header'
+    description: >-
+      Provide the session id previously acquired from /oxap/session. The session id can either be provided
+      through this header parameter or as cookie ('Oxapsessionid'). If both, header and cookie will be
+      send in a request, the cookie supersedes and will be used to verify the session.
+    required: false
+    type: 'string'
 definitions:
   Error:
-    type: string
-    description: "The cause of the Error"
+    type: 'string'
+    description: 'The cause of the Error'
+  Session:
+    type: 'object'
+    description: 'OXAP Session'
+    required:
+    - 'id'
+    properties:
+      id:
+        type: 'string'
+        description: 'The OXAP Session ID generated by the OXAP middleware'
+      session_cookie_path:
+        type: 'string'
+        description: 'The path to the cookie saved during the authentication request'
+      creation_date:
+        type: 'string'
+      expiration_date:
+        type: 'string'
+      account_id:
+        description: 'Id of the OXAP account'
+        type: 'string'
+      endpoint_id:
+        description: 'Id of the OXAP endpoint for this OXAP account'
+        type: 'string'
+      role:
+        type: 'string'
+        enum:
+        - oxap
+        - context
+        - reseller
+        - user
+        description: >-
+          'The type of account that requests the login. If type is ':
+          * oxap - An OXAP Master administrator having access to multiple endpoints
+          * reseller - A Context reseller managing a context within an endpoint (the endpoint_id is required in data object)
+          * context - A Context administrator managing a context within an endpoint (the endpoint_id is required in data object)
+          * user - An Open-Xchange user account (the endpoint_id is required in data object)
   Group:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "displayname"
+    - 'name'
+    - 'displayname'
     properties:
       displayname:
-        type: "string"
-        description: "The displayname of the group"
+        type: 'string'
+        description: 'The displayname of the group'
       id:
-        type: "integer"
-        format: "int32"
-        description: "The id of the group"
+        type: 'integer'
+        format: 'int32'
+        description: 'The id of the group'
       members:
-        type: "integer"
-        format: "int32"
-        description: "The members of the group"
+        type: 'integer'
+        format: 'int32'
+        description: 'The members of the group'
       name:
-        type: "string"
-        description: "The displayname of the group"
+        type: 'string'
+        description: 'The displayname of the group'
   Resource:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "displayname"
-    - "email"
+    - 'name'
+    - 'displayname'
+    - 'email'
     properties:
       id:
-        type: "integer"
-        format: "int32"
-        description: "The id of the resource"
+        type: 'integer'
+        format: 'int32'
+        description: 'The id of the resource'
       description:
-        type: "string"
-        description: "The description of the resource"
+        type: 'string'
+        description: 'The description of the resource'
       displayname:
-        type: "string"
-        description: "The displayname of the resource"
+        type: 'string'
+        description: 'The displayname of the resource'
       email:
-        type: "string"
-        description: "The E-Mail of the resource"
+        type: 'string'
+        description: 'The E-Mail of the resource'
       name:
-        type: "string"
-        description: "The name of the resource"
+        type: 'string'
+        description: 'The name of the resource'
   Context:
-    type: "object"
+    type: 'object'
     required:
-    - "maxQuota"
+    - 'maxQuota'
     properties:
       average_size:
-        type: "integer"
-        format: "int64"
-        description: "The average size of a context"
+        type: 'integer'
+        format: 'int64'
+        description: 'The average size of a context'
       enabled:
-        type: "boolean"
-        description: "Defines if the context is enabled or not"
+        type: 'boolean'
+        description: 'Defines if the context is enabled or not'
       filestoreId:
-        type: "integer"
-        format: "int32"
-        description: "The filestore id of a context"
+        type: 'integer'
+        format: 'int32'
+        description: 'The filestore id of a context'
       filestore_name:
-        type: "string"
-        description: "The filestore name of a context"
+        type: 'string'
+        description: 'The filestore name of a context'
       id:
-        type: "integer"
-        format: "int32"
-        description: "The id of a context"
+        type: 'integer'
+        format: 'int32'
+        description: 'The id of a context'
       customid:
-        type: "string"
-        description: "The customid of a context, only used for OXaaS API endpoints"
+        type: 'string'
+        description: 'The customid of a context, only used for OXaaS API endpoints'
       loginMappings:
-        type: "string"
-        description: "The login mappings of a context (usually a list of domains)"
+        type: 'string'
+        description: 'The login mappings of a context (usually a list of domains)'
       maxQuota:
-        type: "integer"
-        format: "int64"
-        description: "The Drive quota setting of a context"
+        type: 'integer'
+        format: 'int64'
+        description: 'The Drive quota setting of a context'
       name:
-        type: "string"
-        description: "The name of a context"
+        type: 'string'
+        description: 'The name of a context'
       readDatabase:
-        type: "object"
-        format: "Database"
-        description: "The read database of a context"
+        type: 'object'
+        format: 'Database'
+        description: 'The read database of a context'
       writeDatabase:
-        type: "object"
-        format: "Database"
-        description: "The write database of a context"
+        type: 'object'
+        format: 'Database'
+        description: 'The write database of a context'
       usedQuota:
-        type: "integer"
-        format: "long64"
-        description: "The used quota of a context"
+        type: 'integer'
+        format: 'long64'
+        description: 'The used quota of a context'
       userAttributes:
-        type: "object"
-        format: "StringMapMap"
-        description: "The user attributes of a context"
+        type: 'object'
+        format: 'StringMapMap'
+        description: 'The user attributes of a context'
     example:
-      name: "example_context"
+      name: 'example_context'
       maxQuota: 0
   ResellerContext:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "maxQuota"
+    - 'name'
+    - 'maxQuota'
     properties:
       average_size:
-        type: "integer"
-        format: "int64"
-        description: "The average size of a context"
+        type: 'integer'
+        format: 'int64'
+        description: 'The average size of a context'
       enabled:
-        type: "boolean"
-        description: "Defines if the context is enabled or not"
+        type: 'boolean'
+        description: 'Defines if the context is enabled or not'
       filestoreId:
-        type: "integer"
-        format: "int32"
-        description: "The filestore id of a context"
+        type: 'integer'
+        format: 'int32'
+        description: 'The filestore id of a context'
       filestore_name:
-        type: "string"
-        description: "The filestore name of a context"
+        type: 'string'
+        description: 'The filestore name of a context'
       id:
-        type: "integer"
-        format: "int32"
-        description: "The id of a context"
+        type: 'integer'
+        format: 'int32'
+        description: 'The id of a context'
       customid:
-        type: "string"
-        description: "The customid of a context, only used for OXaaS API endpoints"
+        type: 'string'
+        description: 'The customid of a context, only used for OXaaS API endpoints'
       loginMappings:
-        type: "string"
-        description: "The login mappings of a context (usually a list of domains)"
+        type: 'string'
+        description: 'The login mappings of a context (usually a list of domains)'
       maxQuota:
-        type: "integer"
-        format: "int64"
-        description: "The Drive quota setting of a context"
+        type: 'integer'
+        format: 'int64'
+        description: 'The Drive quota setting of a context'
       name:
-        type: "string"
-        description: "The name of a context"
+        type: 'string'
+        description: 'The name of a context'
       readDatabase:
-        type: "object"
-        format: "Database"
-        description: "The read database of a context"
+        type: 'object'
+        format: 'Database'
+        description: 'The read database of a context'
       writeDatabase:
-        type: "object"
-        format: "Database"
-        description: "The write database of a context"
+        type: 'object'
+        format: 'Database'
+        description: 'The write database of a context'
       usedQuota:
-        type: "integer"
-        format: "long64"
-        description: "The used quota of a context"
+        type: 'integer'
+        format: 'long64'
+        description: 'The used quota of a context'
       userAttributes:
-        type: "object"
-        format: "StringMapMap"
-        description: "The user attributes of a context"
+        type: 'object'
+        format: 'StringMapMap'
+        description: 'The user attributes of a context'
       extensionError:
-        type: "string"
+        type: 'string'
       owner:
-        type: "object"
-        format: "ResellerAdmin"
+        type: 'object'
+        format: 'ResellerAdmin'
       restriction:
-        type: "object"
-        format: "Restriction"
+        type: 'object'
+        format: 'Restriction'
       sid:
-        type: "integer"
-        format: "int32"
+        type: 'integer'
+        format: 'int32'
   ResellerAdmin:
-    type: "object"
+    type: 'object'
     properties:
       name:
-        type: "string"
+        type: 'string'
       passwordMech:
-        type: "string"
+        type: 'string'
       password:
-        type: "string"
+        type: 'string'
       parentId:
-        type: "integer"
-        format: "int32"
+        type: 'integer'
+        format: 'int32'
       restrictions:
         type: array
         items:
           $ref: '#/definitions/Restriction'
       displayname:
-        type: "string"
+        type: 'string'
       id:
-        type: "integer"
-        format: "int32"
+        type: 'integer'
+        format: 'int32'
   Restriction:
-    type: "object"
+    type: 'object'
     properties:
       mandatoryMembersChange:
-        type: "string"
+        type: 'string'
       mandatoryMembersCreate:
-        type: "string"
+        type: 'string'
       mandatoryMembersDelete:
-        type: "string"
+        type: 'string'
       mandatoryMembersRegister:
-        type: "string"
+        type: 'string'
   User:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "display_name"
-    - "given_name"
-    - "sur_name"
-    - "password"
-    - "email"
-    - "email1"
-    - "primaryEmail"
+    - 'name'
+    - 'display_name'
+    - 'given_name'
+    - 'sur_name'
+    - 'password'
+    - 'email'
+    - 'email1'
+    - 'primaryEmail'
     properties:
       aliases:
-        type: "string"
-        description: "The aliases of a user"
+        type: 'string'
+        description: 'The aliases of a user'
       anniversary:
-        type: "string"
-        format: "date"
-        description: "The anniversary date of a user"
+        type: 'string'
+        format: 'date'
+        description: 'The anniversary date of a user'
       assistant_name:
-        type: "string"
-        description: "The assistant name of a user"
+        type: 'string'
+        description: 'The assistant name of a user'
       birthday:
-        type: "string"
-        format: "date"
-        description: "The birthday of a user"
+        type: 'string'
+        format: 'date'
+        description: 'The birthday of a user'
       branches:
-        type: "string"
-        description: "The branches of a user"
+        type: 'string'
+        description: 'The branches of a user'
       business_category:
-        type: "string"
-        description: "The business category of a user"
+        type: 'string'
+        description: 'The business category of a user'
       categories:
-        type: "string"
-        description: "The categories of a user"
+        type: 'string'
+        description: 'The categories of a user'
       cellular_telephone1:
-        type: "string"
-        description: "The cellular telephone 1 of a user"
+        type: 'string'
+        description: 'The cellular telephone 1 of a user'
       cellular_telephone2:
-        type: "string"
-        description: "The cellular telephone 2 of a user"
+        type: 'string'
+        description: 'The cellular telephone 2 of a user'
       city_business:
-        type: "string"
-        description: "The city (business) of a user"
+        type: 'string'
+        description: 'The city (business) of a user'
       city_home:
-        type: "string"
-        description: "The city (home) of a user"
+        type: 'string'
+        description: 'The city (home) of a user'
       city_other:
-        type: "string"
-        description: "Other city of a user"
+        type: 'string'
+        description: 'Other city of a user'
       commercial_register:
-        type: "string"
-        description: "The commercial register of a user"
+        type: 'string'
+        description: 'The commercial register of a user'
       company:
-        type: "string"
-        description: "The company of a user"
+        type: 'string'
+        description: 'The company of a user'
       contextadmin:
-        type: "boolean"
-        description: "Is the user a context admin?"
+        type: 'boolean'
+        description: 'Is the user a context admin?'
       country_business:
-        type: "string"
-        description: "The country (business) of a user"
+        type: 'string'
+        description: 'The country (business) of a user'
       country_home:
-        type: "string"
-        description: "The country (home) of a user"
+        type: 'string'
+        description: 'The country (home) of a user'
       country_other:
-        type: "string"
-        description: "Other country of a user"
+        type: 'string'
+        description: 'Other country of a user'
       defaultSenderAddress:
-        type: "string"
-        description: "The default sender address of a user"
+        type: 'string'
+        description: 'The default sender address of a user'
       driveUserFolderMode:
-        type: "string"
-        description: "The drive user folder mode of a user"
+        type: 'string'
+        description: 'The drive user folder mode of a user'
       default_group:
-        type: "object"
-        format: "Group"
-        description: "The default group of a user"
+        type: 'object'
+        format: 'Group'
+        description: 'The default group of a user'
       department:
-        type: "string"
-        description: "The department of a user"
+        type: 'string'
+        description: 'The department of a user'
       display_name:
-        type: "string"
-        description: "The display name of a user (must be unique)"
+        type: 'string'
+        description: 'The display name of a user (must be unique)'
       email:
-        type: "string"
-        description: "The email of a user"
+        type: 'string'
+        description: 'The email of a user'
       email1:
-        type: "string"
-        description: "The email1 of a user"
+        type: 'string'
+        description: 'The email1 of a user'
       email2:
-        type: "string"
-        description: "The email2 of a user"
+        type: 'string'
+        description: 'The email2 of a user'
       email3:
-        type: "string"
-        description: "The email3 of a user"
+        type: 'string'
+        description: 'The email3 of a user'
       employeeType:
-        type: "string"
-        description: "The employee type of a user"
+        type: 'string'
+        description: 'The employee type of a user'
       fax_business:
-        type: "string"
-        description: "The fax (business) of a user"
+        type: 'string'
+        description: 'The fax (business) of a user'
       fax_home:
-        type: "string"
-        description: "The fax (home) of a user"
+        type: 'string'
+        description: 'The fax (home) of a user'
       fax_other:
-        type: "string"
-        description: "Other fax of a user"
+        type: 'string'
+        description: 'Other fax of a user'
       filestoreId:
-        type: "integer"
-        format: "int32"
-        description: "The filestore id of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The filestore id of a user'
       filestore_name:
-        type: "string"
-        description: "The filestore name of a user"
+        type: 'string'
+        description: 'The filestore name of a user'
       folderTree:
-        type: "integer"
-        format: "int32"
-        description: "The folder tree of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The folder tree of a user'
       given_name:
-        type: "string"
-        description: "The given name of a user"
+        type: 'string'
+        description: 'The given name of a user'
       guiPreferencesForSoap:
-        type: "object"
-        format: "StringMap"
-        description: "The gui preferences of a user"
+        type: 'object'
+        format: 'StringMap'
+        description: 'The gui preferences of a user'
       gui_spam_filter_enabled:
-        type: "boolean"
-        description: "Is the spam plugin in App Suite enabled for a user?"
+        type: 'boolean'
+        description: 'Is the spam plugin in App Suite enabled for a user?'
       id:
-        type: "integer"
-        format: "int32"
-        description: "The id of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The id of a user'
       imapLogin:
-        type: "string"
-        description: "The imap login information of a user"
+        type: 'string'
+        description: 'The imap login information of a user'
       imapPort:
-        type: "integer"
-        format: "int32"
-        description: "The imap port of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The imap port of a user'
       imapSchema:
-        type: "string"
-        description: "The imap schema of a user"
+        type: 'string'
+        description: 'The imap schema of a user'
       imapServer:
-        type: "string"
-        description: "The imap server of a user"
+        type: 'string'
+        description: 'The imap server of a user'
       imapServerString:
-        type: "string"
-        description: "The imap server string of a user"
+        type: 'string'
+        description: 'The imap server string of a user'
       info:
-        type: "string"
-        description: "The info of a user"
+        type: 'string'
+        description: 'The info of a user'
       instant_messenger1:
-        type: "string"
-        description: "The instant messenger 1 of a user"
+        type: 'string'
+        description: 'The instant messenger 1 of a user'
       instant_messenger2:
-        type: "string"
-        description: "The instant messenger 2 of a user"
+        type: 'string'
+        description: 'The instant messenger 2 of a user'
       language:
-        type: "string"
-        description: "The language of a user"
+        type: 'string'
+        description: 'The language of a user'
       mail_folder_confirmed_ham_name:
-        type: "string"
-        description: "The folder name for confirmed ham of a user"
+        type: 'string'
+        description: 'The folder name for confirmed ham of a user'
       mail_folder_confirmed_spam_name:
-        type: "string"
-        description: "The folder name for confirmed spam of a user"
+        type: 'string'
+        description: 'The folder name for confirmed spam of a user'
       mail_folder_drafts_name:
-        type: "string"
-        description: "The folder name for drafts of a user"
+        type: 'string'
+        description: 'The folder name for drafts of a user'
       mail_folder_sent_name:
-        type: "string"
-        description: "The folder name for sent of a user"
+        type: 'string'
+        description: 'The folder name for sent of a user'
       mail_folder_spam_name:
-        type: "string"
-        description: "The folder name for spam of a user"
+        type: 'string'
+        description: 'The folder name for spam of a user'
       mail_folder_trash_name:
-        type: "string"
-        description: "The folder name for trash of a user"
+        type: 'string'
+        description: 'The folder name for trash of a user'
       mailenabled:
-        type: "boolean"
-        description: "The mailenabled flag of a user"
+        type: 'boolean'
+        description: 'The mailenabled flag of a user'
       manager_name:
-        type: "string"
-        description: "The manager name of a user"
+        type: 'string'
+        description: 'The manager name of a user'
       marital_status:
-        type: "string"
-        description: "The marital status of a user"
+        type: 'string'
+        description: 'The marital status of a user'
       maxQuota:
-        type: "integer"
-        format: "int64"
-        description: "The maxQuota of a user"
+        type: 'integer'
+        format: 'int64'
+        description: 'The maxQuota of a user'
       middle_name:
-        type: "string"
-        description: "The middle name of a user"
+        type: 'string'
+        description: 'The middle name of a user'
       name:
-        type: "string"
-        description: "The name of a user"
+        type: 'string'
+        description: 'The name of a user'
       nickname:
-        type: "string"
-        description: "The nickname of a user"
+        type: 'string'
+        description: 'The nickname of a user'
       note:
-        type: "string"
-        description: "The note of a user"
+        type: 'string'
+        description: 'The note of a user'
       number_of_children:
-        type: "string"
-        description: "The number of children of a user"
+        type: 'string'
+        description: 'The number of children of a user'
       number_of_employee:
-        type: "string"
-        description: "The number of employee of a user"
+        type: 'string'
+        description: 'The number of employee of a user'
       password:
-        type: "string"
-        description: "The password of a user"
+        type: 'string'
+        description: 'The password of a user'
       passwordMech:
-        type: "string"
-        description: "The password mechanism of a user"
+        type: 'string'
+        description: 'The password mechanism of a user'
       password_expired:
-        type: "boolean"
-        description: "The password expired status of a user"
+        type: 'boolean'
+        description: 'The password expired status of a user'
       position:
-        type: "string"
-        description: "The position of a user"
+        type: 'string'
+        description: 'The position of a user'
       postal_code_business:
-        type: "string"
-        description: "The postal code (business) of a user"
+        type: 'string'
+        description: 'The postal code (business) of a user'
       postal_code_home:
-        type: "string"
-        description: "The postal code (home) of a user"
+        type: 'string'
+        description: 'The postal code (home) of a user'
       postal_code_other:
-        type: "string"
-        description: "Other postal code of a user"
+        type: 'string'
+        description: 'Other postal code of a user'
       primaryEmail:
-        type: "string"
-        description: "The primary email of a user"
+        type: 'string'
+        description: 'The primary email of a user'
       profession:
-        type: "string"
-        description: "The profession of a user"
+        type: 'string'
+        description: 'The profession of a user'
       room_number:
-        type: "string"
-        description: "The room number of a user"
+        type: 'string'
+        description: 'The room number of a user'
       sales_volume:
-        type: "string"
-        description: "The sales volume of a user"
+        type: 'string'
+        description: 'The sales volume of a user'
       smtpPort:
-        type: "integer"
-        format: "int32"
-        description: "The smtp port of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The smtp port of a user'
       smtpSchema:
-        type: "string"
-        description: "The smtp schema of a user"
+        type: 'string'
+        description: 'The smtp schema of a user'
       smtpServer:
-        type: "string"
-        description: "The smtp server of a user"
+        type: 'string'
+        description: 'The smtp server of a user'
       smtpServerString:
-        type: "string"
-        description: "The smtp server string of a user"
+        type: 'string'
+        description: 'The smtp server string of a user'
       spouse_name:
-        type: "string"
-        description: "The spouse name of a user"
+        type: 'string'
+        description: 'The spouse name of a user'
       state_business:
-        type: "string"
-        description: "The state (business) of a user"
+        type: 'string'
+        description: 'The state (business) of a user'
       state_home:
-        type: "string"
-        description: "The state (home) of a user"
+        type: 'string'
+        description: 'The state (home) of a user'
       state_other:
-        type: "string"
-        description: "Other state of a user"
+        type: 'string'
+        description: 'Other state of a user'
       street_business:
-        type: "string"
-        description: "The street (business) of a user"
+        type: 'string'
+        description: 'The street (business) of a user'
       street_home:
-        type: "string"
-        description: "The street (home) of a user"
+        type: 'string'
+        description: 'The street (home) of a user'
       street_other:
-        type: "string"
-        description: "Other street of a user"
+        type: 'string'
+        description: 'Other street of a user'
       suffix:
-        type: "string"
-        description: "The suffix of a user"
+        type: 'string'
+        description: 'The suffix of a user'
       sur_name:
-        type: "string"
-        description: "The lastname of a user"
+        type: 'string'
+        description: 'The lastname of a user'
       tax_id:
-        type: "string"
-        description: "The tax id of a user"
+        type: 'string'
+        description: 'The tax id of a user'
       telephone_assistant:
-        type: "string"
-        description: "The telephone assistant of a user"
+        type: 'string'
+        description: 'The telephone assistant of a user'
       telephone_business1:
-        type: "string"
-        description: "The telephone business 1 of a user"
+        type: 'string'
+        description: 'The telephone business 1 of a user'
       telephone_business2:
-        type: "string"
-        description: "The telephone business 2 of a user"
+        type: 'string'
+        description: 'The telephone business 2 of a user'
       telephone_callback:
-        type: "string"
-        description: "The telephone callback of a user"
+        type: 'string'
+        description: 'The telephone callback of a user'
       telephone_car:
-        type: "string"
-        description: "The telephone car of a user"
+        type: 'string'
+        description: 'The telephone car of a user'
       telephone_company:
-        type: "string"
-        description: "The telephone (company) of a user"
+        type: 'string'
+        description: 'The telephone (company) of a user'
       telephone_home1:
-        type: "string"
-        description: "The telephone (home 1) of a user"
+        type: 'string'
+        description: 'The telephone (home 1) of a user'
       telephone_home2:
-        type: "string"
-        description: "The telephone (home 2) of a user"
+        type: 'string'
+        description: 'The telephone (home 2) of a user'
       telephone_ip:
-        type: "string"
-        description: "The telephone (ip) of a user"
+        type: 'string'
+        description: 'The telephone (ip) of a user'
       telephone_isdn:
-        type: "string"
-        description: "The telephone (isdn) of a user"
+        type: 'string'
+        description: 'The telephone (isdn) of a user'
       telephone_other:
-        type: "string"
-        description: "Other telephone of a user"
+        type: 'string'
+        description: 'Other telephone of a user'
       telephone_pager:
-        type: "string"
-        description: "The telephone pager of a user"
+        type: 'string'
+        description: 'The telephone pager of a user'
       telephone_primary:
-        type: "string"
-        description: "The primary telephone of a user"
+        type: 'string'
+        description: 'The primary telephone of a user'
       telephone_radio:
-        type: "string"
-        description: "The telephone (radio) of a user"
+        type: 'string'
+        description: 'The telephone (radio) of a user'
       telephone_telex:
-        type: "string"
-        description: "The telephone (telex) of a user"
+        type: 'string'
+        description: 'The telephone (telex) of a user'
       telephone_ttytdd:
-        type: "string"
-        description: "The telephone (ttytdd) of a user"
+        type: 'string'
+        description: 'The telephone (ttytdd) of a user'
       timezone:
-        type: "string"
-        description: "The timezone of a user"
+        type: 'string'
+        description: 'The timezone of a user'
       title:
-        type: "string"
-        description: "The title of a user"
+        type: 'string'
+        description: 'The title of a user'
       uploadFileSizeLimit:
-        type: "integer"
-        format: "int32"
-        description: "The uploadFileSizeLimit of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The uploadFileSizeLimit of a user'
       uploadFileSizeLimitPerFile:
-        type: "integer"
-        format: "int32"
-        description: "The uploadFileSizeLimitPerFile of a user"
+        type: 'integer'
+        format: 'int32'
+        description: 'The uploadFileSizeLimitPerFile of a user'
       url:
-        type: "string"
-        description: "The url of a user"
+        type: 'string'
+        description: 'The url of a user'
       usedQuota:
-        type: "integer"
-        format: "int64"
-        description: "The usedQuota of a user"
+        type: 'integer'
+        format: 'int64'
+        description: 'The usedQuota of a user'
       userAttributes:
-        type: "object"
-        format: "StringMapMap"
-        description: "The attributes of a user"
+        type: 'object'
+        format: 'StringMapMap'
+        description: 'The attributes of a user'
       userfield01:
-        type: "string"
-        description: "The userfield01 of a user"
+        type: 'string'
+        description: 'The userfield01 of a user'
       userfield02:
-        type: "string"
-        description: "The userfield02 of a user"
+        type: 'string'
+        description: 'The userfield02 of a user'
       userfield03:
-        type: "string"
-        description: "The userfield03 of a user"
+        type: 'string'
+        description: 'The userfield03 of a user'
       userfield04:
-        type: "string"
-        description: "The userfield04 of a user"
+        type: 'string'
+        description: 'The userfield04 of a user'
       userfield05:
-        type: "string"
-        description: "The userfield05 of a user"
+        type: 'string'
+        description: 'The userfield05 of a user'
       userfield06:
-        type: "string"
-        description: "The userfield06 of a user"
+        type: 'string'
+        description: 'The userfield06 of a user'
       userfield07:
-        type: "string"
-        description: "The userfield07 of a user"
+        type: 'string'
+        description: 'The userfield07 of a user'
       userfield08:
-        type: "string"
-        description: "The userfield08 of a user"
+        type: 'string'
+        description: 'The userfield08 of a user'
       userfield09:
-        type: "string"
-        description: "The userfield09 of a user"
+        type: 'string'
+        description: 'The userfield09 of a user'
       userfield10:
-        type: "string"
-        description: "The userfield10 of a user"
+        type: 'string'
+        description: 'The userfield10 of a user'
       userfield11:
-        type: "string"
-        description: "The userfield11 of a user"
+        type: 'string'
+        description: 'The userfield11 of a user'
       userfield12:
-        type: "string"
-        description: "The userfield12 of a user"
+        type: 'string'
+        description: 'The userfield12 of a user'
       userfield13:
-        type: "string"
-        description: "The userfield13 of a user"
+        type: 'string'
+        description: 'The userfield13 of a user'
       userfield14:
-        type: "string"
-        description: "The userfield14 of a user"
+        type: 'string'
+        description: 'The userfield14 of a user'
       userfield15:
-        type: "string"
-        description: "The userfield15 of a user"
+        type: 'string'
+        description: 'The userfield15 of a user'
       userfield16:
-        type: "string"
-        description: "The userfield16 of a user"
+        type: 'string'
+        description: 'The userfield16 of a user'
       userfield17:
-        type: "string"
-        description: "The userfield17 of a user"
+        type: 'string'
+        description: 'The userfield17 of a user'
       userfield18:
-        type: "string"
-        description: "The userfield18 of a user"
+        type: 'string'
+        description: 'The userfield18 of a user'
       userfield19:
-        type: "string"
-        description: "The userfield19 of a user"
+        type: 'string'
+        description: 'The userfield19 of a user'
       userfield20:
-        type: "string"
-        description: "The userfield20 of a user"
+        type: 'string'
+        description: 'The userfield20 of a user'
       primaryAccountName:
-        type: "string"
-        description: "The primaryAccountName of a user"
+        type: 'string'
+        description: 'The primaryAccountName of a user'
       convert_drive_user_folders:
-        type: "boolean"
-        description: "The convert_drive_user_folders flag of a user"
+        type: 'boolean'
+        description: 'The convert_drive_user_folders flag of a user'
     example:
-      name: "username"
-      display_name: "Firstname Lastname"
-      given_name: "Firstname"
-      sur_name: "Lastname"
-      password: "secret"
-      email: "firstname.lastname@example.com"
-      email1: "firstname.lastname@example.com"
-      primaryEmail: "firstname.lastname@example.com"
+      name: 'username'
+      display_name: 'Firstname Lastname'
+      given_name: 'Firstname'
+      sur_name: 'Lastname'
+      password: 'secret'
+      email: 'firstname.lastname@example.com'
+      email1: 'firstname.lastname@example.com'
+      primaryEmail: 'firstname.lastname@example.com'
   Database:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "password"
-    - "master"
+    - 'name'
+    - 'password'
+    - 'master'
     properties:
       clusterWeight:
-        type: "integer"
-        format: "int32"
-        description: "The clusterWeight of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The clusterWeight of the database object'
       currentUnits:
-        type: "integer"
-        format: "int32"
-        description: "The currentUnits of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The currentUnits of the database object'
       driver:
-        type: "string"
-        description: "The driver of the database object"
+        type: 'string'
+        description: 'The driver of the database object'
       id:
-        type: "integer"
-        format: "int32"
-        description: "The id of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The id of the database object'
       login:
-        type: "string"
-        description: "The login of the database object"
+        type: 'string'
+        description: 'The login of the database object'
       master:
-        type: "boolean"
-        description: "The master flag of the database object"
+        type: 'boolean'
+        description: 'The master flag of the database object'
       masterId:
-        type: "integer"
-        format: "int32"
-        description: "The master id reference of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The master id reference of the database object'
       maxUnits:
-        type: "integer"
-        format: "int32"
-        description: "The maxUnits of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The maxUnits of the database object'
       name:
-        type: "string"
-        description: "The name of the database object"
+        type: 'string'
+        description: 'The name of the database object'
       password:
-        type: "string"
-        description: "The password of the database object"
+        type: 'string'
+        description: 'The password of the database object'
       poolHardLimit:
-        type: "integer"
-        format: "int32"
-        description: "The poolHardLimit of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The poolHardLimit of the database object'
       poolInitial:
-        type: "integer"
-        format: "int32"
-        description: "The poolInitial of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The poolInitial of the database object'
       poolMax:
-        type: "integer"
-        format: "int32"
-        description: "The poolMax of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The poolMax of the database object'
       read_id:
-        type: "integer"
-        format: "int32"
-        description: "The database read id reference of the database object"
+        type: 'integer'
+        format: 'int32'
+        description: 'The database read id reference of the database object'
       scheme:
-        type: "string"
-        description: "The scheme of the database object"
+        type: 'string'
+        description: 'The scheme of the database object'
       url:
-        type: "string"
-        description: "The url of the database object"
+        type: 'string'
+        description: 'The url of the database object'
   Filestore:
-    type: "object"
+    type: 'object'
     required:
-    - "url"
+    - 'url'
     properties:
       currentContexts:
-        type: "integer"
-        format: "int32"
-        description: ""
+        type: 'integer'
+        format: 'int32'
+        description: ''
       id:
-        type: "integer"
-        format: "int32"
-        description: ""
+        type: 'integer'
+        format: 'int32'
+        description: ''
       maxContexts:
-        type: "integer"
-        format: "int32"
-        description: ""
+        type: 'integer'
+        format: 'int32'
+        description: ''
       reserved:
-        type: "integer"
-        format: "int64"
-        description: ""
+        type: 'integer'
+        format: 'int64'
+        description: ''
       size:
-        type: "integer"
-        format: "int64"
-        description: ""
+        type: 'integer'
+        format: 'int64'
+        description: ''
       url:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       used:
-        type: "integer"
-        format: "int64"
-        description: ""
+        type: 'integer'
+        format: 'int64'
+        description: ''
   Publication:
-    type: "object"
+    type: 'object'
     properties:
       userId:
-        type: "integer"
-        format: "int64"
-        description: ""
+        type: 'integer'
+        format: 'int64'
+        description: ''
       id:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       entityId:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       module:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       name:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       description:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
   UserModuleAccess:
-    type: "object"
+    type: 'object'
     properties:
       OLOX20:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       USM:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       activeSync:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       calendar:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       collectEmailAddresses:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       contacts:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       delegateTask:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       deniedPortal:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       editGroup:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       editPassword:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       editPublicFolders:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       editResource:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       globalAddressBookDisabled:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       ical:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       infostore:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       multipleMailAccounts:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       publicFolderEditable:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       publication:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       readCreateSharedFolders:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       subscription:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       syncml:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       tasks:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       vcard:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       webdav:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       webdavXml:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       webmail:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
   SOAPStringMapMap:
-    type: "object"
+    type: 'object'
     required:
-    - "entries"
+    - 'entries'
     properties:
       entries:
         type: array
         items:
           $ref: '#/definitions/SOAPMapEntry'
   SOAPMapEntry:
-    type: "object"
+    type: 'object'
     required:
-    - "key"
-    - "value"
+    - 'key'
+    - 'value'
     properties:
       key:
-        type: "string"
+        type: 'string'
       value:
         $ref: '#/definitions/Entry'
   SOAPStringMap:
-    type: "object"
+    type: 'object'
     required:
-    - "entries"
+    - 'entries'
     properties:
       entries:
         type: array
         items:
           $ref: '#/definitions/SOAPMapEntry'
   Entry:
-    type: "object"
+    type: 'object'
     required:
-    - "key"
-    - "value"
+    - 'key'
+    - 'value'
     properties:
       key:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       value:
-        type: "string"
+        type: 'string'
   OXAPAccount:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
+    - 'name'
     properties:
       id:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       name:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       description:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
   Endpoint:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "interface"
+    - 'name'
+    - 'interface'
     properties:
       id:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       name:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       description:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       oxaas:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       interface:
         type: array
         items:
           $ref: '#/definitions/EndpointInterface'
   EndpointInterface:
-    type: "object"
+    type: 'object'
     required:
-    - "name"
-    - "type"
+    - 'name'
+    - 'type'
     properties:
       id:
-        type: "string"
+        type: 'string'
       name:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       description:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       location:
-        type: "string"
-        description: "The url / address / location of the endpoint interface"
+        type: 'string'
+        description: 'The url / address / location of the endpoint interface'
       ssl_verify:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       login:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       password:
-        type: "string"
-        description: ""
+        type: 'string'
+        description: ''
       ignore_binding:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       reseller:
-        type: "boolean"
-        description: ""
+        type: 'boolean'
+        description: ''
       type:
-        type: "string"
+        type: 'string'
         enum:
         - appsuite-soap
         - dovecot-ldap-dovecotMailboxUid
         - dovecot-ldap-dovecotMailPrimaryAddress
         - dovecot-ldap-dovecotMailAliasAddress
         - dovecot-ldap-dovecotUserQuotaStorage
-        description: >
-          "Endpoint Interface Type":
+        description: >-
+          'Endpoint Interface Type':
           * appsuite-soap - The App Suite SOAP API Endpoint
           * dovecot-ldap-dovecotMailboxUid - The Dovecot LDAP Endpoint for Mailbox Information
           * dovecot-ldap-dovecotMailPrimaryAddress - The Dovecot LDAP Endpoint for Primary Mail Address Information

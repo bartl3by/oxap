@@ -27,13 +27,3 @@
   command: pip3.6 install -r /opt/oxap/middleware/requirements.txt
   when: ansible_os_family == "RedHat"
   tags: python_install
-
-- name: install Tornado for python
-  command: pip3.6 install tornado
-  when: ansible_os_family == "RedHat"
-  tags: python_install
-
-- name: install Zeep for python
-  command: pip3.6 install zeep
-  when: ansible_os_family == "RedHat"
-  tags: python_install

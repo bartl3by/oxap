@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 # import models into model package
 from .context import Context
+from .data import Data
 from .database import Database
 from .endpoint import Endpoint
 from .endpoint_interface import EndpointInterface
@@ -21,5 +22,6 @@ from .restriction import Restriction
 from .soap_map_entry import SOAPMapEntry
 from .soap_string_map import SOAPStringMap
 from .soap_string_map_map import SOAPStringMapMap
+from .session import Session
 from .user import User
 from .user_module_access import UserModuleAccess

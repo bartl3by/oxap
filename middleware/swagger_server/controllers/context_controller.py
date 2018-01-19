@@ -1,20 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import json
+import logging
+
 import connexion
 from swagger_server.models.context import Context
 from swagger_server.models.user import User
-from datetime import date, datetime
-from typing import List, Dict
-from six import iteritems
-from ..util import deserialize_date, deserialize_datetime
-from zeep import helpers, Client
-import json
-from swagger_server.oxap.service_types import ContextService
-from swagger_server.oxap.soap_handler import SOAPHandler
 from swagger_server.oxap.exceptions.context_exceptions import *
-import logging
-import sys
+from swagger_server.oxap.types.service_types import ContextService
+from swagger_server.oxap.soap.base_soap_handler import SOAPHandler
+from zeep import helpers
 
 
 def change_context(context_id: str, account_id: str, endpoint_id: str, payload: dict):

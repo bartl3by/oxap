@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tornado.options import options
-import yaml
 import os
 from typing import List
-from swagger_server.oxap.endpoint_interface import EndpointInterface
-from swagger_server.oxap.endpoint import Endpoint
-from swagger_server.oxap.endpoint_interface_types import AppsuiteSOAP
-from swagger_server.oxap.soap_types import SOAPStandard, SOAPReseller
-from swagger_server.oxap.service_types import ContextService
+
+import yaml
+from swagger_server.oxap.models.endpoint import Endpoint
+from swagger_server.oxap.models.endpoint_interface import EndpointInterface
+from swagger_server.oxap.types.endpoint_interface_types import AppsuiteSOAP
+from tornado.options import options
 
 
 class OXAPAccount(object):

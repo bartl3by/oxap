@@ -1,10 +1,51 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import connexion
-from swagger_server.models.endpoint import Endpoint
-from swagger_server.models.endpoint_interface import EndpointInterface
-from datetime import date, datetime
-from typing import List, Dict
-from six import iteritems
-from ..util import deserialize_date, deserialize_datetime
+from swagger_server.models.data import Data
+
+from swagger_server.oxap import session_manager
+from swagger_server.oxap.exceptions.session_exceptions import ClientSessionIdMissingException, \
+    NoSuchSessionException, SessionException
+from swagger_server.oxap.session_manager import cookie_name
+
+
+def create_session(data):
+    """
+    Create an OXAP session
+    Create an OXAP session
+    :param data: Session Information
+    :type data: dict | bytes
+
+    :rtype: Session
+    """
+    if connexion.request.is_json:
+        data = Data.from_dict(connexion.request.get_json())
+
+    session = session_manager.create_session(data.account_id, data.endpoint_id, data.role, data.username, data.password)
+
+    return session, 200, {
+        'Set-Cookie': session.session_cookie_path + '=' + session.id + '; expires=' + session.expiration_date + '; path=/'
+    }
+
+
+def delete_session():
+    """
+    Refresh an OXAP session
+    Refresh an OXAP session
+
+    :rtype: None
+    """
+    try:
+        session_manager.delete_session()
+
+        return str(e), 200, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
+    except ClientSessionIdMissingException as e:
+        return str(e), 401
+    except NoSuchSessionException as e:
+        return str(e), 401, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
+    except SessionException as e:
+        return str(e), 400, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
 
 
 def get_endpoint_by_id(endpointId):
@@ -63,3 +104,24 @@ def get_oxap_account_endpoints():
     :rtype: List[Endpoint]
     """
     return 'do some magic!'
+
+
+def get_session_information():
+    """
+    Get OXAP session information
+    Get OXAP session information
+
+    :rtype: Session
+    """
+    try:
+        session = session_manager.get_session_information(True)
+
+        return session, 200, {
+            'Set-Cookie': session.session_cookie_path + '=' + session.id + '; expires=' + session.expiration_date + '; path=/'
+        }
+    except ClientSessionIdMissingException as e:
+        return str(e), 401
+    except NoSuchSessionException as e:
+        return str(e), 401, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
+    except SessionException as e:
+        return str(e), 400, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
