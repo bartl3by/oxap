@@ -19,14 +19,14 @@ from swagger_server.oxap.exceptions.session_exceptions import ClientSessionIdMis
 cookie_name = 'Oxapsessionid'
 
 
-def __verify_client_cookie(*outer_args,**outer_kwargs):
+def __verify_client_cookie(*outer_args, **outer_kwargs):
     def decorator(fn):
-        def decorated(*args,**kwargs):
+        def decorated(*args, **kwargs):
             if connexion.request.cookies is None \
                     or cookie_name not in connexion.request.cookies \
                     or connexion.request.cookies[cookie_name] is None:
                 raise ClientSessionIdMissingException('Missing session id in request')
-            return fn(*args,**kwargs)
+            return fn(*args, **kwargs)
         return decorated
     return decorator
 
@@ -40,8 +40,10 @@ def __get_method_scope(method: str) -> str:
 
 def __refresh_session(memcache: Client, session: Session) -> Session:
     if memcache.check_key(connexion.request.cookies[cookie_name]):
-        session.expiration_date = (datetime.datetime.utcnow() + datetime.timedelta(seconds=options.session_timeout)).strftime("%a, %d-%b-%Y %H:%M:%S GMT")
-        memcache.set(session.id, json.dumps(session.to_dict()), options.session_timeout, options.cache_session_memcache_noreply)
+        session.expiration_date = (datetime.datetime.utcnow(
+        ) + datetime.timedelta(seconds=options.session_timeout)).strftime("%a, %d-%b-%Y %H:%M:%S GMT")
+        memcache.set(session.id, json.dumps(session.to_dict()),
+                     options.session_timeout, options.cache_session_memcache_noreply)
         return session
     else:
         raise NoSuchSessionException('Session id is unknown or expired')
@@ -70,7 +72,8 @@ def create_session(account_id: str, endpoint_id: str, role: str, username: str, 
                       endpoint_id,
                       role)
 
-    memcache.add(session.id, json.dumps(session.to_dict()), options.session_timeout, options.cache_session_memcache_noreply)
+    memcache.add(session.id, json.dumps(session.to_dict()),
+                 options.session_timeout, options.cache_session_memcache_noreply)
     memcache.close()
 
     return session
@@ -86,7 +89,8 @@ def get_session_information(refresh: bool) -> Session:
 
     session = Session.from_dict(json.loads(memcache.get(connexion.request.cookies[cookie_name])))
     if __session_expired(session):
-        memcache.delete(connexion.request.cookies[cookie_name], options.cache_session_memcache_noreply)
+        memcache.delete(connexion.request.cookies[cookie_name],
+                        options.cache_session_memcache_noreply)
         memcache.close()
         raise SessionExpiredException('Session id is unknown or expired')
     else:
@@ -101,7 +105,8 @@ def delete_session():
     memcache = __get_memcache_client()
 
     if memcache.check_key(connexion.request.cookies[cookie_name]):
-        memcache.delete(connexion.request.cookies[cookie_name], options.cache_session_memcache_noreply)
+        memcache.delete(connexion.request.cookies[cookie_name],
+                        options.cache_session_memcache_noreply)
         memcache.close()
         return
     else:

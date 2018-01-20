@@ -17,7 +17,8 @@ from .encoder import JSONEncoder
 
 
 if __name__ == '__main__':
-    app = connexion.FlaskApp(__name__, specification_dir='./swagger/', swagger_json=True, swagger_ui=True)
+    app = connexion.FlaskApp(__name__, specification_dir='./swagger/',
+                             swagger_json=True, swagger_ui=True)
     app.app.json_encoder = JSONEncoder
 
     define_configuration_options()
@@ -26,8 +27,8 @@ if __name__ == '__main__':
 
     app.add_api('swagger.yaml',
                 arguments={'title': 'This is the Open-Xchange Admin Panel API. This API is the '
-                                                    'connector to the middleware that handles provisioning tasks '
-                                                    'towards Open-Xchange products such as Dovecot or App Suite.'},
+                           'connector to the middleware that handles provisioning tasks '
+                           'towards Open-Xchange products such as Dovecot or App Suite.'},
                 resolver=SessionEnhancedResolver())
 
     @app.app.before_request

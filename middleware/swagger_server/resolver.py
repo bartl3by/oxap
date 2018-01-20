@@ -19,7 +19,8 @@ class SessionEnhancedResolver(Resolver):
             endpoint_name = flask_utils.flaskify_endpoint(Resolver.resolve_operation_id(self, operation),
                                                           operation.randomize_endpoint)
 
-            logging.debug('Registering scope \'' + str(security_scope) + '\' for method ' + base_path + '.' + endpoint_name)
+            logging.debug('Registering scope \'' + str(security_scope) +
+                          '\' for method ' + base_path + '.' + endpoint_name)
             register_method_scope(base_path + '.' + endpoint_name, security_scope)
 
         return Resolver.resolve_operation_id(self, operation)

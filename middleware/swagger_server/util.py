@@ -133,7 +133,6 @@ def _deserialize_list(data, boxed_type):
             for sub_data in data]
 
 
-
 def _deserialize_dict(data, boxed_type):
     """
     Deserializes a dict and its elements.

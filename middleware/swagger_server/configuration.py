@@ -14,9 +14,11 @@ def define_configuration_options():
     define("server_port", default="8080", help="Port of the tornado http server")
 
     # Caching Configuration
-    define("cache_wsdl_store_path", default="wsdl_cache.db", help="Path to the SQLite WSDL cache database")
+    define("cache_wsdl_store_path", default="wsdl_cache.db",
+           help="Path to the SQLite WSDL cache database")
     define("cache_wsdl_timeout", default=60, help="Cache timeout in seconds for the WSDL caching")
-    define("cache_session_memcache_host", default="localhost", help="Host address of the Memcache server")
+    define("cache_session_memcache_host", default="localhost",
+           help="Host address of the Memcache server")
     define("cache_session_memcache_port", default=11211, help="Host port of the Memcache server")
     define("cache_session_memcache_timeout", default=60,
            help="Cache timeout in seconds used for the Memcache server connection")

@@ -81,7 +81,7 @@ class OXAPAccount(object):
                         endpoint_interface['ignore_binding'],
                         endpoint_interface['reseller'],
                         endpoint_interface['type']
-                        )
+                    )
             self.endpoints[endpoint['id']] = Endpoint(
                 self.oxap_account_id,
                 endpoint['id'],
@@ -89,4 +89,4 @@ class OXAPAccount(object):
                 endpoint['description'],
                 endpoint['oxaas'],
                 endpoint_interfaces
-                )
+            )

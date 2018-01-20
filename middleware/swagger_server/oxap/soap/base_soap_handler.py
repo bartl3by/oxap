@@ -18,6 +18,7 @@ from zeep.cache import SqliteCache
 from zeep.exceptions import Fault
 from zeep.transports import Transport
 
+
 class SOAPHandler(object):
 
     def __init__(self, oxap_account_id: str, endpoint_id: str, service_type):
@@ -27,7 +28,8 @@ class SOAPHandler(object):
 
         self.oxap_account = OXAPAccount(self.oxap_account_id)
         self.endpoint = self.oxap_account.getEndpoint(self.endpoint_id)
-        self.endpoint_interface = self.oxap_account.getEndpointInterfaceByType(self.endpoint_id, AppsuiteSOAP())
+        self.endpoint_interface = self.oxap_account.getEndpointInterfaceByType(
+            self.endpoint_id, AppsuiteSOAP())
 
         self.client = self._initiate_oxsoap_client()
         self.service = self._create_oxsoap_service()
@@ -39,8 +41,8 @@ class SOAPHandler(object):
         soap_context_instance = soap_context()
         for key in context.attribute_map:
             if hasattr(context, key) \
-                and not isinstance(getattr(context, key), (Model)) \
-                and getattr(context, key) is not None:
+                    and not isinstance(getattr(context, key), (Model)) \
+                    and getattr(context, key) is not None:
                 setattr(soap_context_instance, context.attribute_map[key], getattr(context, key))
 
         setattr(soap_context_instance, "id", context_id)
@@ -56,7 +58,8 @@ class SOAPHandler(object):
 
     def create_context(self, context: Context, user: User):
         if self.endpoint_interface.getSOAPType() == SOAPReseller and context.name is None:
-            raise Exception("'name' is a required property during context creation on a reseller type SOAP interface")
+            raise Exception(
+                "'name' is a required property during context creation on a reseller type SOAP interface")
 
         soap_context = self._get_oxsoap_context_object()
         soap_admin_user = self._get_oxsoap_user_object()
@@ -65,15 +68,15 @@ class SOAPHandler(object):
         soap_context_instance = soap_context()
         for key in context.attribute_map:
             if hasattr(context, key) \
-                and not isinstance(getattr(context, key), (Model)) \
-                and getattr(context, key) is not None:
-                    setattr(soap_context_instance, context.attribute_map[key], getattr(context, key))
+                    and not isinstance(getattr(context, key), (Model)) \
+                    and getattr(context, key) is not None:
+                setattr(soap_context_instance, context.attribute_map[key], getattr(context, key))
 
         soap_admin_user_instance = soap_admin_user()
         for key in user.attribute_map:
             if hasattr(user, key) \
-                and not isinstance(getattr(user, key), (Model)) \
-                and getattr(user, key) is not None:
+                    and not isinstance(getattr(user, key), (Model)) \
+                    and getattr(user, key) is not None:
                 setattr(soap_admin_user_instance, user.attribute_map[key], getattr(user, key))
 
         soap_schema_select_strategy_instance = soap_schema_select_strategy()
