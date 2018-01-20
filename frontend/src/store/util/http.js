@@ -23,5 +23,17 @@ export default {
     return window.fetch('/' + API_VERSION + '/' + endpoint + (params && params.length ? '?' + params : ''), {
       credentials: 'include'
     }).then(response => response.json())
+  },
+  post (endpoint, data) {
+    // perform fetch and return response (if any)
+    return window.fetch('/' + API_VERSION + '/' + endpoint, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      credentials: 'include'
+    }).then(response => response.json())
   }
 }

@@ -9,8 +9,22 @@ class ApiException extends Exception {
 
 export default {
 
-  getContexts: () => {
-    return http.get('context')
+  /**
+   * List all endpoints available by the server
+   */
+  getEndpoints: () => {
+    return http.get('oxap/endpoints')
+  },
+
+  createSession: (creds) => {
+    return http.post('oxap/session', creds)
+  },
+
+  /**
+   * Get available contexts for an accountId/endpointId
+   */
+  getContexts: (accountId, endpointId) => {
+    return http.get('context', { accountId, endpointId })
       .then(json => {
         if (json.error) {
           throw new ApiException('Error fetching contexts.')

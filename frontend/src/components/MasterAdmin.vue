@@ -16,7 +16,7 @@
 
 <script>
   import Vue from 'vue'
-  import ContextsList from './ContextsList'
+  import ContextsList from './partials/ContextsList'
 
   Vue.component('ox-contexts-list', ContextsList)
 
