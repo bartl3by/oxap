@@ -119,7 +119,6 @@ def session_in_scope(method: str, refresh: bool) -> bool:
         return True
 
     session = get_session_information(refresh)
-    print(connexion.request.headers)
     if session.role == __get_method_scope(method):
         return True
 
@@ -130,7 +129,7 @@ def method_has_scope(method: str) -> bool:
     return __get_method_scope(method) is not (None, '')
 
 
-def get_method_scope(method: str) -> bool:
+def get_method_scope(method: str) -> str:
     return __get_method_scope(method)
 
 
