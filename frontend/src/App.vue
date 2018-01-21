@@ -64,9 +64,6 @@ export default {
     sessions: state => state.App.sessions,
     sessionsCount: state => state.App.sessionsCount
   }),
-  data: {
-    sessionsCount: 0
-  },
   watch: {
     sessions: function () {
       if (!this.sessions.hasOwnProperty(this.currentApp)) this.$router.push('/login/' + this.currentApp)
