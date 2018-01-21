@@ -9,8 +9,6 @@ import router from './router'
 // theme.scss sets sass variables and then imports the bootstrap scss file to override them accordingly
 import './assets/theme.scss'
 
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 

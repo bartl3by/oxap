@@ -20,6 +20,10 @@ export default {
     return http.post('oxap/session', creds)
   },
 
+  deleteSession: (id) => {
+    return http.delete('oxap/session', { 'Oxapsessionid': id })
+  },
+
   /**
    * Get available contexts for an accountId/endpointId
    */

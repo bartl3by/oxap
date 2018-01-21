@@ -9,6 +9,22 @@
           <b-nav-item @click="selectMasterAdmin" :class="{ active: isActiveMasterAdmin }">Master Admin</b-nav-item>
           <b-nav-item @click="selectContextAdmin" :class="{ active: isActiveContextAdmin }">Context Admin</b-nav-item>
         </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown right v-if="sessionsCount">
+            <!-- Using button-content slot -->
+            <template slot="button-content">
+              <i class="fa fa-users"></i> Sessions
+            </template>
+            <b-dropdown-item v-for="(session, key) in sessions" :key="key" @click="selectApp(key)">
+              <b-media right-align vertical-align="center">
+                <b-button slot="aside" title="Logout this session" @click="logout(session.id)"><i class="fa fa-sign-out"></i></b-button>
+                <h6>{{ key }}</h6>
+                <small>{{ session.endpoint.endpoint_name }}</small>
+              </b-media>  
+            </b-dropdown-item>
+            
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
       </b-collapse>
     </b-navbar>
       
@@ -35,14 +51,27 @@ export default {
     },
     selectContextAdmin () {
       this.selectApp(APP_TYPES.CONTEXT_ADMIN)
+    },
+    logout (id) {
+      this.$store.dispatch('logout', id)
     }
   },
   computed: mapState({
     isActiveMasterAdmin: state => (state.App.currentApp === APP_TYPES.MASTER_ADMIN),
     isActiveContextAdmin: state => (state.App.currentApp === APP_TYPES.CONTEXT_ADMIN),
     currentApp: state => state.App.currentApp,
-    endpoints: state => state.App.endpoints
-  })
+    endpoints: state => state.App.endpoints,
+    sessions: state => state.App.sessions,
+    sessionsCount: state => state.App.sessionsCount
+  }),
+  data: {
+    sessionsCount: 0
+  },
+  watch: {
+    sessions: function () {
+      if (!this.sessions.hasOwnProperty(this.currentApp)) this.$router.push('/login/' + this.currentApp)
+    }
+  }
 }
 </script>
 
