@@ -35,5 +35,29 @@ export default {
       body: JSON.stringify(data),
       credentials: 'include'
     }).then(response => response.json())
+  },
+  put (endpoint, data) {
+    // perform fetch and return response (if any)
+    return window.fetch('/' + API_VERSION + '/' + endpoint, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      credentials: 'include'
+    }).then(response => response.json())
+  },
+  delete (endpoint, data) {
+    // perform fetch and return response (if any)
+    return window.fetch('/' + API_VERSION + '/' + endpoint, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      credentials: 'include'
+    }).then(response => response.json())
   }
 }

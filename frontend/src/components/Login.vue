@@ -52,10 +52,13 @@
         }
 
         const router = this.$router
+        const store = this.$store
 
         // attempt login
         this.$store.dispatch('login', { app: returnApp, creds }).then(function (data) {
-          router.replace({ name: returnApp })
+          store.dispatch('setCurrentApp', returnApp).then(function () {
+            router.replace({ name: returnApp })
+          })
         })
 
         return false
