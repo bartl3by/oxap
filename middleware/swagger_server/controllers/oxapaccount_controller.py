@@ -39,7 +39,7 @@ def delete_session():
     try:
         session_manager.delete_session()
 
-        return str(e), 200, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
+        return None, 200, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
     except ClientSessionIdMissingException as e:
         return str(e), 401
     except NoSuchSessionException as e:

@@ -104,7 +104,8 @@ def get_session_information(refresh: bool) -> Session:
 def delete_session():
     memcache = __get_memcache_client()
 
-    if memcache.check_key(connexion.request.cookies[cookie_name]):
+    cache_value = memcache.get(connexion.request.cookies[cookie_name])
+    if cache_value is not None:
         memcache.delete(connexion.request.cookies[cookie_name],
                         options.cache_session_memcache_noreply)
         memcache.close()
