@@ -80,14 +80,15 @@ def create_session(account_id: str, endpoint_id: str, role: str, username: str, 
 
 
 @__verify_client_cookie()
-def get_session_information(refresh: bool) -> Session:
+def get_session_information(refresh: bool=True) -> Session:
     memcache = __get_memcache_client()
 
-    if not memcache.check_key(connexion.request.cookies[cookie_name]):
+    cache_value_raw = memcache.get(connexion.request.cookies[cookie_name])
+    if cache_value_raw in (None, ''):
         memcache.close()
         raise NoSuchSessionException('Session id is unknown or expired')
 
-    session = Session.from_dict(json.loads(memcache.get(connexion.request.cookies[cookie_name])))
+    session = Session.from_dict(json.loads(cache_value_raw))
     if __session_expired(session):
         memcache.delete(connexion.request.cookies[cookie_name],
                         options.cache_session_memcache_noreply)

@@ -8,11 +8,12 @@ import yaml
 
 
 def get_all_endpoints():
-    """
-    Get a list of all Open-Xchange Admin Panel account endpoints
+    """Get a list of all Open-Xchange Admin Panel account endpoints
+
     Get a list with restricted (public) information of all Open-Xchange Admin Panel account endpoints
 
-    :rtype: None
+
+    :rtype: List[PublicEndpoint]
     """
     response = []
 
@@ -21,7 +22,7 @@ def get_all_endpoints():
             with open(os.path.join(options.oxap_account_config_dir, file), 'r') as stream:
                 configuration = yaml.load(stream)
                 for currentEndpoint in configuration['OXAPAccount']['endpoint']:
-                    endpoint = {}
+                    endpoint = { }
                     endpoint['oxap_account_id'] = configuration['OXAPAccount']['id']
                     endpoint['oxap_account_name'] = configuration['OXAPAccount']['name']
                     endpoint['oxap_account_description'] = configuration['OXAPAccount']['description']
@@ -29,5 +30,5 @@ def get_all_endpoints():
                     endpoint['endpoint_name'] = currentEndpoint['name']
                     endpoint['endpoint_description'] = currentEndpoint['description']
                     response.append(endpoint)
-                    
+
     return response

@@ -5,36 +5,41 @@ import json
 import logging
 
 import connexion
-from swagger_server.models.context import Context
-from swagger_server.models.user import User
-from swagger_server.oxap.exceptions.context_exceptions import *
-from swagger_server.oxap.types.service_types import ContextService
-from swagger_server.oxap.soap.base_soap_handler import SOAPHandler
 from zeep import helpers
 
+from swagger_server.models.context import Context
+from swagger_server.models.context_create import ContextCreate
+from swagger_server.oxap import session_manager
+from swagger_server.oxap.exceptions.context_exceptions import *
+from swagger_server.oxap.soap.base_soap_handler import SOAPHandler
+from swagger_server.oxap.types.service_types import ContextService
 
-def change_context(context_id: str, account_id: str, endpoint_id: str, payload: dict):
-    """
-    Change a context
+
+def change_context(endpoint_id, context_id, data, Oxapsessionid=None):
+    """Change a context
+
     Change a context within an endpoint
-    :param context_id: Id of the context object that needs to be changed within the given endpoint
-    :type context_id: int
-    :param account_id: Id of the OXAP account
-    :type account_id: str
+
     :param endpoint_id: Id of the OXAP endpoint for this OXAP account
     :type endpoint_id: str
-    :param payload: Context information that will be used to update the context within the given endpoint
-    :type payload: dict | bytes
+    :param context_id: Id of the context object within the given endpoint
+    :type context_id: int
+    :param data: Context information that will be used to update the context within the given endpoint
+    :type data: dict | bytes
+    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :type Oxapsessionid: str
 
     :rtype: None
     """
     if connexion.request.is_json:
         context_object = Context.from_dict(connexion.request.get_json())
 
-    soap_handler = SOAPHandler(account_id, endpoint_id, ContextService)
+    session = session_manager.get_session_information()
+    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
-        logging.info(json.loads(json.dumps(helpers.serialize_object(soap_handler.change_context(context_id, context_object)))))
+        logging.info(
+            json.loads(json.dumps(helpers.serialize_object(soap_handler.change_context(context_id, context_object)))))
     except ContextExistsException as e:
         return str(e), 409
     except DatabaseUpdateException as e:
@@ -61,27 +66,31 @@ def change_context(context_id: str, account_id: str, endpoint_id: str, payload: 
         return str(e), 400
 
 
-def create_context(account_id: str, endpoint_id: str, payload: dict):
-    """
-    Create a new context
+def create_context(endpoint_id, data, Oxapsessionid=None):
+    """Create a new context
+
     Creates a new context within the given endpoint
-    :param account_id: Id of the OXAP account
-    :type account_id: str
+
     :param endpoint_id: Id of the OXAP endpoint for this OXAP account
     :type endpoint_id: str
-    :param payload: Context object that needs to be created within the given endpoint
-    :type payload: dict | bytes
+    :param data: 
+    :type data: dict | bytes
+    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :type Oxapsessionid: str
 
     :rtype: Context
     """
     if connexion.request.is_json:
-        context_object = Context.from_dict(connexion.request.get_json()['context'])
-        user_object = User.from_dict(connexion.request.get_json()['user'])
+        data = ContextCreate.from_dict(connexion.request.get_json())
+        context_object = data.context
+        user_object = data.user
 
-    soap_handler = SOAPHandler(account_id, endpoint_id, ContextService)
+    session = session_manager.get_session_information()
+    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
-        return json.loads(json.dumps(helpers.serialize_object(soap_handler.create_context(context_object, user_object))))
+        return json.loads(
+            json.dumps(helpers.serialize_object(soap_handler.create_context(context_object, user_object))))
     except ContextExistsException as e:
         return str(e), 409
     except DatabaseUpdateException as e:
@@ -106,20 +115,22 @@ def create_context(account_id: str, endpoint_id: str, payload: dict):
         return str(e), 400
 
 
-def delete_context(context_id: str, account_id: str, endpoint_id: str):
-    """
-    Delete a context
+def delete_context(endpoint_id, context_id, Oxapsessionid=None):
+    """Delete a context
+
     Delete a context within an endpoint
-    :param context_id: Id of the context object that needs to be deleted within the given endpoint
-    :type context_id: int
-    :param account_id: Id of the OXAP account
-    :type account_id: str
+
     :param endpoint_id: Id of the OXAP endpoint for this OXAP account
     :type endpoint_id: str
+    :param context_id: Id of the context object within the given endpoint
+    :type context_id: int
+    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :type Oxapsessionid: str
 
     :rtype: None
     """
-    soap_handler = SOAPHandler(account_id, endpoint_id, ContextService)
+    session = session_manager.get_session_information()
+    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
         logging.info(json.loads(json.dumps(helpers.serialize_object(soap_handler.delete_context(context_id)))))
@@ -149,18 +160,20 @@ def delete_context(context_id: str, account_id: str, endpoint_id: str):
         return str(e), 400
 
 
-def list_all_contexts(account_id: str, endpoint_id: str):
-    """
-    List all contexts
+def list_all_contexts(endpoint_id, Oxapsessionid=None):
+    """List all contexts
+
     List all contexts in given context
-    :param account_id: Id of the OXAP account
-    :type account_id: str
+
     :param endpoint_id: Id of the OXAP endpoint for this OXAP account
     :type endpoint_id: str
+    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :type Oxapsessionid: str
 
     :rtype: List[Context]
     """
-    soap_handler = SOAPHandler(account_id, endpoint_id, ContextService)
+    session = session_manager.get_session_information()
+    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
         return json.loads(json.dumps(helpers.serialize_object(soap_handler.list_all_contexts())))

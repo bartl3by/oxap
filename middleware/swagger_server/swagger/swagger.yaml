@@ -34,7 +34,6 @@ tags:
 schemes:
 - "http"
 - "https"
-security: []
 paths:
   /context:
     get:
@@ -48,11 +47,6 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
-        required: true
-        type: "string"
       - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
@@ -69,6 +63,11 @@ paths:
       responses:
         200:
           description: "Successful Operation"
+          schema:
+            type: "array"
+            title: "Context List"
+            items:
+              $ref: "#/definitions/Context"
         400:
           description: "Bad Request"
           schema:
@@ -104,22 +103,16 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
-        required: true
-        type: "string"
       - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
       - in: "body"
-        name: "payload"
-        description: "Context object that needs to be created within the given endpoint"
+        name: "data"
         required: true
         schema:
-          $ref: "#/definitions/payload"
+          $ref: "#/definitions/ContextCreate"
       - name: "Oxapsessionid"
         in: "header"
         description: "Provide the session id previously acquired from /oxap/session.\
@@ -132,6 +125,8 @@ paths:
         200:
           description: "Successful Operation"
           schema:
+            description: "data desc"
+            title: "data"
             $ref: "#/definitions/Context"
         400:
           description: "Bad Request"
@@ -167,25 +162,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "context_id"
-        in: "path"
-        description: "Id of the context object that needs to be changed within the\
-          \ given endpoint"
-        required: true
-        type: "integer"
-        format: "int32"
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
-        required: true
-        type: "string"
       - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
+      - name: "context_id"
+        in: "path"
+        description: "Id of the context object within the given endpoint"
+        required: true
+        type: "integer"
+        format: "int32"
       - in: "body"
-        name: "payload"
+        name: "data"
         description: "Context information that will be used to update the context\
           \ within the given endpoint"
         required: true
@@ -239,23 +228,17 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "context_id"
-        in: "path"
-        description: "Id of the context object that needs to be deleted within the\
-          \ given endpoint"
-        required: true
-        type: "integer"
-        format: "int32"
-      - name: "account_id"
-        in: "query"
-        description: "Id of the OXAP account"
-        required: true
-        type: "string"
       - name: "endpoint_id"
         in: "query"
         description: "Id of the OXAP endpoint for this OXAP account"
         required: true
         type: "string"
+      - name: "context_id"
+        in: "path"
+        description: "Id of the context object within the given endpoint"
+        required: true
+        type: "integer"
+        format: "int32"
       - name: "Oxapsessionid"
         in: "header"
         description: "Provide the session id previously acquired from /oxap/session.\
@@ -394,9 +377,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "pattern"
+      - name: "endpoint_id"
         in: "query"
-        description: "Pattern of the resource object to find within the given context"
+        description: "Id of the OXAP endpoint for this OXAP account"
+        required: true
+        type: "string"
+      - name: "search_pattern"
+        in: "query"
+        description: "Pattern for the search request"
         required: true
         type: "string"
       responses:
@@ -407,7 +395,7 @@ paths:
       x-open-xchange-soap-reference-operation-interface: "OXResourceService"
       x-open-xchange-soap-reference-operation-id: "list"
       x-swagger-router-controller: "swagger_server.controllers.resource_controller"
-  /resource/{resourceId}:
+  /resource/{resource_id}:
     get:
       tags:
       - "resource"
@@ -417,12 +405,20 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "resourceId"
+      - name: "resource_id"
         in: "path"
-        description: "Id of the resource object to find within the given context"
+        description: "Id of the resource object within the given context"
         required: true
         type: "integer"
         format: "int32"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -442,13 +438,20 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "resourceId"
+      - name: "resource_id"
         in: "path"
-        description: "Id of the resource object that needs to be updated within the\
-          \ given context"
+        description: "Id of the resource object within the given context"
         required: true
         type: "integer"
         format: "int32"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       - in: "body"
         name: "resourceObject"
         description: "Resource object that needs to be updated within the given context"
@@ -470,13 +473,20 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "resourceId"
+      - name: "resource_id"
         in: "path"
-        description: "Id of the resource object that needs to be deleted within the\
-          \ given context"
+        description: "Id of the resource object within the given context"
         required: true
         type: "integer"
         format: "int32"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "Provide the session id previously acquired from /oxap/session.\
+          \ The session id can either be provided through this header parameter or\
+          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
+          \ a request, the cookie supersedes and will be used to verify the session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -524,7 +534,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/inline_response_200"
+              $ref: "#/definitions/PublicEndpoint"
       x-swagger-router-controller: "swagger_server.controllers.endpoints_controller"
   /oxap/account:
     get:
@@ -560,9 +570,10 @@ paths:
           schema:
             type: "array"
             items:
+              description: "Public Open-Xchange Admin Panel account endpoint information"
               $ref: "#/definitions/Endpoint"
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
-  /oxap/account/endpoint/{endpointId}:
+  /oxap/account/endpoint/{endpoint_id}:
     get:
       tags:
       - "oxapaccount"
@@ -572,7 +583,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "path"
         description: "Id of the Open-Xchange Admin Panel Account endpoint object to\
           \ find within the given account"
@@ -585,7 +596,7 @@ paths:
           schema:
             $ref: "#/definitions/Endpoint"
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
-  /oxap/account/endpoint/{endpointId}/endpointinterface:
+  /oxap/account/endpoint/{endpoint_id}/endpointinterface:
     get:
       tags:
       - "oxapaccount"
@@ -597,7 +608,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "path"
         description: "Id of the Open-Xchange Admin Panel Account endpoint object to\
           \ find within the given account"
@@ -612,7 +623,7 @@ paths:
             items:
               $ref: "#/definitions/EndpointInterface"
       x-swagger-router-controller: "swagger_server.controllers.oxapaccount_controller"
-  /oxap/account/endpoint/{endpointId}/endpointinterface/{endpointInterfaceId}:
+  /oxap/account/endpoint/{endpoint_id}/endpointinterface/{endpoint_interface_id}:
     get:
       tags:
       - "oxapaccount"
@@ -623,14 +634,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "endpointId"
+      - name: "endpoint_id"
         in: "path"
         description: "Id of the Open-Xchange Admin Panel Account endpoint object to\
           \ find within the given account"
         required: true
         type: "integer"
         format: "int64"
-      - name: "endpointInterfaceId"
+      - name: "endpoint_interface_id"
         in: "path"
         description: "Id of the Open-Xchange Admin Panel account endpoint interface\
           \ object to find within the given endpoint"
@@ -664,6 +675,20 @@ paths:
       responses:
         200:
           description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/Session"
+          headers:
+            Set-Cookie:
+              type: "string"
+              description: "The session id acquired from this interface can either\
+                \ be provided through a header parameter or as cookie ('Oxapsessionid').\
+                \ The response of /oxap/session will automatically set the cookie\
+                \ if the authentication request was successful, providing the header\
+                \ field in subsequent requests is optional and primarily for documentation\
+                \ purposes due to missing cookie authentication integration in swagger\
+                \ 2.0. If both, header and cookie information will be present in a\
+                \ request the session id provided in the cookie supersedes and will\
+                \ be used to verify the session on the server."
         400:
           description: "Bad Request"
           schema:
@@ -689,10 +714,9 @@ paths:
       parameters:
       - in: "body"
         name: "data"
-        description: "Session Information"
         required: true
         schema:
-          $ref: "#/definitions/data"
+          $ref: "#/definitions/SessionLogin"
       responses:
         200:
           description: "Successful Operation"
@@ -729,6 +753,11 @@ paths:
       responses:
         200:
           description: "Successful Operation"
+          headers:
+            Set-Cookie:
+              type: "string"
+              description: "Send a Set-Cookie delete header to remove the OXAP session\
+                \ cookie from the client."
         400:
           description: "Bad Request"
           schema:
@@ -747,6 +776,47 @@ definitions:
   Error:
     type: "string"
     description: "The cause of the Error"
+  SessionLogin:
+    type: "object"
+    required:
+    - "account_id"
+    - "password"
+    - "username"
+    properties:
+      username:
+        type: "string"
+        description: "Id of the OXAP account"
+      password:
+        type: "string"
+        format: "password"
+        description: "Id of the OXAP endpoint for this OXAP account"
+      account_id:
+        type: "string"
+        description: "Id of the OXAP account"
+      endpoint_id:
+        type: "string"
+        description: "Id of the OXAP endpoint for this OXAP account"
+      role:
+        type: "string"
+        description: "'The type of account that requests the login. If type is ':\
+          \ * oxap - An OXAP Master administrator having access to multiple endpoints\
+          \ * reseller - A Context reseller managing a context within an endpoint\
+          \ (the endpoint_id is required in data object) * context - A Context administrator\
+          \ managing a context within an endpoint (the endpoint_id is required in\
+          \ data object) * user - An Open-Xchange user account (the endpoint_id is\
+          \ required in data object)"
+        enum:
+        - "oxap"
+        - "context"
+        - "reseller"
+        - "user"
+    description: "Session Login Information"
+    example:
+      password: "password"
+      account_id: "account_id"
+      role: "oxap"
+      endpoint_id: "endpoint_id"
+      username: "username"
   Session:
     type: "object"
     required:
@@ -783,6 +853,14 @@ definitions:
         - "reseller"
         - "user"
     description: "OXAP Session"
+    example:
+      account_id: "account_id"
+      role: "oxap"
+      endpoint_id: "endpoint_id"
+      id: "id"
+      creation_date: "creation_date"
+      expiration_date: "expiration_date"
+      session_cookie_path: "session_cookie_path"
   Group:
     type: "object"
     required:
@@ -803,6 +881,11 @@ definitions:
       name:
         type: "string"
         description: "The displayname of the group"
+    example:
+      displayname: "displayname"
+      members: 6
+      name: "name"
+      id: 0
   Resource:
     type: "object"
     required:
@@ -826,6 +909,39 @@ definitions:
       name:
         type: "string"
         description: "The name of the resource"
+    example:
+      displayname: "displayname"
+      name: "name"
+      description: "description"
+      id: 0
+      email: "email"
+  ContextCreate:
+    type: "object"
+    required:
+    - "context"
+    - "user"
+    properties:
+      context:
+        description: "The context information"
+        $ref: "#/definitions/Context"
+      user:
+        description: "The admin user information of a context"
+        $ref: "#/definitions/User"
+    title: "Context"
+    description: "Context object that needs to be created within the given endpoint"
+    example:
+      context:
+        name: "example_context"
+        maxQuota: 0
+      user:
+        name: "username"
+        display_name: "Firstname Lastname"
+        given_name: "Firstname"
+        sur_name: "Lastname"
+        password: "secret"
+        email: "firstname.lastname@example.com"
+        email1: "firstname.lastname@example.com"
+        primaryEmail: "firstname.lastname@example.com"
   Context:
     type: "object"
     required:
@@ -878,6 +994,8 @@ definitions:
         type: "object"
         description: "The user attributes of a context"
         properties: {}
+    title: "Context"
+    description: "Context"
     example:
       name: "example_context"
       maxQuota: 0
@@ -1529,6 +1647,13 @@ definitions:
       description:
         type: "string"
         description: ""
+    example:
+      module: "module"
+      name: "name"
+      description: "description"
+      entityId: "entityId"
+      id: "id"
+      userId: 0
   UserModuleAccess:
     type: "object"
     properties:
@@ -1685,6 +1810,67 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/EndpointInterface"
+    example:
+      name: "name"
+      description: "description"
+      id: "id"
+      interface:
+      - password: "password"
+        ignore_binding: true
+        ssl_verify: true
+        name: "name"
+        reseller: true
+        description: "description"
+        location: "location"
+        id: "id"
+        login: "login"
+        type: "appsuite-soap"
+      - password: "password"
+        ignore_binding: true
+        ssl_verify: true
+        name: "name"
+        reseller: true
+        description: "description"
+        location: "location"
+        id: "id"
+        login: "login"
+        type: "appsuite-soap"
+      oxaas: true
+  PublicEndpoint:
+    type: "object"
+    required:
+    - "endpoint_description"
+    - "endpoint_id"
+    - "endpoint_name"
+    - "oxap_account_description"
+    - "oxap_account_id"
+    - "oxap_account_name"
+    properties:
+      oxap_account_id:
+        type: "string"
+        description: ""
+      oxap_account_name:
+        type: "string"
+        description: ""
+      oxap_account_description:
+        type: "string"
+        description: ""
+      endpoint_id:
+        type: "string"
+        description: ""
+      endpoint_name:
+        type: "string"
+        description: ""
+      endpoint_description:
+        type: "string"
+        description: ""
+    example:
+      oxap_account_description: "oxap_account_description"
+      endpoint_name: "endpoint_name"
+      oxap_account_id: "oxap_account_id"
+      oxap_account_name: "oxap_account_name"
+      endpoint_id: "endpoint_id"
+      endpoint_description: "endpoint_description"
   EndpointInterface:
     type: "object"
     required:
@@ -1731,73 +1917,31 @@ definitions:
         - "dovecot-ldap-dovecotMailPrimaryAddress"
         - "dovecot-ldap-dovecotMailAliasAddress"
         - "dovecot-ldap-dovecotUserQuotaStorage"
-  payload:
-    type: "object"
-    required:
-    - "context"
-    - "user"
-    properties:
-      context:
-        description: "The context information"
-        $ref: "#/definitions/Context"
-      user:
-        description: "The admin user information of a context"
-        $ref: "#/definitions/User"
-  inline_response_200:
-    properties:
-      oxap_account_id:
-        type: "string"
-        description: ""
-      oxap_account_name:
-        type: "string"
-        description: ""
-      oxap_account_description:
-        type: "string"
-        description: ""
-      endpoint_id:
-        type: "string"
-        description: ""
-      endpoint_name:
-        type: "string"
-        description: ""
-      endpoint_description:
-        type: "string"
-        description: ""
-  data:
-    type: "object"
-    required:
-    - "account_id"
-    - "password"
-    - "username"
-    properties:
-      username:
-        type: "string"
-        description: "Id of the OXAP account"
-      password:
-        type: "string"
-        format: "password"
-        description: "Id of the OXAP endpoint for this OXAP account"
-      account_id:
-        type: "string"
-        description: "Id of the OXAP account"
-      endpoint_id:
-        type: "string"
-        description: "Id of the OXAP endpoint for this OXAP account"
-      role:
-        type: "string"
-        description: "'The type of account that requests the login. If type is ':\
-          \ * oxap - An OXAP Master administrator having access to multiple endpoints\
-          \ * reseller - A Context reseller managing a context within an endpoint\
-          \ (the endpoint_id is required in data object) * context - A Context administrator\
-          \ managing a context within an endpoint (the endpoint_id is required in\
-          \ data object) * user - An Open-Xchange user account (the endpoint_id is\
-          \ required in data object)"
-        enum:
-        - "oxap"
-        - "context"
-        - "reseller"
-        - "user"
+    example:
+      password: "password"
+      ignore_binding: true
+      ssl_verify: true
+      name: "name"
+      reseller: true
+      description: "description"
+      location: "location"
+      id: "id"
+      login: "login"
+      type: "appsuite-soap"
 parameters:
+  ContextId:
+    name: "context_id"
+    in: "path"
+    description: "Id of the context object within the given endpoint"
+    required: true
+    type: "integer"
+    format: "int32"
+  EndpointId:
+    name: "endpoint_id"
+    in: "query"
+    description: "Id of the OXAP endpoint for this OXAP account"
+    required: true
+    type: "string"
   Oxapsessionid:
     name: "Oxapsessionid"
     in: "header"
@@ -1806,6 +1950,19 @@ parameters:
       \ ('Oxapsessionid'). If both, header and cookie will be send in a request, the\
       \ cookie supersedes and will be used to verify the session."
     required: false
+    type: "string"
+  ResourceId:
+    name: "resource_id"
+    in: "path"
+    description: "Id of the resource object within the given context"
+    required: true
+    type: "integer"
+    format: "int32"
+  SearchPattern:
+    name: "search_pattern"
+    in: "query"
+    description: "Pattern for the search request"
+    required: true
     type: "string"
 responses:
   200:
