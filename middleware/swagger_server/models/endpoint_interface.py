@@ -112,7 +112,7 @@ class EndpointInterface(Model):
     def name(self) -> str:
         """Gets the name of this EndpointInterface.
 
-        
+
 
         :return: The name of this EndpointInterface.
         :rtype: str
@@ -123,7 +123,7 @@ class EndpointInterface(Model):
     def name(self, name: str):
         """Sets the name of this EndpointInterface.
 
-        
+
 
         :param name: The name of this EndpointInterface.
         :type name: str
@@ -137,7 +137,7 @@ class EndpointInterface(Model):
     def description(self) -> str:
         """Gets the description of this EndpointInterface.
 
-        
+
 
         :return: The description of this EndpointInterface.
         :rtype: str
@@ -148,7 +148,7 @@ class EndpointInterface(Model):
     def description(self, description: str):
         """Sets the description of this EndpointInterface.
 
-        
+
 
         :param description: The description of this EndpointInterface.
         :type description: str
@@ -183,7 +183,7 @@ class EndpointInterface(Model):
     def ssl_verify(self) -> bool:
         """Gets the ssl_verify of this EndpointInterface.
 
-        
+
 
         :return: The ssl_verify of this EndpointInterface.
         :rtype: bool
@@ -194,7 +194,7 @@ class EndpointInterface(Model):
     def ssl_verify(self, ssl_verify: bool):
         """Sets the ssl_verify of this EndpointInterface.
 
-        
+
 
         :param ssl_verify: The ssl_verify of this EndpointInterface.
         :type ssl_verify: bool
@@ -206,7 +206,7 @@ class EndpointInterface(Model):
     def login(self) -> str:
         """Gets the login of this EndpointInterface.
 
-        
+
 
         :return: The login of this EndpointInterface.
         :rtype: str
@@ -217,7 +217,7 @@ class EndpointInterface(Model):
     def login(self, login: str):
         """Sets the login of this EndpointInterface.
 
-        
+
 
         :param login: The login of this EndpointInterface.
         :type login: str
@@ -229,7 +229,7 @@ class EndpointInterface(Model):
     def password(self) -> str:
         """Gets the password of this EndpointInterface.
 
-        
+
 
         :return: The password of this EndpointInterface.
         :rtype: str
@@ -240,7 +240,7 @@ class EndpointInterface(Model):
     def password(self, password: str):
         """Sets the password of this EndpointInterface.
 
-        
+
 
         :param password: The password of this EndpointInterface.
         :type password: str
@@ -252,7 +252,7 @@ class EndpointInterface(Model):
     def ignore_binding(self) -> bool:
         """Gets the ignore_binding of this EndpointInterface.
 
-        
+
 
         :return: The ignore_binding of this EndpointInterface.
         :rtype: bool
@@ -263,7 +263,7 @@ class EndpointInterface(Model):
     def ignore_binding(self, ignore_binding: bool):
         """Sets the ignore_binding of this EndpointInterface.
 
-        
+
 
         :param ignore_binding: The ignore_binding of this EndpointInterface.
         :type ignore_binding: bool
@@ -275,7 +275,7 @@ class EndpointInterface(Model):
     def reseller(self) -> bool:
         """Gets the reseller of this EndpointInterface.
 
-        
+
 
         :return: The reseller of this EndpointInterface.
         :rtype: bool
@@ -286,7 +286,7 @@ class EndpointInterface(Model):
     def reseller(self, reseller: bool):
         """Sets the reseller of this EndpointInterface.
 
-        
+
 
         :param reseller: The reseller of this EndpointInterface.
         :type reseller: bool

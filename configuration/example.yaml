@@ -2,25 +2,27 @@
 # [OXAPAccount.id].yaml (in this example: c1c02f90-b5ef-4968-90da-210db815f2d4.yaml)
 
 OXAPAccount:
-  id: "c1c02f90-b5ef-4968-90da-210db815f2d4"
-  name: "ExampleHoster.com"
-  description: "ExampleHoster.com"
+  id: 'c1c02f90-b5ef-4968-90da-210db815f2d4'
+  name: 'ExampleHoster.com'
+  description: 'ExampleHoster.com'
+  username: 'example_hoster_admin'
+  password: '$pbkdf2-sha256$29000$PWfMWQsBgFCqtXbOWWuNcQ$safbTSd0IasnO9Wgsq9zuDNuKECwDBxH1IXd4.JtQTQ'
   endpoint:
-    - id: "be866c8a-c4f7-4e83-869c-68637cdb7f6e"
-      name: "ExampleHoster.com eMail"
-      description: "ExampleHoster.com eMail"
+    - id: 'be866c8a-c4f7-4e83-869c-68637cdb7f6e'
+      name: 'ExampleHoster.com eMail'
+      description: 'ExampleHoster.com eMail'
       oxaas: True
       interface:
-        - id: "16fde508-dd65-425c-8811-8068d7df3f58"
-          name: "OXaaS provisioning interface for ExampleHoster.com eMail"
-          description: "OXaaS provisioning interface for ExampleHoster.com eMail"
-          location: "https://doesnotexist.open-xchange.com/webservices"
+        - id: '16fde508-dd65-425c-8811-8068d7df3f58'
+          name: 'OXaaS provisioning interface for ExampleHoster.com eMail'
+          description: 'OXaaS provisioning interface for ExampleHoster.com eMail'
+          location: 'https://doesnotexist.open-xchange.com/webservices'
           ssl_verify: False
-          login: "ox_admin_master"
-          password: "masterpassword"
+          login: 'ox_admin_master'
+          password: 'masterpassword'
           ignore_binding: True
           reseller: True
-          type: "appsuite-soap"
+          type: 'appsuite-soap'
             # appsuite-soap
             # dovecot-ldap-dovecotMailboxUid - not supported yet
             # dovecot-ldap-dovecotMailPrimaryAddress - not supported yet

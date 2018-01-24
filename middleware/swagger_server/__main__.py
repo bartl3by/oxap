@@ -7,10 +7,8 @@ from tornado.options import define, options
 
 from swagger_server.oxap.exceptions.session_exceptions import ClientSessionIdMissingException, \
     NoSuchSessionException, SessionExpiredException, SessionException
-from swagger_server.oxap.session_manager import method_has_scope, session_in_scope, get_method_scope
+from swagger_server.oxap.session_manager import session_in_scope, get_method_scope
 from swagger_server.resolver import SessionEnhancedResolver
-
-from swagger_server.oxap.session_manager import cookie_name
 
 from .configuration import define_configuration_options
 from .encoder import JSONEncoder
@@ -34,18 +32,15 @@ if __name__ == '__main__':
     @app.app.before_request
     def before_request():
         if hasattr(connexion.request.url_rule, 'endpoint') \
-                and getattr(connexion.request.url_rule, 'endpoint') is not None \
-                and method_has_scope(connexion.request.url_rule.endpoint):
+                and getattr(connexion.request.url_rule, 'endpoint') is not None:
             try:
                 if not session_in_scope(connexion.request.url_rule.endpoint, True):
                     return 'Requested interface requires role ' + get_method_scope, 403
-            except ClientSessionIdMissingException as e:
+            except (ClientSessionIdMissingException,
+                    SessionExpiredException,
+                    NoSuchSessionException) as e:
                 return str(e), 401
-            except SessionExpiredException as e:
-                return str(e), 401, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
-            except NoSuchSessionException as e:
-                return str(e), 401, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
             except SessionException as e:
-                return str(e), 400, {'Set-Cookie': cookie_name + '=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT'}
+                return str(e), 400
 
     app.run(server='tornado', port=options.server_port)

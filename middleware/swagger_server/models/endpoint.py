@@ -67,7 +67,7 @@ class Endpoint(Model):
     def id(self) -> str:
         """Gets the id of this Endpoint.
 
-
+        
 
         :return: The id of this Endpoint.
         :rtype: str
@@ -78,7 +78,7 @@ class Endpoint(Model):
     def id(self, id: str):
         """Sets the id of this Endpoint.
 
-
+        
 
         :param id: The id of this Endpoint.
         :type id: str
@@ -90,7 +90,7 @@ class Endpoint(Model):
     def name(self) -> str:
         """Gets the name of this Endpoint.
 
-
+        
 
         :return: The name of this Endpoint.
         :rtype: str
@@ -101,7 +101,7 @@ class Endpoint(Model):
     def name(self, name: str):
         """Sets the name of this Endpoint.
 
-
+        
 
         :param name: The name of this Endpoint.
         :type name: str
@@ -115,7 +115,7 @@ class Endpoint(Model):
     def description(self) -> str:
         """Gets the description of this Endpoint.
 
-
+        
 
         :return: The description of this Endpoint.
         :rtype: str
@@ -126,7 +126,7 @@ class Endpoint(Model):
     def description(self, description: str):
         """Sets the description of this Endpoint.
 
-
+        
 
         :param description: The description of this Endpoint.
         :type description: str
@@ -138,7 +138,7 @@ class Endpoint(Model):
     def oxaas(self) -> bool:
         """Gets the oxaas of this Endpoint.
 
-
+        
 
         :return: The oxaas of this Endpoint.
         :rtype: bool
@@ -149,7 +149,7 @@ class Endpoint(Model):
     def oxaas(self, oxaas: bool):
         """Sets the oxaas of this Endpoint.
 
-
+        
 
         :param oxaas: The oxaas of this Endpoint.
         :type oxaas: bool

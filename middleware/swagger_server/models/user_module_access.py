@@ -171,7 +171,7 @@ class UserModuleAccess(Model):
     def olox20(self) -> bool:
         """Gets the olox20 of this UserModuleAccess.
 
-
+        
 
         :return: The olox20 of this UserModuleAccess.
         :rtype: bool
@@ -182,7 +182,7 @@ class UserModuleAccess(Model):
     def olox20(self, olox20: bool):
         """Sets the olox20 of this UserModuleAccess.
 
-
+        
 
         :param olox20: The olox20 of this UserModuleAccess.
         :type olox20: bool
@@ -194,7 +194,7 @@ class UserModuleAccess(Model):
     def usm(self) -> bool:
         """Gets the usm of this UserModuleAccess.
 
-
+        
 
         :return: The usm of this UserModuleAccess.
         :rtype: bool
@@ -205,7 +205,7 @@ class UserModuleAccess(Model):
     def usm(self, usm: bool):
         """Sets the usm of this UserModuleAccess.
 
-
+        
 
         :param usm: The usm of this UserModuleAccess.
         :type usm: bool
@@ -217,7 +217,7 @@ class UserModuleAccess(Model):
     def active_sync(self) -> bool:
         """Gets the active_sync of this UserModuleAccess.
 
-
+        
 
         :return: The active_sync of this UserModuleAccess.
         :rtype: bool
@@ -228,7 +228,7 @@ class UserModuleAccess(Model):
     def active_sync(self, active_sync: bool):
         """Sets the active_sync of this UserModuleAccess.
 
-
+        
 
         :param active_sync: The active_sync of this UserModuleAccess.
         :type active_sync: bool
@@ -240,7 +240,7 @@ class UserModuleAccess(Model):
     def calendar(self) -> bool:
         """Gets the calendar of this UserModuleAccess.
 
-
+        
 
         :return: The calendar of this UserModuleAccess.
         :rtype: bool
@@ -251,7 +251,7 @@ class UserModuleAccess(Model):
     def calendar(self, calendar: bool):
         """Sets the calendar of this UserModuleAccess.
 
-
+        
 
         :param calendar: The calendar of this UserModuleAccess.
         :type calendar: bool
@@ -263,7 +263,7 @@ class UserModuleAccess(Model):
     def collect_email_addresses(self) -> bool:
         """Gets the collect_email_addresses of this UserModuleAccess.
 
-
+        
 
         :return: The collect_email_addresses of this UserModuleAccess.
         :rtype: bool
@@ -274,7 +274,7 @@ class UserModuleAccess(Model):
     def collect_email_addresses(self, collect_email_addresses: bool):
         """Sets the collect_email_addresses of this UserModuleAccess.
 
-
+        
 
         :param collect_email_addresses: The collect_email_addresses of this UserModuleAccess.
         :type collect_email_addresses: bool
@@ -286,7 +286,7 @@ class UserModuleAccess(Model):
     def contacts(self) -> bool:
         """Gets the contacts of this UserModuleAccess.
 
-
+        
 
         :return: The contacts of this UserModuleAccess.
         :rtype: bool
@@ -297,7 +297,7 @@ class UserModuleAccess(Model):
     def contacts(self, contacts: bool):
         """Sets the contacts of this UserModuleAccess.
 
-
+        
 
         :param contacts: The contacts of this UserModuleAccess.
         :type contacts: bool
@@ -309,7 +309,7 @@ class UserModuleAccess(Model):
     def delegate_task(self) -> bool:
         """Gets the delegate_task of this UserModuleAccess.
 
-
+        
 
         :return: The delegate_task of this UserModuleAccess.
         :rtype: bool
@@ -320,7 +320,7 @@ class UserModuleAccess(Model):
     def delegate_task(self, delegate_task: bool):
         """Sets the delegate_task of this UserModuleAccess.
 
-
+        
 
         :param delegate_task: The delegate_task of this UserModuleAccess.
         :type delegate_task: bool
@@ -332,7 +332,7 @@ class UserModuleAccess(Model):
     def denied_portal(self) -> bool:
         """Gets the denied_portal of this UserModuleAccess.
 
-
+        
 
         :return: The denied_portal of this UserModuleAccess.
         :rtype: bool
@@ -343,7 +343,7 @@ class UserModuleAccess(Model):
     def denied_portal(self, denied_portal: bool):
         """Sets the denied_portal of this UserModuleAccess.
 
-
+        
 
         :param denied_portal: The denied_portal of this UserModuleAccess.
         :type denied_portal: bool
@@ -355,7 +355,7 @@ class UserModuleAccess(Model):
     def edit_group(self) -> bool:
         """Gets the edit_group of this UserModuleAccess.
 
-
+        
 
         :return: The edit_group of this UserModuleAccess.
         :rtype: bool
@@ -366,7 +366,7 @@ class UserModuleAccess(Model):
     def edit_group(self, edit_group: bool):
         """Sets the edit_group of this UserModuleAccess.
 
-
+        
 
         :param edit_group: The edit_group of this UserModuleAccess.
         :type edit_group: bool
@@ -378,7 +378,7 @@ class UserModuleAccess(Model):
     def edit_password(self) -> bool:
         """Gets the edit_password of this UserModuleAccess.
 
-
+        
 
         :return: The edit_password of this UserModuleAccess.
         :rtype: bool
@@ -389,7 +389,7 @@ class UserModuleAccess(Model):
     def edit_password(self, edit_password: bool):
         """Sets the edit_password of this UserModuleAccess.
 
-
+        
 
         :param edit_password: The edit_password of this UserModuleAccess.
         :type edit_password: bool
@@ -401,7 +401,7 @@ class UserModuleAccess(Model):
     def edit_public_folders(self) -> bool:
         """Gets the edit_public_folders of this UserModuleAccess.
 
-
+        
 
         :return: The edit_public_folders of this UserModuleAccess.
         :rtype: bool
@@ -412,7 +412,7 @@ class UserModuleAccess(Model):
     def edit_public_folders(self, edit_public_folders: bool):
         """Sets the edit_public_folders of this UserModuleAccess.
 
-
+        
 
         :param edit_public_folders: The edit_public_folders of this UserModuleAccess.
         :type edit_public_folders: bool
@@ -424,7 +424,7 @@ class UserModuleAccess(Model):
     def edit_resource(self) -> bool:
         """Gets the edit_resource of this UserModuleAccess.
 
-
+        
 
         :return: The edit_resource of this UserModuleAccess.
         :rtype: bool
@@ -435,7 +435,7 @@ class UserModuleAccess(Model):
     def edit_resource(self, edit_resource: bool):
         """Sets the edit_resource of this UserModuleAccess.
 
-
+        
 
         :param edit_resource: The edit_resource of this UserModuleAccess.
         :type edit_resource: bool
@@ -447,7 +447,7 @@ class UserModuleAccess(Model):
     def global_address_book_disabled(self) -> bool:
         """Gets the global_address_book_disabled of this UserModuleAccess.
 
-
+        
 
         :return: The global_address_book_disabled of this UserModuleAccess.
         :rtype: bool
@@ -458,7 +458,7 @@ class UserModuleAccess(Model):
     def global_address_book_disabled(self, global_address_book_disabled: bool):
         """Sets the global_address_book_disabled of this UserModuleAccess.
 
-
+        
 
         :param global_address_book_disabled: The global_address_book_disabled of this UserModuleAccess.
         :type global_address_book_disabled: bool
@@ -470,7 +470,7 @@ class UserModuleAccess(Model):
     def ical(self) -> bool:
         """Gets the ical of this UserModuleAccess.
 
-
+        
 
         :return: The ical of this UserModuleAccess.
         :rtype: bool
@@ -481,7 +481,7 @@ class UserModuleAccess(Model):
     def ical(self, ical: bool):
         """Sets the ical of this UserModuleAccess.
 
-
+        
 
         :param ical: The ical of this UserModuleAccess.
         :type ical: bool
@@ -493,7 +493,7 @@ class UserModuleAccess(Model):
     def infostore(self) -> bool:
         """Gets the infostore of this UserModuleAccess.
 
-
+        
 
         :return: The infostore of this UserModuleAccess.
         :rtype: bool
@@ -504,7 +504,7 @@ class UserModuleAccess(Model):
     def infostore(self, infostore: bool):
         """Sets the infostore of this UserModuleAccess.
 
-
+        
 
         :param infostore: The infostore of this UserModuleAccess.
         :type infostore: bool
@@ -516,7 +516,7 @@ class UserModuleAccess(Model):
     def multiple_mail_accounts(self) -> bool:
         """Gets the multiple_mail_accounts of this UserModuleAccess.
 
-
+        
 
         :return: The multiple_mail_accounts of this UserModuleAccess.
         :rtype: bool
@@ -527,7 +527,7 @@ class UserModuleAccess(Model):
     def multiple_mail_accounts(self, multiple_mail_accounts: bool):
         """Sets the multiple_mail_accounts of this UserModuleAccess.
 
-
+        
 
         :param multiple_mail_accounts: The multiple_mail_accounts of this UserModuleAccess.
         :type multiple_mail_accounts: bool
@@ -539,7 +539,7 @@ class UserModuleAccess(Model):
     def public_folder_editable(self) -> bool:
         """Gets the public_folder_editable of this UserModuleAccess.
 
-
+        
 
         :return: The public_folder_editable of this UserModuleAccess.
         :rtype: bool
@@ -550,7 +550,7 @@ class UserModuleAccess(Model):
     def public_folder_editable(self, public_folder_editable: bool):
         """Sets the public_folder_editable of this UserModuleAccess.
 
-
+        
 
         :param public_folder_editable: The public_folder_editable of this UserModuleAccess.
         :type public_folder_editable: bool
@@ -562,7 +562,7 @@ class UserModuleAccess(Model):
     def publication(self) -> bool:
         """Gets the publication of this UserModuleAccess.
 
-
+        
 
         :return: The publication of this UserModuleAccess.
         :rtype: bool
@@ -573,7 +573,7 @@ class UserModuleAccess(Model):
     def publication(self, publication: bool):
         """Sets the publication of this UserModuleAccess.
 
-
+        
 
         :param publication: The publication of this UserModuleAccess.
         :type publication: bool
@@ -585,7 +585,7 @@ class UserModuleAccess(Model):
     def read_create_shared_folders(self) -> bool:
         """Gets the read_create_shared_folders of this UserModuleAccess.
 
-
+        
 
         :return: The read_create_shared_folders of this UserModuleAccess.
         :rtype: bool
@@ -596,7 +596,7 @@ class UserModuleAccess(Model):
     def read_create_shared_folders(self, read_create_shared_folders: bool):
         """Sets the read_create_shared_folders of this UserModuleAccess.
 
-
+        
 
         :param read_create_shared_folders: The read_create_shared_folders of this UserModuleAccess.
         :type read_create_shared_folders: bool
@@ -608,7 +608,7 @@ class UserModuleAccess(Model):
     def subscription(self) -> bool:
         """Gets the subscription of this UserModuleAccess.
 
-
+        
 
         :return: The subscription of this UserModuleAccess.
         :rtype: bool
@@ -619,7 +619,7 @@ class UserModuleAccess(Model):
     def subscription(self, subscription: bool):
         """Sets the subscription of this UserModuleAccess.
 
-
+        
 
         :param subscription: The subscription of this UserModuleAccess.
         :type subscription: bool
@@ -631,7 +631,7 @@ class UserModuleAccess(Model):
     def syncml(self) -> bool:
         """Gets the syncml of this UserModuleAccess.
 
-
+        
 
         :return: The syncml of this UserModuleAccess.
         :rtype: bool
@@ -642,7 +642,7 @@ class UserModuleAccess(Model):
     def syncml(self, syncml: bool):
         """Sets the syncml of this UserModuleAccess.
 
-
+        
 
         :param syncml: The syncml of this UserModuleAccess.
         :type syncml: bool
@@ -654,7 +654,7 @@ class UserModuleAccess(Model):
     def tasks(self) -> bool:
         """Gets the tasks of this UserModuleAccess.
 
-
+        
 
         :return: The tasks of this UserModuleAccess.
         :rtype: bool
@@ -665,7 +665,7 @@ class UserModuleAccess(Model):
     def tasks(self, tasks: bool):
         """Sets the tasks of this UserModuleAccess.
 
-
+        
 
         :param tasks: The tasks of this UserModuleAccess.
         :type tasks: bool
@@ -677,7 +677,7 @@ class UserModuleAccess(Model):
     def vcard(self) -> bool:
         """Gets the vcard of this UserModuleAccess.
 
-
+        
 
         :return: The vcard of this UserModuleAccess.
         :rtype: bool
@@ -688,7 +688,7 @@ class UserModuleAccess(Model):
     def vcard(self, vcard: bool):
         """Sets the vcard of this UserModuleAccess.
 
-
+        
 
         :param vcard: The vcard of this UserModuleAccess.
         :type vcard: bool
@@ -700,7 +700,7 @@ class UserModuleAccess(Model):
     def webdav(self) -> bool:
         """Gets the webdav of this UserModuleAccess.
 
-
+        
 
         :return: The webdav of this UserModuleAccess.
         :rtype: bool
@@ -711,7 +711,7 @@ class UserModuleAccess(Model):
     def webdav(self, webdav: bool):
         """Sets the webdav of this UserModuleAccess.
 
-
+        
 
         :param webdav: The webdav of this UserModuleAccess.
         :type webdav: bool
@@ -723,7 +723,7 @@ class UserModuleAccess(Model):
     def webdav_xml(self) -> bool:
         """Gets the webdav_xml of this UserModuleAccess.
 
-
+        
 
         :return: The webdav_xml of this UserModuleAccess.
         :rtype: bool
@@ -734,7 +734,7 @@ class UserModuleAccess(Model):
     def webdav_xml(self, webdav_xml: bool):
         """Sets the webdav_xml of this UserModuleAccess.
 
-
+        
 
         :param webdav_xml: The webdav_xml of this UserModuleAccess.
         :type webdav_xml: bool
@@ -746,7 +746,7 @@ class UserModuleAccess(Model):
     def webmail(self) -> bool:
         """Gets the webmail of this UserModuleAccess.
 
-
+        
 
         :return: The webmail of this UserModuleAccess.
         :rtype: bool
@@ -757,7 +757,7 @@ class UserModuleAccess(Model):
     def webmail(self, webmail: bool):
         """Sets the webmail of this UserModuleAccess.
 
-
+        
 
         :param webmail: The webmail of this UserModuleAccess.
         :type webmail: bool

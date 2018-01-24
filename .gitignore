@@ -110,3 +110,7 @@ ENV/
 swagger_server/controllers/default_controller.py
 /middleware/sqlite.db
 /middleware/wsdl_cache.db
+/api/index.yaml
+/api/paths/
+/api/definitions/
+/api/responses.yaml

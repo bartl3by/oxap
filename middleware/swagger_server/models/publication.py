@@ -71,7 +71,7 @@ class Publication(Model):
     def user_id(self) -> int:
         """Gets the user_id of this Publication.
 
-
+        
 
         :return: The user_id of this Publication.
         :rtype: int
@@ -82,7 +82,7 @@ class Publication(Model):
     def user_id(self, user_id: int):
         """Sets the user_id of this Publication.
 
-
+        
 
         :param user_id: The user_id of this Publication.
         :type user_id: int
@@ -94,7 +94,7 @@ class Publication(Model):
     def id(self) -> str:
         """Gets the id of this Publication.
 
-
+        
 
         :return: The id of this Publication.
         :rtype: str
@@ -105,7 +105,7 @@ class Publication(Model):
     def id(self, id: str):
         """Sets the id of this Publication.
 
-
+        
 
         :param id: The id of this Publication.
         :type id: str
@@ -117,7 +117,7 @@ class Publication(Model):
     def entity_id(self) -> str:
         """Gets the entity_id of this Publication.
 
-
+        
 
         :return: The entity_id of this Publication.
         :rtype: str
@@ -128,7 +128,7 @@ class Publication(Model):
     def entity_id(self, entity_id: str):
         """Sets the entity_id of this Publication.
 
-
+        
 
         :param entity_id: The entity_id of this Publication.
         :type entity_id: str
@@ -140,7 +140,7 @@ class Publication(Model):
     def module(self) -> str:
         """Gets the module of this Publication.
 
-
+        
 
         :return: The module of this Publication.
         :rtype: str
@@ -151,7 +151,7 @@ class Publication(Model):
     def module(self, module: str):
         """Sets the module of this Publication.
 
-
+        
 
         :param module: The module of this Publication.
         :type module: str
@@ -163,7 +163,7 @@ class Publication(Model):
     def name(self) -> str:
         """Gets the name of this Publication.
 
-
+        
 
         :return: The name of this Publication.
         :rtype: str
@@ -174,7 +174,7 @@ class Publication(Model):
     def name(self, name: str):
         """Sets the name of this Publication.
 
-
+        
 
         :param name: The name of this Publication.
         :type name: str
@@ -186,7 +186,7 @@ class Publication(Model):
     def description(self) -> str:
         """Gets the description of this Publication.
 
-
+        
 
         :return: The description of this Publication.
         :rtype: str
@@ -197,7 +197,7 @@ class Publication(Model):
     def description(self, description: str):
         """Sets the description of this Publication.
 
-
+        
 
         :param description: The description of this Publication.
         :type description: str

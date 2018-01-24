@@ -5,3 +5,5 @@ tornado
 zeep
 pymemcache
 uuid
+passlib
+bcrypt

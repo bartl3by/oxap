@@ -14,7 +14,7 @@ def change_resource(resource_id, resourceObject, Oxapsessionid=None):
     :type resource_id: int
     :param resourceObject: Resource object that needs to be updated within the given context
     :type resourceObject: dict | bytes
-    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :param Oxapsessionid: The session id previously acquired from /oxap/session.
     :type Oxapsessionid: str
 
     :rtype: None
@@ -46,7 +46,7 @@ def delete_resource(resource_id, Oxapsessionid=None):
 
     :param resource_id: Id of the resource object within the given context
     :type resource_id: int
-    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :param Oxapsessionid: The session id previously acquired from /oxap/session.
     :type Oxapsessionid: str
 
     :rtype: None
@@ -76,7 +76,7 @@ def get_resource_by_id(resource_id, Oxapsessionid=None):
 
     :param resource_id: Id of the resource object within the given context
     :type resource_id: int
-    :param Oxapsessionid: Provide the session id previously acquired from /oxap/session. The session id can either be provided through this header parameter or as cookie (&#39;Oxapsessionid&#39;). If both, header and cookie will be send in a request, the cookie supersedes and will be used to verify the session.
+    :param Oxapsessionid: The session id previously acquired from /oxap/session.
     :type Oxapsessionid: str
 
     :rtype: Resource

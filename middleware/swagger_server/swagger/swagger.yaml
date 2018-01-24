@@ -54,10 +54,7 @@ paths:
         type: "string"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -115,10 +112,7 @@ paths:
           $ref: "#/definitions/ContextCreate"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -182,10 +176,7 @@ paths:
           $ref: "#/definitions/Context"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -241,10 +232,7 @@ paths:
         format: "int32"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -289,7 +277,18 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      parameters: []
+      parameters:
+      - name: "context_id"
+        in: "path"
+        description: "Id of the context object within the given endpoint"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "The session id previously acquired from /oxap/session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -297,6 +296,7 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/User"
+      x-security-scope: "context,reseller"
       x-open-xchange-soap-reference-operation-interface: "OXUserService"
       x-open-xchange-soap-reference-operation-id: "listAll"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
@@ -311,7 +311,18 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      parameters: []
+      parameters:
+      - name: "context_id"
+        in: "path"
+        description: "Id of the context object within the given endpoint"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "Oxapsessionid"
+        in: "header"
+        description: "The session id previously acquired from /oxap/session."
+        required: false
+        type: "string"
       responses:
         200:
           description: "Successful Operation"
@@ -319,6 +330,7 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Group"
+      x-security-scope: "context,reseller"
       x-open-xchange-soap-reference-operation-interface: "OXGroupService"
       x-open-xchange-soap-reference-operation-id: "listAll"
       x-swagger-router-controller: "swagger_server.controllers.group_controller"
@@ -413,10 +425,7 @@ paths:
         format: "int32"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -446,10 +455,7 @@ paths:
         format: "int32"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       - in: "body"
@@ -481,10 +487,7 @@ paths:
         format: "int32"
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -658,18 +661,15 @@ paths:
     get:
       tags:
       - "oxapaccount"
-      summary: "Get OXAP session information"
-      description: "Get OXAP session information"
+      summary: "Refresh and get OXAP session information"
+      description: "Refresh and get OXAP session information"
       operationId: "get_session_information"
       produces:
       - "application/json"
       parameters:
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
@@ -677,18 +677,6 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/Session"
-          headers:
-            Set-Cookie:
-              type: "string"
-              description: "The session id acquired from this interface can either\
-                \ be provided through a header parameter or as cookie ('Oxapsessionid').\
-                \ The response of /oxap/session will automatically set the cookie\
-                \ if the authentication request was successful, providing the header\
-                \ field in subsequent requests is optional and primarily for documentation\
-                \ purposes due to missing cookie authentication integration in swagger\
-                \ 2.0. If both, header and cookie information will be present in a\
-                \ request the session id provided in the cookie supersedes and will\
-                \ be used to verify the session on the server."
         400:
           description: "Bad Request"
           schema:
@@ -707,7 +695,13 @@ paths:
       tags:
       - "oxapaccount"
       summary: "Create an OXAP session"
-      description: "Create an OXAP session"
+      description: "Create an OXAP session. The endpoint_id parameter is mandatory\
+        \ for 'context', 'reseller' and 'user' login requests (set via 'role'), a\
+        \ login request will fail if this parameter is not specified in case the role\
+        \ is 'context', 'reseller' or 'user'. OXAP accounts (role 'oxap') do not need\
+        \ to specify this value as a session grants them access to all their endpoints,\
+        \ endpoints will have to be specified during subsequent API requests to OXAP\
+        \ interfaces (like the manage context interface).\n"
       operationId: "create_session"
       produces:
       - "application/json"
@@ -724,7 +718,7 @@ paths:
           description: "Bad Request"
           schema:
             $ref: "#/definitions/Error"
-        403:
+        422:
           description: "Forbidden"
           schema:
             $ref: "#/definitions/Error"
@@ -744,20 +738,12 @@ paths:
       parameters:
       - name: "Oxapsessionid"
         in: "header"
-        description: "Provide the session id previously acquired from /oxap/session.\
-          \ The session id can either be provided through this header parameter or\
-          \ as cookie ('Oxapsessionid'). If both, header and cookie will be send in\
-          \ a request, the cookie supersedes and will be used to verify the session."
+        description: "The session id previously acquired from /oxap/session."
         required: false
         type: "string"
       responses:
         200:
           description: "Successful Operation"
-          headers:
-            Set-Cookie:
-              type: "string"
-              description: "Send a Set-Cookie delete header to remove the OXAP session\
-                \ cookie from the client."
         400:
           description: "Bad Request"
           schema:
@@ -825,9 +811,6 @@ definitions:
       id:
         type: "string"
         description: "The OXAP Session ID generated by the OXAP middleware"
-      session_cookie_path:
-        type: "string"
-        description: "The path to the cookie saved during the authentication request"
       creation_date:
         type: "string"
       expiration_date:
@@ -860,7 +843,6 @@ definitions:
       id: "id"
       creation_date: "creation_date"
       expiration_date: "expiration_date"
-      session_cookie_path: "session_cookie_path"
   Group:
     type: "object"
     required:
@@ -1945,10 +1927,7 @@ parameters:
   Oxapsessionid:
     name: "Oxapsessionid"
     in: "header"
-    description: "Provide the session id previously acquired from /oxap/session. The\
-      \ session id can either be provided through this header parameter or as cookie\
-      \ ('Oxapsessionid'). If both, header and cookie will be send in a request, the\
-      \ cookie supersedes and will be used to verify the session."
+    description: "The session id previously acquired from /oxap/session."
     required: false
     type: "string"
   ResourceId:
@@ -1989,6 +1968,10 @@ responses:
       $ref: "#/definitions/Error"
   409:
     description: "Conflict"
+    schema:
+      $ref: "#/definitions/Error"
+  422:
+    description: "Authentication Failed"
     schema:
       $ref: "#/definitions/Error"
   500:

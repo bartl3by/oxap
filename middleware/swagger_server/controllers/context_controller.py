@@ -11,7 +11,7 @@ from swagger_server.models.context import Context
 from swagger_server.models.context_create import ContextCreate
 from swagger_server.oxap import session_manager
 from swagger_server.oxap.exceptions.context_exceptions import *
-from swagger_server.oxap.soap.base_soap_handler import SOAPHandler
+from swagger_server.oxap.soap.context_soap_handler import ContextSOAPHandler
 from swagger_server.oxap.types.service_types import ContextService
 
 
@@ -35,7 +35,7 @@ def change_context(endpoint_id, context_id, data, Oxapsessionid=None):
         context_object = Context.from_dict(connexion.request.get_json())
 
     session = session_manager.get_session_information()
-    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
+    soap_handler = ContextSOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
         logging.info(
@@ -62,7 +62,7 @@ def change_context(endpoint_id, context_id, data, Oxapsessionid=None):
         return str(e), 400
     except StorageException as e:
         return str(e), 409
-    except OXContextException as e:
+    except ContextException as e:
         return str(e), 400
 
 
@@ -86,7 +86,7 @@ def create_context(endpoint_id, data, Oxapsessionid=None):
         user_object = data.user
 
     session = session_manager.get_session_information()
-    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
+    soap_handler = ContextSOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
         return json.loads(
@@ -111,7 +111,7 @@ def create_context(endpoint_id, data, Oxapsessionid=None):
         return str(e), 400
     except StorageException as e:
         return str(e), 409
-    except OXContextException as e:
+    except ContextException as e:
         return str(e), 400
 
 
@@ -130,7 +130,7 @@ def delete_context(endpoint_id, context_id, Oxapsessionid=None):
     :rtype: None
     """
     session = session_manager.get_session_information()
-    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
+    soap_handler = ContextSOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
         logging.info(json.loads(json.dumps(helpers.serialize_object(soap_handler.delete_context(context_id)))))
@@ -156,7 +156,7 @@ def delete_context(endpoint_id, context_id, Oxapsessionid=None):
         return str(e), 400
     except StorageException as e:
         return str(e), 409
-    except OXContextException as e:
+    except ContextException as e:
         return str(e), 400
 
 
@@ -173,7 +173,7 @@ def list_all_contexts(endpoint_id, Oxapsessionid=None):
     :rtype: List[Context]
     """
     session = session_manager.get_session_information()
-    soap_handler = SOAPHandler(session.account_id, endpoint_id, ContextService)
+    soap_handler = ContextSOAPHandler(session.account_id, endpoint_id, ContextService)
 
     try:
         return json.loads(json.dumps(helpers.serialize_object(soap_handler.list_all_contexts())))
@@ -191,5 +191,5 @@ def list_all_contexts(endpoint_id, Oxapsessionid=None):
         return str(e), 400
     except StorageException as e:
         return str(e), 409
-    except OXContextException as e:
+    except ContextException as e:
         return str(e), 400
