@@ -56,7 +56,7 @@ class OXAPAccount(Model):
     def id(self) -> str:
         """Gets the id of this OXAPAccount.
 
-        
+
 
         :return: The id of this OXAPAccount.
         :rtype: str
@@ -67,7 +67,7 @@ class OXAPAccount(Model):
     def id(self, id: str):
         """Sets the id of this OXAPAccount.
 
-        
+
 
         :param id: The id of this OXAPAccount.
         :type id: str
@@ -79,7 +79,7 @@ class OXAPAccount(Model):
     def name(self) -> str:
         """Gets the name of this OXAPAccount.
 
-        
+
 
         :return: The name of this OXAPAccount.
         :rtype: str
@@ -90,7 +90,7 @@ class OXAPAccount(Model):
     def name(self, name: str):
         """Sets the name of this OXAPAccount.
 
-        
+
 
         :param name: The name of this OXAPAccount.
         :type name: str
@@ -104,7 +104,7 @@ class OXAPAccount(Model):
     def description(self) -> str:
         """Gets the description of this OXAPAccount.
 
-        
+
 
         :return: The description of this OXAPAccount.
         :rtype: str
@@ -115,7 +115,7 @@ class OXAPAccount(Model):
     def description(self, description: str):
         """Sets the description of this OXAPAccount.
 
-        
+
 
         :param description: The description of this OXAPAccount.
         :type description: str

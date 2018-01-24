@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import logging
+
 import os
 from typing import List
 
 import yaml
+
+from swagger_server.oxap.exceptions.authentication_exceptions import AccountInformationNotFoundException
 from swagger_server.oxap.models.endpoint import Endpoint
 from swagger_server.oxap.models.endpoint_interface import EndpointInterface
 from swagger_server.oxap.types.endpoint_interface_types import AppsuiteSOAP
@@ -31,6 +35,12 @@ class OXAPAccount(object):
     def getAccountDescription(self) -> str:
         return self.configuration['OXAPAccount']['description']
 
+    def getUsername(self):
+        return self.configuration['OXAPAccount']['username']
+
+    def getEncryptedPassword(self):
+        return self.configuration['OXAPAccount']['password']
+
     def getEndpointList(self) -> List[str]:
         return list(self.endpoints)
 
@@ -54,8 +64,13 @@ class OXAPAccount(object):
                 return self.endpoints[endpoint_id].getEndpointInterfaces()[endpoint_interface_id]
 
     def _load_account_configuration(self):
-        with open(os.path.join(options.oxap_account_config_dir, str(self.oxap_account_id) + ".yaml"), 'r') as stream:
-            self.configuration = yaml.load(stream)
+        try:
+            with open(os.path.join(options.oxap_account_config_dir, str(self.oxap_account_id) + ".yaml"), 'r') as stream:
+                self.configuration = yaml.load(stream)
+        except FileNotFoundError as e:
+            raise AccountInformationNotFoundException('File %s could not be found during OXAP account information '
+                                                      'lookup', os.path.join(options.oxap_account_config_dir,
+                                                                             str(self.oxap_account_id) + ".yaml"))
 
     def _load_endpoints(self):
         """

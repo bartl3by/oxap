@@ -15,13 +15,11 @@ class Session(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id: str=None, session_cookie_path: str=None, creation_date: str=None, expiration_date: str=None, account_id: str=None, endpoint_id: str=None, role: str=None):
+    def __init__(self, id: str=None, creation_date: str=None, expiration_date: str=None, account_id: str=None, endpoint_id: str=None, role: str=None):
         """Session - a model defined in Swagger
 
         :param id: The id of this Session.
         :type id: str
-        :param session_cookie_path: The session_cookie_path of this Session.
-        :type session_cookie_path: str
         :param creation_date: The creation_date of this Session.
         :type creation_date: str
         :param expiration_date: The expiration_date of this Session.
@@ -35,7 +33,6 @@ class Session(Model):
         """
         self.swagger_types = {
             'id': str,
-            'session_cookie_path': str,
             'creation_date': str,
             'expiration_date': str,
             'account_id': str,
@@ -45,7 +42,6 @@ class Session(Model):
 
         self.attribute_map = {
             'id': 'id',
-            'session_cookie_path': 'session_cookie_path',
             'creation_date': 'creation_date',
             'expiration_date': 'expiration_date',
             'account_id': 'account_id',
@@ -54,7 +50,6 @@ class Session(Model):
         }
 
         self._id = id
-        self._session_cookie_path = session_cookie_path
         self._creation_date = creation_date
         self._expiration_date = expiration_date
         self._account_id = account_id
@@ -96,29 +91,6 @@ class Session(Model):
             raise ValueError("Invalid value for `id`, must not be `None`")
 
         self._id = id
-
-    @property
-    def session_cookie_path(self) -> str:
-        """Gets the session_cookie_path of this Session.
-
-        The path to the cookie saved during the authentication request
-
-        :return: The session_cookie_path of this Session.
-        :rtype: str
-        """
-        return self._session_cookie_path
-
-    @session_cookie_path.setter
-    def session_cookie_path(self, session_cookie_path: str):
-        """Sets the session_cookie_path of this Session.
-
-        The path to the cookie saved during the authentication request
-
-        :param session_cookie_path: The session_cookie_path of this Session.
-        :type session_cookie_path: str
-        """
-
-        self._session_cookie_path = session_cookie_path
 
     @property
     def creation_date(self) -> str:
