@@ -1,17 +1,17 @@
 <template>
-  <b-table striped :items="contexts" :fields="displayFields">
+  <b-table striped small :items="contexts" :fields="displayFields">
 
   </b-table>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'ContextsList',
     methods: {
       loadContexts () {
-        this.$store.dispatch('getContexts')
+        this.$store.dispatch('MasterAdmin/getContexts')
       }
     },
     mounted: function () {
@@ -37,21 +37,19 @@
             usedQuota: {
               sortable: true
             },
-            loginMappings: {
+            maxQuota: {
               sortable: true
             },
-            'filestore_name': {
-              label: 'Filestore'
+            loginMappings: {
+              sortable: false
             },
-            filestoreId: {
-              label: 'Filestore ID'
-            }
+            
           }
         }
       },
-      ...mapGetters([
-        'contexts'
-      ])
+      ...mapState({
+        contexts: state => state.MasterAdmin.contexts
+      })
     }
   }
 </script>

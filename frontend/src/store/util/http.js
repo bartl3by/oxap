@@ -2,7 +2,17 @@ import 'whatwg-fetch'
 
 const API_VERSION = 'v2'
 
+function parseResponse(response) {
+  return response.json().then(json => {
+    return response.ok ? json : Promise.reject(json);
+  });
+}
+
 export default {
+  setSession (sessionId) {
+    this.sessionId = sessionId
+    return this
+  },
   get (endpoint, data) {
     let params = ''
 
@@ -21,8 +31,12 @@ export default {
 
     // perform fetch and get the response json to pass along
     return window.fetch('/' + API_VERSION + '/' + endpoint + (params && params.length ? '?' + params : ''), {
-      credentials: 'include'
-    }).then(response => response.json())
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Oxapsessionid': this.sessionId ? this.sessionId : ''
+      }
+    }).then(parseResponse)
   },
   post (endpoint, data) {
     // perform fetch and return response (if any)
@@ -30,11 +44,12 @@ export default {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Oxapsessionid': this.sessionId ? this.sessionId : ''
       },
       body: JSON.stringify(data),
       credentials: 'include'
-    }).then(response => response.json())
+    }).then(parseResponse)
   },
   put (endpoint, data) {
     // perform fetch and return response (if any)
@@ -42,11 +57,12 @@ export default {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Oxapsessionid': this.sessionId ? this.sessionId : ''
       },
       body: JSON.stringify(data),
       credentials: 'include'
-    }).then(response => response.json())
+    }).then(parseResponse)
   },
   delete (endpoint, data) {
     // perform fetch and return response (if any)
@@ -54,10 +70,11 @@ export default {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Oxapsessionid': this.sessionId ? this.sessionId : ''
       },
       body: JSON.stringify(data),
       credentials: 'include'
-    }).then(response => response.json())
+    }).then(parseResponse)
   }
 }

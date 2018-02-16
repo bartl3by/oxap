@@ -1,18 +1,13 @@
-import { App as types } from '../mutation-types'
-import * as APP_TYPES from '../app-types'
-import api from '../api'
-import Exception from '../util/Exception'
+import { App as types } from '@/store/mutation-types'
+import * as APP_TYPES from '@/store/app-types'
+import api from '@/store/api'
+import Exception from '@/store/util/Exception'
 
 const state = {
   currentApp: APP_TYPES.INDEX,
-  endpoints: [],
+  accounts: {},
   endpointsLoading: false,
-  endpointsError: false,
-  sessionCreating: false,
-  sessionDeleting: false,
-  sessionError: false,
-  sessions: {},
-  sessionsCount: 0
+  endpointsError: false
 }
 
 const mutations = {
@@ -34,85 +29,53 @@ const mutations = {
   [types.ENDPOINTS_LIST_SUCCESS] (state, data) {
     state.endpointsLoading = false
     state.endpointsError = false
-    state.endpoints = data
-  },
-  [types.SESSION_CREATE_REQUEST] (state) {
-    state.sessionCreating = true
-    state.sessionError = false
-  },
-  [types.SESSION_CREATE_SUCCESS] (state, payload) {
-    state.sessionCreating = false
-    state.sessionError = false
-    state.sessions[payload.app] = payload.data
-    state.sessionsCount = Object.keys(state.sessions).length
-  },
-  [types.SESSION_CREATE_ERROR] (state, data) {
-    state.sessionCreating = false
-    state.sessionError = data
-  },
-  [types.SESSION_DELETE_REQUEST] (state) {
-    state.sessionDeleting = true
-  },
-  [types.SESSION_DELETE_SUCCESS] (state, key) {
-    state.sessionDeleting = false
-    delete state.sessions[key]
-    // hack to force reactivity
-    state.sessions = Object.assign({}, state.sessions)
-    state.sessionsCount = Object.keys(state.sessions).length
-  },
-  [types.SESSION_DELETE_ERROR] (state) {
-    state.sessionDeleting = false
+    state.accounts = data
   }
 }
 
 const getters = {
-  currentApp: state => state.currentApp,
-  currentEndpoint: state => state.currentEndpoint,
-  endpoints: state => state.endpoints,
-  sessions: state => state.sessions,
-  sessionError: state => state.sessionError
+  currentApp: state => state.currentApp
 }
 
 const actions = {
   setCurrentApp: ({ commit }, app) => {
     commit(types.SET_CURRENT, app)
   },
-  login: ({ commit, state }, payload) => {
-    const creds = payload.creds
-    const app = payload.app
-
-    const endpoint = state.endpoints.find(function (endpoint) {
-      return endpoint.endpoint_id === payload.creds.endpoint_id
-    })
-
-    commit(types.SESSION_CREATE_REQUEST, creds)
-    return api.createSession(creds).then(function (data) {
-      data.endpoint = endpoint
-      commit(types.SESSION_CREATE_SUCCESS, { app, data })
-      return data
-    }).catch(function (e) {
-      commit(types.SESSION_CREATE_ERROR, e)
-    })
-  },
-  logout: ({ commit, state }, id) => {
-    api.deleteSession(id).then(function () {
-      // find the session key which contains the session id passed in, commit the delete
-      for (const key in state.sessions) {
-        if (state.sessions[key].id === id) commit(types.SESSION_DELETE_SUCCESS, key)
-      }
-    })
-  },
   loadEndpoints: ({ commit }) => {
     commit(types.ENDPOINTS_LIST_REQUEST)
     return api.getEndpoints().then(function (data) {
-      commit(types.ENDPOINTS_LIST_SUCCESS, data)
-      return data
+      // make sure returned data is acceptable
+      if (!data && !data instanceof Array) {
+        commit(types.ENDPOINTS_LIST_ERROR)
+        return false
+      }
+
+      // api returns endpoints and accounts in a flat structure.
+      // change to strucutre of one account:many endpoints
+      const accounts = {}
+      data.forEach(function (item) {
+        // create item in accounts object if it doesn't yet exist
+        if (!accounts[item.oxap_account_id]) {
+          accounts[item.oxap_account_id] = {
+            'account_id': item['oxap_account_id'],
+            'account_name': item['oxap_account_name'],
+            'account_description': item['oxap_account_description'],
+            endpoints: []
+          }
+        }
+
+        // add endpoint to the account
+        accounts[item.oxap_account_id].endpoints.push({
+          'endpoint_id': item['endpoint_id'],
+          'endpoint_name': item['endpoint_name'],
+          'endpoint_description': item['endpoint_description']
+        })
+      })
+
+      // set the values in the store
+      commit(types.ENDPOINTS_LIST_SUCCESS, accounts)
+      return accounts
     })
-  },
-  autologin: () => {
-    // for now, check if the user has an endpoint selected. If they do, go on. If not, reject.
-    // TODO: incorporate actual autologin as well
-    // return state.currentEndpoint ? Promise.resolve() : Promise.reject()
   }
 }
 
