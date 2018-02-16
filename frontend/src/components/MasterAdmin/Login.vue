@@ -1,5 +1,11 @@
 <template>
   <b-container>
+    <b-row>
+      <b-col sm="12" md="8" offset-md="2">
+        <h2>Master Admin Login</h2>
+        <b-alert show variant="primary">Log in to the Master Admin panel using your Master Admin credentials. </b-alert>
+      </b-col>
+    </b-row>
     <b-form @submit.prevent="login">
       <b-alert :show="loginError" variant="danger">{{ loginError }}</b-alert>
       <b-form-row>
