@@ -8,6 +8,9 @@ $theme-colors: (
 
 table.table tbody {
     word-break: break-all;
+    .click_editable {
+        cursor: pointer;
+    }
 }
 
 @import '~bootstrap/scss/bootstrap.scss';

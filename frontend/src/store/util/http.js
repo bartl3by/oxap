@@ -75,6 +75,6 @@ export default {
       },
       body: JSON.stringify(data),
       credentials: 'include'
-    }).then(parseResponse)
+    }).then(( response ) => response.ok ? response : Promise.reject(json))
   }
 }

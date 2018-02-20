@@ -1,5 +1,5 @@
 <template>
-  <b-modal size="lg" :title="title" v-model="showModal" @ok="onSubmit">
+  <b-modal size="lg" :title="title" v-model="showModal" @ok="onSubmit" @show="onLoad" no-close-on-backdrop lazy>
 
     <b-alert :show="!!contextError" variant="danger">{{ contextError }}</b-alert>
 
@@ -9,7 +9,7 @@
         <b-form-input placeholder="Context Name" v-model="form.context.name"></b-form-input>
         <b-form-input type="number" placeholder="Max Quota (bytes)" v-model="form.context.maxQuota"></b-form-input>
         
-        <fieldset>
+        <fieldset v-if="!form.context.id">
           <legend>Context Admin</legend>
           <b-row>
             <b-col>
@@ -44,6 +44,8 @@
             </b-col>
           </b-row>
         </fieldset>
+
+        <b-button variant="danger" size="sm" v-if="form.context.id" @click="onDelete">Delete Context</b-button>
       </b-container>
     </b-form>
     <div slot="modal-ok">
@@ -55,6 +57,23 @@
 <script>
   import { mapState } from 'vuex'
 
+  const defaultForm = {
+    context: {
+      name: '',
+      maxQuota: 0
+    },
+    user: {
+      given_name: '',
+      sur_name: '',
+      display_name: '',
+      email: '',
+      email1: '',
+      name: null,
+      password: null,
+      primaryEmail: null
+    }
+  }
+
   export default {
     name: 'EditContext',
     props: [
@@ -65,14 +84,33 @@
       updateDisplayName () {
         this.form.user.display_name = this.form.user.given_name + ' ' + this.form.user.sur_name
       },
+      onLoad () {
+        if (this.context && this.context.id) {
+          this.contextId = this.context.id
+          
+          // deep copy the merged values of the default form and the context passed in
+          this.form.context = JSON.parse(JSON.stringify(Object.assign({}, defaultForm.context, this.context)))
+        } else {
+          this.contextId = false
+
+          // deep copy the default form values
+          this.form = JSON.parse(JSON.stringify(defaultForm))
+        }
+        this.$store.dispatch('MasterAdmin/clearContextError')
+      },
       onSubmit (evt) {
         // prevent the modal from hiding before save is done
         evt.preventDefault()
         
         if (this.contextId) {
-          this.$store.dispatch('MasterAdmin/updateContext', this.contextId, this.form).then(this.close)
+          this.$store.dispatch('MasterAdmin/updateContext', {contextId: this.contextId, data: this.form.context}).then(this.close).catch(() => {})
         } else {
           this.$store.dispatch('MasterAdmin/createContext', this.form).then(this.close).catch(() => {})
+        }
+      },
+      onDelete () {
+        if (window.confirm('Are you sure you want to delete this context?')) {
+          this.$store.dispatch('MasterAdmin/deleteContext', this.contextId).then(this.close).catch(() => {})
         }
       },
       close () {
@@ -82,22 +120,7 @@
     data () {
       return {
         contextId: false,
-        form: {
-          context: {
-            name: '',
-            maxQuota: 0
-          },
-          user: {
-            given_name: '',
-            sur_name: '',
-            display_name: '',
-            email: '',
-            email1: '',
-            name: null,
-            password: null,
-            primaryEmail: null
-          }
-        }
+        form: JSON.parse(JSON.stringify(defaultForm)) // deep copy of the form default values
       }
     },
     computed: {
@@ -109,7 +132,7 @@
           this.$emit('visibility:set', val)
         }
       },
-      title () { return this.id ? 'Edit Context' : 'Create Context' },
+      title () { return this.contextId ? 'Edit Context' : 'Create Context' },
       ...mapState({
         currentEndpoint: state => state.MasterAdmin.currentEndpoint,
         contextSaving: state => state.MasterAdmin.contextSaving,
@@ -119,11 +142,6 @@
     watch: {
       show () {
         this.showModal = this.show
-      }
-    },
-    mounted: function () {
-      if (this.context) {
-        // this.form = this.context 
       }
     }
   }

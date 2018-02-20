@@ -25,7 +25,7 @@
       <b-form-row>
         <b-col sm="12" md="6" offset-md="3" lg="4" offset-lg="4">
           <b-form-group id="account-select" label="Account" label-for="account">
-            <b-form-select id="account" :options="accounts" @input="selectAccount" value-field="account_id" text-field="account_name" required></b-form-select>
+            <b-form-select id="account" :options="accounts" @input="selectAccount" value-field="account_id" text-field="account_name" class="mb-3" required></b-form-select>
           </b-form-group>
         </b-col>
       </b-form-row>

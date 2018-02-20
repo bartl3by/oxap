@@ -1,5 +1,5 @@
 <template>
-  <b-table striped small :items="contexts" :fields="displayFields">
+  <b-table striped hover small tbody-tr-class="click_editable" :items="contexts" :fields="displayFields" @row-clicked="clickContext">
 
   </b-table>
 </template>
@@ -12,6 +12,9 @@
     methods: {
       loadContexts () {
         this.$store.dispatch('MasterAdmin/getContexts')
+      },
+      clickContext(context) {
+        this.$emit('clickContext', context)
       }
     },
     mounted: function () {

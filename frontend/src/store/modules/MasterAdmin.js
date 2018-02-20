@@ -69,6 +69,9 @@ const mutations = {
     state.contextSaving = false
     state.contextError = err
   },
+  [types.CONTEXT_ERROR_RESET] (state) {
+    state.contextError = false
+  },
   [types.SESSION_CREATE_REQUEST] (state) {
     state.sessionCreating = true
     state.sessionError = false
@@ -125,7 +128,7 @@ const actions = {
       throw new Exception(e)
     })
   },
-  updateContext: ({ commit, state, dispatch }, contextId, data) => {
+  updateContext: ({ commit, state, dispatch }, {contextId, data}) => {
     commit(types.CONTEXT_UPDATE_REQUEST)
     return api.updateContext(contextId, data, state.currentEndpoint.endpoint_id).then((data) => {
       commit(types.CONTEXT_UPDATE_SUCCESS)
@@ -133,6 +136,7 @@ const actions = {
       return data
     }).catch((e) => {
       commit(types.CONTEXT_UPDATE_ERROR, e)
+      throw new Exception(e)
     })
   },
   deleteContext: ({ commit, state, dispatch }, contextId) => {
@@ -142,7 +146,11 @@ const actions = {
       dispatch('getContexts')
     }).catch((e) => {
       commit(types.CONTEXT_DELETE_ERROR, e)
+      throw new Exception(e)
     })
+  },
+  clearContextError: ({ commit }) => {
+    commit(types.CONTEXT_ERROR_RESET)
   },
   setEndpoint: ({ commit }, endpoint) => {
     commit(types.SET_ENDPOINT, endpoint)

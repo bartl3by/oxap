@@ -13,12 +13,12 @@
             <b-dropdown-item v-for="endpoint in endpoints" :key="endpoint.endpoint_id" @click="selectEndpoint(endpoint)">{{ endpoint.endpoint_name }}</b-dropdown-item>
           </b-dropdown>
           <div class="float-right">
-            <b-button variant="secondary" @click="showCreateContext" :disabled="!currentEndpoint"><i class="fa fa-cubes"></i> Create Context</b-button>
+            <b-button variant="secondary" @click="createContext" :disabled="!currentEndpoint"><i class="fa fa-cubes"></i> Create Context</b-button>
           </div>
-          <ox-contexts-list />
+          <ox-contexts-list @clickContext="editContext" />
         </b-tab>
       </b-tabs>
-      <ox-edit-context @visibility:set="val => showContextEditDialog = val" :show="showContextEditDialog" :context="editContext"></ox-edit-context>
+      <ox-edit-context ref="editContextDialog" @visibility:set="val => showContextEditDialog = val" :show="showContextEditDialog" :context="currentContext"></ox-edit-context>
     </b-card>
     
 </template>
@@ -41,15 +41,19 @@
           store.dispatch('MasterAdmin/getContexts')
         })
       },
-      showCreateContext () {
+      createContext () {
+        this.currentContext = false;
+        this.showContextEditDialog = true;
+      },
+      editContext (context) {
+        this.currentContext = context;
         this.showContextEditDialog = true;
       }
     },
     data () {
       return {
-        editContext: {},
+        currentContext: {},
         showContextEditDialog: false
-
       }
     },
     computed: mapState({
