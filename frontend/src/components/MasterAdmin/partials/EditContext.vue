@@ -5,44 +5,53 @@
 
     <b-form @submit="onSubmit">
       <b-container>
+        <b-form-group label="Context Name" label-for="form-context-name" description="">
+          <b-form-input placeholder="Context Name" id="form-context-name" v-model="form.context.name"></b-form-input>
+        </b-form-group>
+        <b-form-group label="Max Quota (bytes)" label-for="form-max-quota" description="">
+          <b-form-input type="number" placeholder="Max Quota (bytes)" id="form-max-quota" v-model="form.context.maxQuota"></b-form-input>
+        </b-form-group>
 
-        <b-form-input placeholder="Context Name" v-model="form.context.name"></b-form-input>
-        <b-form-input type="number" placeholder="Max Quota (bytes)" v-model="form.context.maxQuota"></b-form-input>
-        
         <fieldset v-if="!form.context.id">
           <legend>Context Admin</legend>
-          <b-row>
-            <b-col>
-              <b-form-input placeholder="First Name" required v-model="form.user.given_name" @change="updateDisplayName"></b-form-input>
-            </b-col>
-            <b-col>
-              <b-form-input placeholder="Last Name" required v-model="form.user.sur_name" @change="updateDisplayName"></b-form-input>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
-              <b-form-input placeholder="Display Name" v-model="form.user.display_name"></b-form-input>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
-              <b-form-input placeholder="User Name" required v-model="form.user.name"></b-form-input>
-            </b-col>
-            <b-col>
-              <b-form-input placeholder="Password" required v-model="form.user.password" type="password"></b-form-input>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
-              <b-form-input placeholder="Primary Email" required v-model="form.user.primaryEmail" type="email"></b-form-input>
-            </b-col>
-            <b-col>
-              <b-form-input placeholder="Email 1" v-model="form.user.email" type="email"></b-form-input>
-            </b-col>
-            <b-col>
-              <b-form-input placeholder="Email 2" v-model="form.user.email1" type="email"></b-form-input>
-            </b-col>
-          </b-row>
+          <b-form-group label="Admin Name">
+            <b-row>
+              <b-col>
+                <b-form-input placeholder="First Name" id="form-context-first-name" required v-model="form.user.given_name" @change="updateDisplayName"></b-form-input>
+              </b-col>
+              <b-col>
+                <b-form-input placeholder="Last Name" required v-model="form.user.sur_name" @change="updateDisplayName"></b-form-input>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-form-input placeholder="Display Name" v-model="form.user.display_name"></b-form-input>
+              </b-col>
+            </b-row>
+          </b-form-group>
+          <b-form-group label="Login Credentials">
+            <b-row>
+              <b-col>
+                <b-form-input placeholder="User Name" required v-model="form.user.name"></b-form-input>
+              </b-col>
+              <b-col>
+                <b-form-input placeholder="Password" required v-model="form.user.password" type="password"></b-form-input>
+              </b-col>
+            </b-row>
+          </b-form-group>
+          <b-form-group label="Email Addresses">
+            <b-row>
+              <b-col>
+                <b-form-input placeholder="Primary Email" required v-model="form.user.primaryEmail" type="email"></b-form-input>
+              </b-col>
+              <b-col>
+                <b-form-input placeholder="Email 1" v-model="form.user.email" type="email"></b-form-input>
+              </b-col>
+              <b-col>
+                <b-form-input placeholder="Email 2" v-model="form.user.email1" type="email"></b-form-input>
+              </b-col>
+            </b-row>
+          </b-form-group>
         </fieldset>
 
         <b-button variant="danger" size="sm" v-if="form.context.id" @click="onDelete">Delete Context</b-button>
